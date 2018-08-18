@@ -5,13 +5,14 @@ import {Text,
         Button,
         TouchableOpacity,
         Image,
+        ScrollView,
     } from 'react-native';
 import styles from '../assets/styles/login.style'
 
-type Props = {};
-export default class Login extends Component<Props> {
+export default class Login extends Component {
   render() {
     return (
+      <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <View style={styles.logo}> 
          <Image borderRadius={35} source={require('../assets/img/logo.jpg')} />
@@ -38,9 +39,10 @@ export default class Login extends Component<Props> {
             <Text style={[styles.loginButton, {marginTop: 70}]}>ورود با حساب گوگل</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-            <Text style={styles.forgetPass}>ثبت نام</Text>
+            <Text style={[styles.forgetPass, {marginBottom: 20}]}>ثبت نام</Text>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     );
   }
 }
