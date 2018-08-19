@@ -22,8 +22,8 @@ export default styles = StyleSheet.create({
     title: {
       fontSize: 20,
       marginTop: 5,
-      color: 'rgb(240, 240, 240)',
-    //  fontFamily: 'IranNastaliq',
+      color: 'rgb(239, 239, 239)',
+      fontFamily: 'IranNastaliq',
     },
 
     inputText: {
@@ -32,7 +32,7 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 5,
         marginHorizontal: 15,
-        backgroundColor: 'rgb(240, 240, 240)',
+        backgroundColor: 'white',
         borderRadius: 5,
         textAlign: "right",
         padding: 10,

@@ -15,11 +15,11 @@ import styles from '../assets/styles/login.style'
 export default class Login extends Component {
   render() {
     return (
-      <LinearGradient colors={['rgb(0, 100, 130)', 'rgb(0, 100, 130)', 'rgb(150, 50, 160)']} style={styles.linearGradient}>
+      <LinearGradient colors={['rgb(25, 50, 75)', 'rgb(25, 50, 75)', 'rgb(133, 69, 255)']} style={styles.linearGradient}>
       <View style={styles.container}>
 
         <StatusBar
-          backgroundColor='rgb(0, 100, 130)'
+          backgroundColor='rgb(25, 50, 75)'
         />
 
         <View opacity={0.8} style={[styles.item, style={alignItems: 'center'}]}>
@@ -27,7 +27,7 @@ export default class Login extends Component {
           <Text style={styles.title}>عکاسخونه</Text>
         </View>
 
-        <View opacity={0.8} style={[styles.item, {justifyContent: 'center',flex: 5}]}>
+        <View opacity={0.6} style={[styles.item, {justifyContent: 'center',flex: 5}]}>
           <TextInput 
             style={styles.inputText} 
             placeholder="آدرس ایمیل" 
