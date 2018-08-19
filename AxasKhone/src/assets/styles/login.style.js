@@ -11,7 +11,8 @@ export default styles = StyleSheet.create({
         flex: 3,
         // backgroundColor: 'red',
         // alignItems: 'center', ino age bzari dg text baxa arzeshun kamtrin halat mishe
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+      //  backgroundColor: 'rgba(0,0,0,0.5)',
       },
 
     linearGradient: {
@@ -31,7 +32,7 @@ export default styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 5,
         marginHorizontal: 15,
-        backgroundColor: 'white',
+        backgroundColor: 'rgb(240, 240, 240)',
         borderRadius: 5,
         textAlign: "right",
         padding: 10,

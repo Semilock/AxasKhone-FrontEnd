@@ -22,12 +22,12 @@ export default class Login extends Component {
           backgroundColor='rgb(0, 100, 130)'
         />
 
-        <View style={[styles.item, style={alignItems: 'center'}]}>
+        <View opacity={0.8} style={[styles.item, style={alignItems: 'center'}]}>
           <Image borderRadius={35} source={require('../assets/img/logo.jpg')} />
           <Text style={styles.title}>عکاسخونه</Text>
         </View>
 
-        <View style={[styles.item, {justifyContent: 'center',flex: 5}]}>
+        <View opacity={0.8} style={[styles.item, {justifyContent: 'center',flex: 5}]}>
           <TextInput 
             style={styles.inputText} 
             placeholder="آدرس ایمیل" 
@@ -47,7 +47,7 @@ export default class Login extends Component {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.item, {justifyContent: 'flex-end'}]}>
+        <View  opacity={0.6} style={[styles.item, {justifyContent: 'flex-end'}]}>
           <TouchableOpacity activeOpacity={.8}>
               <Text style={[styles.loginButton, {}]}>ورود با حساب گوگل</Text>
           </TouchableOpacity>
