@@ -7,17 +7,27 @@ import {Text,
         TouchableOpacity,
         Image,
         StatusBar,
+        ScrollView
         } from 'react-native';
 
 
 import styles from '../assets/styles/login.style'
 
 export default class Login extends Component {
+
+  static navigationOptions = {
+    //  headerStyle: {
+    //   backgroundColor: 'rgb(25, 50, 75)',
+    //  },
+      header: null,
+   }
+
   render() {
     return (
       <LinearGradient colors={['rgb(25, 50, 75)', 'rgb(25, 50, 75)', 'rgb(133, 69, 255)']} style={styles.linearGradient}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <View style={styles.container}>
-
+      
         <StatusBar
           backgroundColor='rgb(25, 50, 75)'
         />
@@ -52,11 +62,16 @@ export default class Login extends Component {
               <Text style={[styles.loginButton, {}]}>ورود با حساب گوگل</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-              <Text style={[styles.forgetPass, {paddingBottom: 15}]}>ثبت نام</Text>
+              <Text 
+              style={[styles.forgetPass, {paddingBottom: 15}]} 
+              onPress={() => this.props.navigation.navigate('SignUp')}>
+              ثبت نام
+              </Text>
           </TouchableOpacity>
         </View>
-
+      
       </View>
+      </ScrollView>
       </LinearGradient>
     );
   }
