@@ -13,6 +13,24 @@ import {Text,
 import styles from '../assets/styles/login.style'
 
 export default class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // Validation state
+      email: "",
+      password: "", 
+      errors : {}
+    };
+  }
+  
+  // set state e.g : [fieldName:value]
+  HandleChange = fieldName => value => {
+    this.setState({ [fieldName]: value });
+  };
+
+  // in button press handler to validation  
+  HandlePress = event => {};
+
   render() {
     return (
       <LinearGradient colors={['rgb(0, 100, 130)', 'rgb(0, 100, 130)', 'rgb(150, 50, 160)']} style={styles.linearGradient}>
@@ -29,17 +47,27 @@ export default class Login extends Component {
 
         <View opacity={0.8} style={[styles.item, {justifyContent: 'center',flex: 5}]}>
           <TextInput 
-            style={styles.inputText} 
+            style={[styles.inputText, (this.state.errors.email !== undefined)? styles.borderError :null ]}
             placeholder="آدرس ایمیل" 
             underlineColorAndroid="transparent"
+            value={this.state.username}
+            onChangeText={this.HandleChange('email')}
           />
+          {/* showing errors validation message */}
+          {(this.state.errors.email !== undefined) ? <Text style={styles.borderError}> {this.state.errors.email}</Text> : null}
+
           <TextInput 
-            style={styles.inputText} 
+            style={[styles.inputText, (this.state.errors.password !== undefined)? styles.borderError :null ]}
             placeholder="رمز عبور" 
             secureTextEntry={true}
             underlineColorAndroid="transparent"
+            value={this.state.password}
+            onChangeText={this.HandleChange('password')}
           />
-          <TouchableOpacity activeOpacity={.8}>
+          {/* showing errors validation message */}
+          {(this.state.errors.password !== undefined) ? <Text style={styles.borderError}> {this.state.errors.password}</Text> : null}
+
+          <TouchableOpacity activeOpacity={.8} onPress={this.HandlePress}>
               <Text style={styles.loginButton}>ورود</Text>
           </TouchableOpacity>
           <TouchableOpacity>

@@ -56,4 +56,9 @@ export default styles = StyleSheet.create({
       textAlign: 'center',
     },
 
+    borderError: {
+      borderColor: 'red',
+      borderWidth: 2,
+      color: 'red'
+    }
   });
