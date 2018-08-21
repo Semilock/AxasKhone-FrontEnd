@@ -16,12 +16,8 @@ import styles from '../assets/styles/login.style'
 export default class Login extends Component {
 
   static navigationOptions = {
-    //  headerStyle: {
-    //   backgroundColor: 'rgb(25, 50, 75)',
-    //  },
       header: null,
    }
-
   render() {
     return (
       <LinearGradient colors={['rgb(25, 50, 75)', 'rgb(25, 50, 75)', 'rgb(133, 69, 255)']} style={styles.linearGradient}>
