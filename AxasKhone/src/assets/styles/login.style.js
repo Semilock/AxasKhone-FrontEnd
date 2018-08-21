@@ -60,5 +60,12 @@ export default styles = StyleSheet.create({
       borderColor: 'red',
       borderWidth: 2,
       color: 'red'
+    },
+
+    textError:{
+      marginHorizontal: 20,
+      textAlign: "right",
+      color: 'red'
     }
+
   });
