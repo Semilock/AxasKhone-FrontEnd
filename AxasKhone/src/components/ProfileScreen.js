@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { createStackNavigator, TabNavigator } from 'react-navigation';
+import { createStackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import { View } from 'react-native';
 
 import Profile from './../assets/pages/Profile/index'
@@ -20,16 +20,19 @@ const AppStackNavigator = TabNavigator({
     Profile: {
         screen: Profile
     },
-    AddPost: {
-        screen: AddPost
-    },
-    HomeUser: {
-        screen: HomeUser
-    },
     Notification: {
         screen: Notif
+    },
+    AddPost: {
+        screen: AddPost
     },
     Search: {
         screen: Search
     },
+    HomeUser: {
+        screen: HomeUser
+    },
+},{
+    tabBarPosition: 'bottom',
+    tabBarComponent: TabBarBottom,
 })
