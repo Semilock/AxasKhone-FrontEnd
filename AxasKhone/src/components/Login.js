@@ -1,25 +1,26 @@
-import React, { Component } from "react";
-import LinearGradient from "react-native-linear-gradient";
-import validator from "./../helpers/validator";
-
+import React, { Component } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {
   Text,
   View,
   TextInput,
   TouchableOpacity,
   Image,
-  StatusBar
-} from "react-native";
+  StatusBar,
+  ActivityIndicator
+} from 'react-native';
+import { connect } from 'react-redux';
+import validator from '../helpers/validator';
+import styles from '../assets/styles/login.style';
+import userActions from '../actions/userAuth';
 
-import styles from "../assets/styles/login.style";
-
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // Validation state
-      email: "",
-      password: "",
+      email: 'foo@gmail.com',
+      password: 'asdasdad',
       errors: {}
     };
   }
@@ -31,43 +32,51 @@ export default class Login extends Component {
 
   // in button press handler to validation
   HandlePress = () => {
-    const emailError = validator("email", this.state.email);
-    const passwordError = validator("password", this.state.password);
+    const { email, password } = this.state;
+    const emailError = validator('email', email);
+    const passwordError = validator('password', password);
     this.setState({
       errors: {
         email: emailError,
         password: passwordError
       }
     });
+
     if (!emailError && !passwordError) {
-      //TODO: dispatch login request api
+      //   //TODO: dispatch login request api
+      this.props.login(email, password);
     }
   };
 
   render() {
     return (
       <LinearGradient
-        colors={["rgb(0, 100, 130)", "rgb(0, 100, 130)", "rgb(150, 50, 160)"]}
+        colors={['rgb(0, 100, 130)', 'rgb(0, 100, 130)', 'rgb(150, 50, 160)']}
         style={styles.linearGradient}
       >
         <View style={styles.container}>
+          {this.props.isFetching === true ? <ActivityIndicator /> : null}
           <StatusBar backgroundColor="rgb(0, 100, 130)" />
 
           <View
             opacity={0.8}
-            style={[styles.item, (style = { alignItems: "center" })]}
+            style={[styles.item, (style = { alignItems: 'center' })]}
           >
             <Image
               borderRadius={35}
-              source={require("../assets/img/logo.jpg")}
+              source={require('../assets/img/logo.jpg')}
             />
             <Text style={styles.title}>عکاسخونه</Text>
           </View>
 
           <View
             opacity={0.8}
-            style={[styles.item, { justifyContent: "center", flex: 5 }]}
+            style={[styles.item, { justifyContent: 'center', flex: 5 }]}
           >
+            {/* showing server errors message */}
+            {this.props.error !== undefined ? (
+              <Text style={styles.textError}> {this.props.error}</Text>
+            ) : null}
             <TextInput
               style={[
                 styles.inputText,
@@ -75,16 +84,19 @@ export default class Login extends Component {
                   ? styles.borderError
                   : null
               ]}
+              keyboardType="email-address"
+              autoCorrect={false}
               placeholder="آدرس ایمیل"
               underlineColorAndroid="transparent"
-              value={this.state.username}
-              onChangeText={this.HandleChange("email")}
+              autoCapitalize="none"
+              value={this.state.email}
+              onChangeText={this.HandleChange('email')}
+              onSubmitEditing={() => this.password.focus()}
             />
             {/* showing errors validation message */}
             {this.state.errors.email !== undefined ? (
               <Text style={styles.textError}> {this.state.errors.email}</Text>
             ) : null}
-
             <TextInput
               style={[
                 styles.inputText,
@@ -92,20 +104,21 @@ export default class Login extends Component {
                   ? styles.borderError
                   : null
               ]}
+              autoCorrect={false}
               placeholder="رمز عبور"
-              secureTextEntry={true}
+              secureTextEntry
               underlineColorAndroid="transparent"
               value={this.state.password}
-              onChangeText={this.HandleChange("password")}
+              ref={input => (this.password = input)}
+              onChangeText={this.HandleChange('password')}
             />
             {/* showing errors validation message */}
             {this.state.errors.password !== undefined ? (
               <Text style={styles.textError}>
-                {" "}
+                {' '}
                 {this.state.errors.password}
               </Text>
             ) : null}
-
             <TouchableOpacity activeOpacity={0.8} onPress={this.HandlePress}>
               <Text style={styles.loginButton}>ورود</Text>
             </TouchableOpacity>
@@ -118,7 +131,7 @@ export default class Login extends Component {
 
           <View
             opacity={0.6}
-            style={[styles.item, { justifyContent: "flex-end" }]}
+            style={[styles.item, { justifyContent: 'flex-end' }]}
           >
             <TouchableOpacity activeOpacity={0.8}>
               <Text style={[styles.loginButton, {}]}>ورود با حساب گوگل</Text>
@@ -134,3 +147,25 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) =>
+      dispatch(userActions.login(username, password))
+  };
+};
+
+function mapStateToProps(state) {
+  const { isFetching, isAuthenticated, user, error } = state.auth;
+  return {
+    isFetching,
+    isAuthenticated,
+    user,
+    error
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

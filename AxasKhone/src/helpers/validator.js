@@ -1,15 +1,15 @@
-import pass_validator from "password-validator";
+import pass_validator from 'password-validator';
 
 const schema = {
   email: {
-    presence: "ایمیل را وارد کنید",
-    wrong: "ایمیل صحیح وارد کنید"
+    presence: 'ایمیل را وارد کنید',
+    wrong: 'ایمیل صحیح وارد کنید'
   },
   password: {
     min: 6,
-    level: "high",
-    presence: "ایمیل را وارد کنید",
-    wrong: "پسورد ضعیف است"
+    level: 'low',
+    presence: 'ایمیل را وارد کنید',
+    wrong: 'پسورد ضعیف است'
   }
 };
 
@@ -20,8 +20,8 @@ const email_validator = email => {
 
 const validator = (fieldName, value) => {
   switch (fieldName) {
-    case "email":
-      if (value.trim() === "") {
+    case 'email':
+      if (value.trim() === '') {
         return schema[`${fieldName}`].presence;
       } else {
         if (!email_validator(value)) {
@@ -29,13 +29,13 @@ const validator = (fieldName, value) => {
         }
       }
       break;
-    case "password":
-      if (value.trim() === "") {
+    case 'password':
+      if (value.trim() === '') {
         return schema[`${fieldName}`].presence;
       } else {
         let pValidator = new pass_validator();
         pValidator.is().min(Number(schema[`${fieldName}`].min));
-        if (schema[`${fieldName}`].level === "high") {
+        if (schema[`${fieldName}`].level === 'high') {
           pValidator
             .has()
             .uppercase()
