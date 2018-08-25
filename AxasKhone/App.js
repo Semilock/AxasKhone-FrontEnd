@@ -1,3 +1,7 @@
+import { Provider } from 'react-redux';
+import Login from './src/components/Login';
+import store from './src/helpers/store';
+
 import React, {Component} from 'react';
 import { createStackNavigator } from 'react-navigation';
 import LoginScreen from './src/components/LoginScreen'
@@ -22,8 +26,10 @@ export default class App extends Component {
 
   render() {
   // return (<Bazi>{this.state.s ? <Text>How Are You?</Text> : <Text>Hello</Text>}</Bazi>);
-  return (<ProfileScreen/>);
+  return (
+    <Provider store={store}>
+      <ProfileScreen/>
+    </Provider>
+  );
   }
 }
-
-
