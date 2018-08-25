@@ -5,7 +5,7 @@ import SignUpScreen from './src/components/SignUpScreen'
 import Bazi from './src/components/bazi'
 import ProfileScreen from './src/components/ProfileScreen'
 import {Text} from 'react-native'
-
+console.disableYellowBox = true;
 export default class App extends Component {
   
   // constructor(props){

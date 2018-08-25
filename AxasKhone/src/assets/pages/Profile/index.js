@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import { View, Text } from 'react-native';
 
-export default class Profile extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, backgroundColor: 'blue'}}>
-        <Text>Profile page</Text>
-      </View>
-    );
-  }
-}
+import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
+
+import Profile from './Profile'
+import Edit from './Edit'
+import Setting from './Setting'
+
+export default ProfileStack = createStackNavigator({
+  Profile: { screen: Profile },
+  Setting: { screen: Setting },
+  Edit: { screen: Edit },
+});  
