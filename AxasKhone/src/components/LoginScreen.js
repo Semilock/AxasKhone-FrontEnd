@@ -60,7 +60,7 @@ export default class Login extends Component {
           <TouchableOpacity>
               <Text 
               style={[styles.forgetPass, {paddingBottom: 15}]} 
-              onPress={() => this.props.navigation.navigate('SignUp')}>
+              onPress={() => this.props.navigation.navigate('PassChange')}>
               ثبت نام
               </Text>
           </TouchableOpacity>

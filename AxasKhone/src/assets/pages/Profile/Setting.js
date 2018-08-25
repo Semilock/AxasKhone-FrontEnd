@@ -26,13 +26,15 @@ export default class Setting extends Component {
           backgroundColor='rgb(25, 50, 75)'
         />
 
-        <View style={[style={alignItems: 'center', margin: 10}]}>
-          <Image borderRadius={45} source={require('../../img/id1.jpg')} />
+        <View style={[style={ marginTop: 15 }]}>
+          <TouchableOpacity activeOpacity={.8} onPress={() => this.props.navigation.navigate('SignUp')}>
+            <Text style={[{color: 'black', borderTopWidth: 1, borderBottomWidth: 1,fontSize: 16, textAlign: 'right', padding: 15,}]}>تغییر رمز عبور</Text>
+          </TouchableOpacity>
         </View>
 
-        <View style={[{justifyContent: 'center'}]}>
+        <View style={[{flex: 1,justifyContent: 'flex-end'}]}>
           <TouchableOpacity activeOpacity={.8}>
-              <Text style={styles.buttomSubmit}>ذخیره تغییرات</Text>
+            <Text style={[styles.buttomSubmit, {backgroundColor: 'red', color: 'white'}]}>خروج از حساب</Text>
           </TouchableOpacity>
         </View>
       

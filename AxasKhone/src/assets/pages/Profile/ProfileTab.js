@@ -3,42 +3,90 @@ import { TabNavigator, TabBarBottom, FooterTabs, TXTabBar } from 'react-navigati
 import { View, Text, FlatList, Image } from 'react-native';
 
 class Photo extends React.Component {
-
-  componentDidMount() {
-    this.setState({
+  constructor(props){
+  super(props);
+    this.state = {
       posts: [
         {
-          imageUrl: 'C:\rahnema\front-end\AxasKhone\src\assets\img\p1.JPG' ,
+          imageUrl: './../../img/logo.jpg' ,
         },
         {
-          imageUrl: 'C:\rahnema\front-end\AxasKhone\src\assets\img\p2.JPG' ,
+          imageUrl: './../../img/id1.jpg' ,
         },
         {
-          imageUrl: 'C:\rahnema\front-end\AxasKhone\src\assets\img\p3.JPG' ,
+          imageUrl: './../../img/logo.jpg' ,
         },
-      ]
-    })
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/id1.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/id1.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+        {
+          imageUrl: './../../img/logo.jpg' ,
+        },
+      ],
+      exp : [
+        {key: 'a'}, 
+        {key: 'b'}
+      ] 
+    }
   }
 
   render () {
     return (
-      <View style={{flex: 1, backgroundColor: 'yellow'}}>
-        <FlatList data={this.props.posts}
+      <View style={{flex: 1, }}>
+        {/* <FlatList
+          data={this.state.exp}
+          renderItem={({item}) => 
+          <Text>{item.key}</Text>}
+        /> */}
 
-
+        <FlatList
+          data={this.state.posts}
+          numColumns={10}
+          renderItem={(item) => 
+          <View style={{flex: 0.3}}>
+            <Image source={require('./../../img/logo.jpg')} />
+          </View>}
+          // renderItem={(item) => <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} />}
+          // <Text>{item.imageUrl}</Text>}
         />
-        <Image borderRadius={35} source={''} />
       </View>
     )
   }
 }
+
+// class FlatListItem extends React.Component {
+//   render(){
+
+//   }
+// }
 
 class Favotites extends React.Component {
     render () {
         return (
         <View style={{ flex: 1, backgroundColor: 'rgb(239, 239, 239)', justifyContent: 'center'}}>
           <Text style={{ textAlign: 'center', Color: 'rgb(57, 57, 57)', fontSize: 24}}>
-          under develop :))
+          hi :))
           </Text>
         </View>
         )
