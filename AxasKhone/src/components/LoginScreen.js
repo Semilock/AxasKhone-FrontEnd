@@ -15,7 +15,7 @@ import validator from '../helpers/validator';
 import styles from '../assets/styles/login.style';
 import userActions from '../actions/userAuth';
 
-class Login extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +45,7 @@ class Login extends Component {
 
     if (!emailError && !passwordError) {
       //   //TODO: dispatch login request api
-      this.props.login(email, password);
+      // this.props.login(email, password);
     }
   };
 
@@ -178,4 +178,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(LoginScreen);

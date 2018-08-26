@@ -1,5 +1,4 @@
 import { Provider } from 'react-redux';
-import Login from './src/components/Login';
 import store from './src/helpers/store';
 
 import React, {Component} from 'react';
