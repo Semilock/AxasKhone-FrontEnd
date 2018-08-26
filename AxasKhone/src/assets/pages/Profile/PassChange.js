@@ -14,7 +14,7 @@ export default class PassChange extends Component {
       elevation: 0,
      },
      headerTintColor: 'white',
-     headerRight: <Text style={[style={alignItems: 'center', margin: 10, color: 'white', fontSize: 18}]}>تنظیمات</Text>, 
+     headerRight: <Text style={[style={alignItems: 'center', margin: 10, color: 'white', fontSize: 18}]}>تغییر رمز عبور</Text>, 
  }
 
   render() {
@@ -26,37 +26,28 @@ export default class PassChange extends Component {
           backgroundColor='rgb(25, 50, 75)'
         />
 
-        <View style={[style={alignItems: 'center', margin: 10}]}>
+        <View style={[style={alignItems: 'center', margin: 30}]}>
           <Image borderRadius={45} source={require('../../img/id1.jpg')} />
         </View>
 
         <View style={[{justifyContent: 'center'}]}>
           <TextInput 
             style={styles.inputText} 
-            placeholder='samyar.mirkazemi'
+            // placeholder='samyar.mirkazemi'
+            secureTextEntry={true}
             underlineColorAndroid="transparent"
           />
           <TextInput 
             style={styles.inputText} 
-            placeholder='سامیار میرکاظمی'
-            secureTextEntry={false}
+            // placeholder='سامیار میرکاظمی'
+            secureTextEntry={true}
             underlineColorAndroid="transparent"
           />
-          <TextInput 
-            style={styles.inputText} 
-            placeholder='sammirkazemi@outlook.com'
-            secureTextEntry={false}
-            underlineColorAndroid="transparent"
-          />
-          <TextInput 
-            style={[styles.inputText, style={height: 150}]} 
-            placeholder=
-            'برنامه نویسی اندروید'
-            secureTextEntry={false}
-            underlineColorAndroid="transparent"
-          />
+        </View>
+
+        <View style={[{flex: 1,justifyContent: 'flex-end'}]}>
           <TouchableOpacity activeOpacity={.8}>
-              <Text style={styles.buttomSubmit}>ذخیره تغییرات</Text>
+            <Text style={[styles.buttomSubmit]}> ثبت رمز عبور جدید </Text>
           </TouchableOpacity>
         </View>
       

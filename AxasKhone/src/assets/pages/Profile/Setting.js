@@ -4,6 +4,8 @@ import { createStackNavigator, TabNavigator, TabBarBottom, navigatinOptions } fr
 
 import styles from './Profile.style'
 
+import PassChange from  './PassChange'
+
 
 export default class Setting extends Component {
 
@@ -27,7 +29,7 @@ export default class Setting extends Component {
         />
 
         <View style={[style={ marginTop: 15 }]}>
-          <TouchableOpacity activeOpacity={.8} onPress={() => this.props.navigation.navigate('SignUp')}>
+          <TouchableOpacity activeOpacity={.8} onPress={() => this.props.navigation.navigate('PassChange')}>
             <Text style={[{color: 'black', borderTopWidth: 1, borderBottomWidth: 1,fontSize: 16, textAlign: 'right', padding: 15,}]}>تغییر رمز عبور</Text>
           </TouchableOpacity>
         </View>

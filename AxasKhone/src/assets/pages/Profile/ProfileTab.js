@@ -62,10 +62,12 @@ class Photo extends React.Component {
 
         <FlatList
           data={this.state.posts}
-          numColumns={10}
+          numColumns={2}
           renderItem={(item) => 
-          <View style={{flex: 0.3}}>
-            <Image source={require('./../../img/logo.jpg')} />
+          <View style={{flex: 1, justifyContent: 'space-around'}}>
+            <View style={{flex: 0.5,  borderWidth:5 , height: 150}}>
+              {/* <Image resizeMode="stretch" source={require('./../../img/id1.jpg')} /> */}
+            </View>
           </View>}
           // renderItem={(item) => <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} />}
           // <Text>{item.imageUrl}</Text>}
