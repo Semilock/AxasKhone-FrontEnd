@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { TabNavigator, TabBarBottom, FooterTabs, TXTabBar } from 'react-navigation';
 import { View, Text, FlatList, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 class Photo extends React.Component {
   constructor(props){
   super(props);
@@ -85,13 +85,11 @@ class Photo extends React.Component {
 
 class Favotites extends React.Component {
     render () {
-      const myIcon = (<Icon name="rocket" size={30} color="#900" />)
         return (
         <View style={{ flex: 1, backgroundColor: 'rgb(239, 239, 239)', justifyContent: 'center'}}>
           <Text style={{ textAlign: 'center', Color: 'rgb(57, 57, 57)', fontSize: 24}}>
           hi :))
-         
-          {myIcon}
+          
           </Text>
         </View>
         )

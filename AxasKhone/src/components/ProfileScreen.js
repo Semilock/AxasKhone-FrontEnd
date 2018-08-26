@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { createStackNavigator, TabNavigator, TabBarBottom, navigatinOptions } from 'react-navigation';
 import { View, Image, Text } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileStack from './../assets/pages/Profile/index'
 import AddPost from './../assets/pages/AddPost/index'
 import HomeUser from './../assets/pages/HomeUser/index'
@@ -23,13 +23,50 @@ export default class ProfileScreen extends Component {
 const AppStackNavigator = TabNavigator({
     Profile: { screen: ProfileStack, 
         navigationOptions: {
-        tabBarLabel: ({tintColor}) => <Text style={{color: tintColor, textAlign: 'center', marginBottom: 12}}>profile</Text>,
+        // tabBarLabel: ({tintColor}) => <Text style={{color: tintColor, textAlign: 'center', marginBottom: 12}}>profile</Text>,
+        tabBarIcon: ({ focused }) => (
+          focused ?
+          <Icon name="md-person" size={30} color="rgb(133, 69, 255)" />:
+          <Icon name="md-person" size={30} color="#blue" />
+        ),
         },
       },
-    Notification: { screen: Notif },
-    AddPost: { screen: AddPost },
-    Search: { screen: Search },
-    HomeUser: { screen: HomeUser },
+    Notification: { screen: Notif, 
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+        focused ?
+        <Icon name="md-notifications" size={30} color="rgb(133, 69, 255)" />:
+        <Icon name="md-notifications" size={30} color="#blue" />
+        ),
+      },
+    },
+    AddPost: { screen: AddPost, 
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+        focused ?
+        <Icon name="md-add" size={30} color="rgb(133, 69, 255)" />:
+        <Icon name="md-add" size={30} color="#blue" />
+        ),
+      },
+    },
+    Search: { screen: Search, 
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+        focused ?
+        <Icon name="md-search" size={30} color="rgb(133, 69, 255)" />:
+        <Icon name="md-search" size={30} color="#blue" />
+        ),
+      },
+    },
+    HomeUser: { screen: HomeUser, 
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+        focused ?
+        <Icon name="md-home" size={30} color="rgb(133, 69, 255)" />:
+        <Icon name="md-home" size={30} color="#blue" />
+        ),
+      },
+    },
 },{
     tabBarPosition: 'bottom',
     tabBarComponent: TabBarBottom,
@@ -37,7 +74,7 @@ const AppStackNavigator = TabNavigator({
       labelStyle: {
         fontSize: 14,
       },
-      // showLabel: false, 
+      showLabel: false, 
       // showIcon: true,
       style: {
         backgroundColor: 'rgb(25, 50, 75)',
