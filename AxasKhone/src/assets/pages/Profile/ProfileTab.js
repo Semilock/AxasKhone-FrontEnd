@@ -89,7 +89,6 @@ class Favotites extends React.Component {
         <View style={{ flex: 1, backgroundColor: 'rgb(239, 239, 239)', justifyContent: 'center'}}>
           <Text style={{ textAlign: 'center', Color: 'rgb(57, 57, 57)', fontSize: 24}}>
           hi :))
-          
           </Text>
         </View>
         )
