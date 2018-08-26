@@ -65,7 +65,7 @@ class Photo extends React.Component {
           numColumns={2}
           renderItem={(item) => 
           <View style={{flex: 1, justifyContent: 'space-around'}}>
-            <View style={{flex: 0.5,  borderWidth:5 , height: 150}}>
+            <View style={{flex: 0.5,  borderWidth:5 , height: 150, borderColor: 'white'}}>
               {/* <Image resizeMode="stretch" source={require('./../../img/id1.jpg')} /> */}
             </View>
           </View>}
@@ -110,10 +110,8 @@ export default AppStackNavigator = TabNavigator({
 },{
     tabBarPosition: 'top',
     tabBarComponent: TabBarBottom,
+    initialRouteName: 'Photo',
     tabBarOptions: {
-      labelStyle: {
-        // fontSize: 29,
-      },
       style: {
         backgroundColor: 'rgb(239, 239, 239)',
       },

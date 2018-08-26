@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { View, Text, Image, StatusBar } from 'react-native';
-// import { createStackNavigator, TabNavigator, TabBarBottom,  } from 'react-navigation';
+// import { createStackNavigator, TabNavigator, TabBarBottom, rootNavigation } from 'react-navigation';
 import styles from './Profile.style'
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileTab from './ProfileTab'
@@ -17,10 +17,8 @@ export default class Profile extends Component {
         headerRight: <Text style={styles.titleNavbar}>sam.mirkazemi</Text>, 
         headerLeft: 
         <View style={styles.titleNavbar}>
-        <Icon style={{ paddingRight: 20, paddingLeft: 15 }} name="md-more" size={30} color="rgb(239, 239, 239)" onPress={() => navigation.navigate('Setting')} />
-        <Icon style={{ paddingLeft: 0 }} name="md-cog" size={30} color="rgb(239, 239, 239)" onPress={() => navigation.navigate('Edit')} />
-        {/* <Text style={{ paddingRight: 10 , color: 'white', fontSize: 18}} onPress={() => navigation.navigate('Edit')}>ویرایش</Text> */}
-        {/* <Text style={{ color: 'white', fontSize: 18}} onPress={() => navigation.navigate('Setting')}>تنظیمات</Text> */}
+        <Icon style={{ paddingRight: 20, paddingLeft: 15 }} name="md-more" size={30} color="rgb(239, 239, 239)" onPress={() => navigation.navigate('Edit')} />
+        <Icon style={{ paddingLeft: 0 }} name="md-cog" size={30} color="rgb(239, 239, 239)" onPress={() => navigation.navigate('Setting')} />
         </View>      
       })
 

@@ -7,20 +7,7 @@ import AddPost from './../assets/pages/AddPost/index'
 import HomeUser from './../assets/pages/HomeUser/index'
 import Notif from './../assets/pages/Notification/index'
 import Search from './../assets/pages/Search/index'
-
-
-
-export default class ProfileScreen extends Component {
-    render() {
-      return (
-        // <RootStack />
-        <AppStackNavigator/>
-      );
-    }
-  }
-
-
-const AppStackNavigator = TabNavigator({
+export default AppStackNavigator = TabNavigator({
     Profile: { screen: ProfileStack, 
         navigationOptions: {
         // tabBarLabel: ({tintColor}) => <Text style={{color: tintColor, textAlign: 'center', marginBottom: 12}}>profile</Text>,
