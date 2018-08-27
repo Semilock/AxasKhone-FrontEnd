@@ -5,6 +5,15 @@ export default (styles = StyleSheet.create({
     flex: 1
   },
 
+  navBarContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'rgb(25, 50, 75)',
+    height: 60,
+    paddingHorizontal: 25,
+    // borderWidth: 1,
+    alignItems: 'center'
+  },
+
   boxUp: {
     // flexDirection: 'row',
     flexDirection: 'row-reverse',
