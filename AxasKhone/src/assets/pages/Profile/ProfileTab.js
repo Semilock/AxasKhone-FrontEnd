@@ -1,59 +1,62 @@
-import React, {Component} from 'react';
-import { TabNavigator, TabBarBottom, FooterTabs, TXTabBar } from 'react-navigation';
+import React, { Component } from 'react';
+import {
+  TabNavigator,
+  TabBarBottom,
+  FooterTabs,
+  TXTabBar
+} from 'react-navigation';
 import { View, Text, FlatList, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 class Photo extends React.Component {
-  constructor(props){
-  super(props);
+  constructor(props) {
+    super(props);
     this.state = {
       posts: [
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/id1.jpg' ,
+          imageUrl: './../../img/id1.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/id1.jpg' ,
+          imageUrl: './../../img/id1.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/id1.jpg' ,
+          imageUrl: './../../img/id1.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
+          imageUrl: './../../img/logo.jpg'
         },
         {
-          imageUrl: './../../img/logo.jpg' ,
-        },
+          imageUrl: './../../img/logo.jpg'
+        }
       ],
-      exp : [
-        {key: 'a'}, 
-        {key: 'b'}
-      ] 
-    }
+      exp: [{ key: 'a' }, { key: 'b' }]
+    };
   }
 
-  render () {
+  render() {
     return (
-      <View style={{flex: 1, }}>
+      <View style={{ flex: 1 }}>
         {/* <FlatList
           data={this.state.exp}
           renderItem={({item}) => 
@@ -63,17 +66,25 @@ class Photo extends React.Component {
         <FlatList
           data={this.state.posts}
           numColumns={2}
-          renderItem={(item) => 
-          <View style={{flex: 1, justifyContent: 'space-around'}}>
-            <View style={{flex: 0.5,  borderWidth:5 , height: 150, borderColor: 'white'}}>
-              {/* <Image resizeMode="stretch" source={require('./../../img/id1.jpg')} /> */}
+          renderItem={item => (
+            <View style={{ flex: 1, justifyContent: 'space-around' }}>
+              <View
+                style={{
+                  flex: 0.5,
+                  borderWidth: 5,
+                  height: 150,
+                  borderColor: 'white'
+                }}
+              >
+                {/* <Image resizeMode="stretch" source={require('./../../img/id1.jpg')} /> */}
+              </View>
             </View>
-          </View>}
+          )}
           // renderItem={(item) => <Image source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}} />}
           // <Text>{item.imageUrl}</Text>}
         />
       </View>
-    )
+    );
   }
 }
 
@@ -84,37 +95,65 @@ class Photo extends React.Component {
 // }
 
 class Favotites extends React.Component {
-    render () {
-        return (
-        <View style={{ flex: 1, backgroundColor: 'rgb(239, 239, 239)', justifyContent: 'center'}}>
-          <Text style={{ textAlign: 'center', Color: 'rgb(57, 57, 57)', fontSize: 24}}>
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'rgb(239, 239, 239)',
+          justifyContent: 'center'
+        }}
+      >
+        <Text
+          style={{
+            textAlign: 'center',
+            Color: 'rgb(57, 57, 57)',
+            fontSize: 24
+          }}
+        >
           hi :))
-          </Text>
-        </View>
-        )
-    }
+        </Text>
+      </View>
+    );
+  }
 }
 
-
-export default AppStackNavigator = TabNavigator({
-    Favotites: { screen: Favotites, 
+export default (AppStackNavigator = TabNavigator(
+  {
+    Favotites: {
+      screen: Favotites,
       navigationOptions: {
-      tabBarLabel: ({tintColor}) => <Text style={{color: tintColor, textAlign: 'center', marginBottom: 12}}>علاقه مندی ها</Text>,
-      },
+        tabBarLabel: ({ tintColor }) => (
+          <Text
+            style={{ color: tintColor, textAlign: 'center', marginBottom: 12 }}
+          >
+            علاقه مندی ها
+          </Text>
+        )
+      }
     },
-    Photo: { screen: Photo, 
-        navigationOptions: {
-        tabBarLabel: ({tintColor}) => <Text style={{color: tintColor, textAlign: 'center', marginBottom: 12}}>عکس ها</Text>,
-        },
-      },
-},{
+    Photo: {
+      screen: Photo,
+      navigationOptions: {
+        tabBarLabel: ({ tintColor }) => (
+          <Text
+            style={{ color: tintColor, textAlign: 'center', marginBottom: 12 }}
+          >
+            عکس ها
+          </Text>
+        )
+      }
+    }
+  },
+  {
     tabBarPosition: 'top',
     tabBarComponent: TabBarBottom,
     initialRouteName: 'Photo',
     tabBarOptions: {
       style: {
-        backgroundColor: 'rgb(239, 239, 239)',
+        backgroundColor: 'rgb(239, 239, 239)'
       },
       activeTintColor: 'rgb(25, 50, 75)'
     }
-})
+  }
+));

@@ -16,14 +16,12 @@
 //   }
 // }
 
-
 import { createStackNavigator } from 'react-navigation';
 
-import Tab1 from './Tab1'
-import Tab2 from './Tab2'
+import Tab1 from './Tab1';
+import Tab2 from './Tab2';
 
-
-export default ProfileStack = createStackNavigator({
+export default (ProfileStack = createStackNavigator({
   Tab1: { screen: Tab1 },
-  Tab2: { screen: Tab2 },
-});  
+  Tab2: { screen: Tab2 }
+}));
