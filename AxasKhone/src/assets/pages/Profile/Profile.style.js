@@ -77,5 +77,9 @@ export default (styles = StyleSheet.create({
     borderRadius: 5,
     textAlign: 'right',
     padding: 10
+  },
+  folowSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
 }));
