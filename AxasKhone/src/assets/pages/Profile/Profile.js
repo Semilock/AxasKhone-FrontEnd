@@ -71,7 +71,7 @@ class Profile extends Component {
 
         <View style={styles.boxUp}>
           <View style={styles.profileImage}>
-            <Image borderRadius={45} source={require('../../img/id1.jpg')} />
+            <Image borderRadius={45} source={{ uri: this.props.profilePi }} />
           </View>
           <View style={styles.profileInfo}>
             <Text style={styles.title}>{this.props.fullname}</Text>
