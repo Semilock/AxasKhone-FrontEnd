@@ -1,13 +1,11 @@
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import React, {Component} from 'react';
-import store from './src/helpers/store';
-
-import { createStackNavigator } from 'react-navigation';
-import LoginScreen from './src/components/LoginScreen';
-import SignUpScreen from './src/components/SignUpScreen';
-import Bazi from './src/components/bazi';
-import ProfileScreen from './src/components/ProfileScreen';
 import { Text } from 'react-native';
+import store from './src/helpers/store';
+import Start from './Start';
+import './ReactotronConfig';
+import ReactotronConfig from './ReactotronConfig';
+import Reactotron from 'reactotron-react-native';
 
 console.disableYellowBox = true;
 export default class App extends Component {
@@ -27,7 +25,7 @@ export default class App extends Component {
     // return (<Bazi>{this.state.s ? <Text>How Are You?</Text> : <Text>Hello</Text>}</Bazi>);
     return (
       <Provider store={store}>
-        <ProfileScreen />
+        <Start />
       </Provider>
     );
   }
