@@ -14,12 +14,12 @@ import {
   TabBarBottom,
   navigatinOptions
 } from 'react-navigation';
-
+import { connect } from 'react-redux';
 import styles from './Profile.style';
-
+import userActions from '../../../actions/userAuth';
 import PassChange from './PassChange';
 
-export default class Setting extends Component {
+class Setting extends Component {
   static navigationOptions = {
     tabBarVisible: true,
     headerStyle: {
@@ -72,7 +72,10 @@ export default class Setting extends Component {
           </View>
 
           <View style={[{ flex: 1, justifyContent: 'flex-end' }]}>
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.props.logout()}
+            >
               <Text
                 style={[
                   styles.buttomSubmit,
@@ -88,3 +91,5 @@ export default class Setting extends Component {
     );
   }
 }
+
+export default Setting;
