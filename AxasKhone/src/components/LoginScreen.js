@@ -20,8 +20,8 @@ class LoginScreen extends Component {
     super(props);
     this.state = {
       // Validation state
-      email: 'foo@gmail.com',
-      password: 'asdasdad',
+      email: 's@s.com',
+      password: 'amirmasoud',
       errors: {}
     };
   }

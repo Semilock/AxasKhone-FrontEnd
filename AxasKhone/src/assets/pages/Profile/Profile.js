@@ -83,11 +83,11 @@ class Profile extends Component {
           <View style={styles.profileInfo}>
             <Text style={styles.title}>{this.props.fullname}</Text>
             <View style={styles.folowSection}>
-              <Text>{this.props.followersNumber} دنبال کننده</Text>
-              <Text>{this.props.followingNumber} دنبال شونده</Text>
+              <Text> دنبال کننده {this.props.followersNumber}</Text>
+              <Text> دنبال شونده {this.props.followingNumber}</Text>
             </View>
+            <Text style={{ flexWrap: 'nowrap' }}>{this.props.biography}</Text>
           </View>
-          <Text style={{ flexWrap: 'nowrap' }}>{this.props.biography}</Text>
         </View>
 
         <View style={styles.BoxDown}>

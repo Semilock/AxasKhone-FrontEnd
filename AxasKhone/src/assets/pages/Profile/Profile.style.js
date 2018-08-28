@@ -37,6 +37,7 @@ export default (styles = StyleSheet.create({
     flex: 0.7,
     marginRight: 10
     // justifyContent: 'center',
+    // backgroundColor: 'red'
   },
 
   titleNavbar: {
@@ -50,7 +51,8 @@ export default (styles = StyleSheet.create({
     fontSize: 20,
     // marginTop: 5,
     // color: 'rgb(239, 239, 239)',
-    fontFamily: 'IranNastaliq'
+    fontFamily: 'IranNastaliq',
+    textAlign: 'right'
   },
 
   buttomSubmit: {
@@ -79,7 +81,8 @@ export default (styles = StyleSheet.create({
     padding: 10
   },
   folowSection: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+    flexDirection: 'row-reverse'
+    // justifyContent: 'space-around'
+    // justifyContent: 'right'
   }
 }));
