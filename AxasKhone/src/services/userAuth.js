@@ -1,19 +1,22 @@
-import apiServerAddress from '../../config';
+import routes from './route';
+import axiosInstance from './axios.config';
 
 const login = (username, password) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: username, password })
+    body: JSON.stringify({ username, password })
   };
-
-  return fetch(`${apiServerAddress.android}/auth/login/`, requestOptions)
+  return fetch(`${routes.basePath}/${routes.login}/`, requestOptions)
     .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
-      if (user.token) {
+      if (user.refresh) {
         //TODO: implementing later
         // store user details and jwt token in application state or storage to keep user logged in.
+        // axiosInstance
+        //   .get(`${routes.user.profileInfo}/`)
+        //   .then(error => console.log('my warn', error));
       }
       return user;
     });
@@ -24,26 +27,17 @@ const logout = () => {
   // removing tokn in storage or state ,...
 };
 
-const getAll = () => {
+const getProfile = () => {
   //TODO: implementing later
-  // const requestOptions = {
-  //   method: 'GET',
-  //   headers: authHeader()
-  // };
-  // return fetch(`${apiServerAddress.android}/user_api`, requestOptions).then(
-  //   handleResponse
-  // );
+
+  return axiosInstance.get(`${routes.basePath}/${routes.user.profileInfo}/`);
 };
 
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        // TODO: navigate user to login view
-      }
+      // if (response.status === 401)  // Unauthorized error
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
@@ -54,5 +48,5 @@ const handleResponse = response => {
 export const userService = {
   login,
   logout,
-  getAll
+  getProfile
 };
