@@ -92,4 +92,13 @@ class Setting extends Component {
   }
 }
 
-export default Setting;
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(userActions.logout())
+  };
+};
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(Setting);
