@@ -5,9 +5,10 @@ import Edit from './Edit';
 import Setting from './Setting';
 import PassChange from './PassChange';
 
-export default (ProfileStack = createStackNavigator({
+const ProfileStack = createStackNavigator({
   Profile: { screen: Profile },
   Setting: { screen: Setting },
   Edit: { screen: Edit },
   PassChange: { screen: PassChange }
-}));
+});
+export default ProfileStack;
