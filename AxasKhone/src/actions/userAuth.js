@@ -8,9 +8,12 @@ export const loginConstants = {
 
   LOGOUT: 'USERS_LOGOUT',
 
-  GETALL_REQUEST: 'USERS_GETALL_REQUEST',
-  GETALL_SUCCESS: 'USERS_GETALL_SUCCESS',
-  GETALL_FAILURE: 'USERS_GETALL_FAILURE'
+  PROFILE_REQUEST: 'USERS_PROFILE_REQUEST',
+  PROFILE_SUCCESS: 'USERS_PROFILE_SUCCESS',
+  PROFILE_FAILURE: 'USERS_PROFILE_FAILURE',
+
+  SET_TOKENS: 'USER_TOKENS_CHANGE',
+  SET_ACCESS_TOKEN: 'USER_ACCESS_TOKEN_CHANGE'
 };
 
 const login = (username, password) => {
@@ -20,6 +23,7 @@ const login = (username, password) => {
     userService.login(username, password).then(
       user => {
         dispatch(success(user));
+        if (user.refresh && user.access) dispatch(setToken(user));
       },
       error => {
         dispatch(failure(error));
@@ -37,41 +41,30 @@ const login = (username, password) => {
   function failure(error) {
     return { type: loginConstants.LOGIN_FAILURE, error };
   }
+  function setToken(tokens) {
+    return { type: loginConstants.SET_TOKENS, tokens };
+  }
+};
+
+const updateAccessToken = token => {
+  return dispatch => {
+    dispatch(setAccessToken(token));
+  };
+  function setAccessToken(token) {
+    return { type: loginConstants.SET_ACCESS_TOKEN, token };
+  }
 };
 
 function logout() {
   //TODO: implementing later
   // userService.logout();
-  // return { type: loginConstants.LOGOUT };
-}
-
-function getAll() {
-  //TODO: implementing later
-  // return dispatch => {
-  //   dispatch(request());
-  //   userService.getAll().then(
-  //     users => dispatch(success(users)),
-  //     error => {
-  //       dispatch(failure(error));
-  //       dispatch(alertActions.error(error));
-  //     }
-  //   );
-  // };
-  // function request() {
-  //   return { type: loginConstants.GETALL_REQUEST };
-  // }
-  // function success(users) {
-  //   return { type: loginConstants.GETALL_SUCCESS, users };
-  // }
-  // function failure(error) {
-  //   return { type: loginConstants.GETALL_FAILURE, error };
-  // }
+  return { type: loginConstants.LOGOUT };
 }
 
 const userActions = {
   login,
   logout,
-  getAll
+  updateAccessToken
 };
 
 export default userActions;
