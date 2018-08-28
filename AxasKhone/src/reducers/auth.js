@@ -1,11 +1,13 @@
 import { loginConstants } from '../actions/userAuth';
 
-const initialState = {
+const authInitialState = {
   isFetching: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  error: undefined,
+  token: undefined
 };
 
-export const authentication = (state = initialState, action) => {
+export const authentication = (state = authInitialState, action) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
       return {
@@ -16,7 +18,9 @@ export const authentication = (state = initialState, action) => {
       return {
         isFetching: false,
         isAuthenticated: true,
-        user: action.user
+        // token: action.user,
+        refreshToken: action.user.refresh,
+        accessToken: action.user.access
       };
     case loginConstants.LOGIN_FAILURE:
       return {
@@ -26,8 +30,19 @@ export const authentication = (state = initialState, action) => {
       };
     case loginConstants.LOGOUT:
       return {
-        isFetching: true,
+        isFetching: false,
         isAuthenticated: false
+      };
+    case loginConstants.SET_TOKENS:
+      return {
+        ...state,
+        refreshToken: action.tokens.refresh,
+        accessToken: action.tokens.access
+      };
+    case loginConstants.SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: action.token
       };
     default:
       return state;
