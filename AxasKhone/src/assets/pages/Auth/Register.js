@@ -68,7 +68,9 @@ export default class Register extends Component {
               />
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => this.props.navigation.navigate('Register2')}
+                onPress={() =>
+                  this.props.navigation.navigate('RegisterComplement')
+                }
               >
                 <Text style={styles.loginButton}>ثبت نام</Text>
               </TouchableOpacity>
