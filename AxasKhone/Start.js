@@ -12,7 +12,8 @@ class Start extends Component {
         <Spinner
           visible={this.props.isFetching}
           textContent="در حال بارگذاری"
-          textStyle={{ color: '#FFF' }}
+          textStyle={{ color: '#fff' }}
+          overlayColor="rgba(0, 0, 0, 0.75)"
         />
         {this.props.isAuthenticated === true ? (
           <ProfileScreen />
