@@ -58,14 +58,15 @@ export default (styles = StyleSheet.create({
   },
 
   borderError: {
-    borderColor: 'red',
+    borderColor: 'orange',
     borderWidth: 2,
-    color: 'red'
+    color: 'brown'
   },
 
   textError: {
     marginHorizontal: 20,
     textAlign: 'right',
-    color: 'red'
+    color: 'orange',
+    fontSize: 16
   }
 }));
