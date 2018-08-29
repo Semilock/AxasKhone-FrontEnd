@@ -10,10 +10,12 @@ import {
   StatusBar,
   ScrollView
 } from 'react-native';
-
+import { connect } from 'react-redux';
+import userRegister from '../../../actions/userRegister';
+import validator from '../../../helpers/validator';
 import styles from '../../styles/login.style';
 
-export default class RegisterComplement extends Component {
+class RegisterComplement extends Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: 'rgb(25, 50, 75)',
@@ -21,6 +23,35 @@ export default class RegisterComplement extends Component {
     },
     //  headerTintColor: 'rgb(180, 180, 180)',
     headerTintColor: 'white'
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: this.props.RegisterEmail,
+      errors: {}
+    };
+  }
+
+  // set state e.g : [fieldName:value]
+  HandleChange = fieldName => value => {
+    this.setState({ [fieldName]: value });
+  };
+
+  NextStep = () => {
+    const { email, password, passwordConfirm } = this.state;
+    const emailError = validator('email', email);
+
+    this.setState({
+      errors: {
+        email: emailError
+      }
+    });
+    if (!emailError) {
+      //   //TODO: dispatch login request api
+
+      this.props.navigation.navigate('RegisterComplement');
+    }
   };
 
   render() {
@@ -47,19 +78,18 @@ export default class RegisterComplement extends Component {
             <TextInput
               style={styles.inputText}
               placeholder="نام و نام خانوادگی"
-              secureTextEntry
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={styles.inputText}
               placeholder="ایمیل"
-              secureTextEntry
+              editable={false}
+              value={this.state.email}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={[styles.inputText, { height: 150 }]}
               placeholder="درباره خودتون بگید"
-              secureTextEntry
               underlineColorAndroid="transparent"
             />
             <TouchableOpacity activeOpacity={0.8}>
@@ -71,3 +101,23 @@ export default class RegisterComplement extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) =>
+      dispatch(userActions.login(username, password))
+  };
+};
+
+function mapStateToProps(state) {
+  const { RegisterEmail, RegisterPassword } = state.register;
+  return {
+    RegisterEmail,
+    RegisterPassword
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterComplement);

@@ -10,6 +10,10 @@ const schema = {
     level: 'low',
     presence: 'ایمیل را وارد کنید',
     wrong: 'پسورد ضعیف است'
+  },
+  confirm_password: {
+    presence: 'فیلد تکرار پسورد را وارد',
+    wrong: 'فیلد تکرار پسورد با پسورد یکسان نیست'
   }
 };
 
@@ -47,6 +51,15 @@ const validator = (fieldName, value) => {
         if (!pValidator.validate(value)) {
           return schema[`${fieldName}`].wrong;
         }
+      }
+      break;
+
+    case 'confirm_password':
+      if (value.conf_password.trim() === '') {
+        return schema[`${fieldName}`].presence;
+      } else {
+        if (value.password !== value.conf_password)
+          return schema[`${fieldName}`].wrong;
       }
       break;
 
