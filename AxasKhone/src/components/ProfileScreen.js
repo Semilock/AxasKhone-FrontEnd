@@ -23,7 +23,7 @@ export default (AppStackNavigator = TabNavigator(
           focused ? (
             <Icon name="md-person" size={30} color="rgb(133, 69, 255)" />
           ) : (
-            <Icon name="md-person" size={30} color="#blue" />
+            <Icon name="md-person" size={30} color="rgb(239, 239, 239)" />
           )
       }
     },
@@ -34,7 +34,11 @@ export default (AppStackNavigator = TabNavigator(
           focused ? (
             <Icon name="md-notifications" size={30} color="rgb(133, 69, 255)" />
           ) : (
-            <Icon name="md-notifications" size={30} color="#blue" />
+            <Icon
+              name="md-notifications"
+              size={30}
+              color="rgb(239, 239, 239)"
+            />
           )
       }
     },
@@ -45,7 +49,7 @@ export default (AppStackNavigator = TabNavigator(
           focused ? (
             <Icon name="md-add" size={30} color="rgb(133, 69, 255)" />
           ) : (
-            <Icon name="md-add" size={30} color="#blue" />
+            <Icon name="md-add" size={30} color="rgb(239, 239, 239)" />
           )
       }
     },
@@ -56,7 +60,7 @@ export default (AppStackNavigator = TabNavigator(
           focused ? (
             <Icon name="md-search" size={30} color="rgb(133, 69, 255)" />
           ) : (
-            <Icon name="md-search" size={30} color="#blue" />
+            <Icon name="md-search" size={30} color="rgb(239, 239, 239)" />
           )
       }
     },
@@ -67,7 +71,7 @@ export default (AppStackNavigator = TabNavigator(
           focused ? (
             <Icon name="md-home" size={30} color="rgb(133, 69, 255)" />
           ) : (
-            <Icon name="md-home" size={30} color="#blue" />
+            <Icon name="md-home" size={30} color="rgb(239, 239, 239)" />
           )
       }
     }

@@ -22,7 +22,7 @@ export default class AddPost extends Component {
     };
   }
 
-  pickSingleWithCamera() {
+  pickWithCamera() {
     ImagePicker.openCamera({
       cropping: true,
       width: 200,
@@ -37,28 +37,20 @@ export default class AddPost extends Component {
       .catch(e => alert(e));
   }
 
-  pickSingle(circular = false) {
+  pickFromGallary() {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
-      cropping: true,
-      cropperCircleOverlay: circular,
-      compressImageMaxWidth: 640,
-      compressImageMaxHeight: 480,
-      compressImageQuality: 0.5,
-      compressVideoPreset: 'MediumQuality',
-      includeExif: true
+      width: 200,
+      height: 200,
+      cropping: true
     })
       .then(image => {
-        console.log('received image', image);
         this.setState({
           image: {
             uri: image.path,
             width: image.width,
             height: image.height,
             mime: image.mime
-          },
-          images: null
+          }
         });
       })
       .catch(e => {
@@ -70,7 +62,7 @@ export default class AddPost extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <TouchableOpacity onPress={() => this.pickSingleWithCamera()}>
+        <TouchableOpacity onPress={() => this.pickWithCamera()}>
           <Text
             style={{
               backgroundColor: 'yellow',
@@ -82,7 +74,7 @@ export default class AddPost extends Component {
             انتخاب عکس با دوربین
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.pickSingle()}>
+        <TouchableOpacity onPress={() => this.pickFromGallary()}>
           <Text
             style={{
               backgroundColor: 'green',

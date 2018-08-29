@@ -52,7 +52,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <LinearGradient
-        colors={['rgb(0, 100, 130)', 'rgb(0, 100, 130)', 'rgb(150, 50, 160)']}
+        colors={['rgb(25, 50, 75)', 'rgb(25, 50, 75)', 'rgb(133, 69, 255)']}
         style={styles.linearGradient}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
