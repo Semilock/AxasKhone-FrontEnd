@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
+
 export default (styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'flex-end'
     // backgroundColor: 'rgb(92, 92, 92)'
   },
 

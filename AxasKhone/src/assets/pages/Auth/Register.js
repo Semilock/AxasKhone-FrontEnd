@@ -66,7 +66,10 @@ export default class Register extends Component {
                 secureTextEntry
                 underlineColorAndroid="transparent"
               />
-              <TouchableOpacity activeOpacity={0.8}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.props.navigation.navigate('Register2')}
+              >
                 <Text style={styles.loginButton}>ثبت نام</Text>
               </TouchableOpacity>
             </View>
