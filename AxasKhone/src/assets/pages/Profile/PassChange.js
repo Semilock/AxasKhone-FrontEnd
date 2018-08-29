@@ -54,13 +54,13 @@ export default class PassChange extends Component {
           <View style={[{ justifyContent: 'center' }]}>
             <TextInput
               style={styles.inputText}
-              // placeholder='samyar.mirkazemi'
+              placeholder="رمز قدیمی خود را وارد کنید "
               secureTextEntry
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={styles.inputText}
-              // placeholder='سامیار میرکاظمی'
+              placeholder=" رمز جدید را وارد کنید "
               secureTextEntry
               underlineColorAndroid="transparent"
             />

@@ -10,31 +10,7 @@ import profileActions from '../../../actions/userProfile';
 
 class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerStyle: {
-      backgroundColor: 'rgb(25, 50, 75)',
-      elevation: 0
-    },
-    headerTintColor: 'white',
     header: null
-    // headerRight: <Text style={styles.titleNavbar}>sam.mirkazemi</Text>,
-    // headerLeft: (
-    //   <View style={styles.titleNavbar}>
-    //     <Icon
-    //       style={{ paddingRight: 20, paddingLeft: 15 }}
-    //       name="md-more"
-    //       size={30}
-    //       color="rgb(239, 239, 239)"
-    //       onPress={() => navigation.navigate('Edit')}
-    //     />
-    //     <Icon
-    //       style={{ paddingLeft: 0 }}
-    //       name="md-cog"
-    //       size={30}
-    //       color="rgb(239, 239, 239)"
-    //       onPress={() => navigation.navigate('Setting')}
-    //     />
-    //   </View>
-    // )
   });
   componentDidMount() {
     this.props.getProfile();
@@ -83,10 +59,15 @@ class Profile extends Component {
           <View style={styles.profileInfo}>
             <Text style={styles.title}>{this.props.fullname}</Text>
             <View style={styles.folowSection}>
-              <Text> دنبال کننده {this.props.followersNumber}</Text>
+              <Text fontWeight="bold" style={{ marginLeft: 10 }}>
+                {' '}
+                دنبال کننده {this.props.followersNumber}
+              </Text>
               <Text> دنبال شونده {this.props.followingNumber}</Text>
             </View>
-            <Text style={{ flexWrap: 'nowrap' }}>{this.props.biography}</Text>
+            <Text numberOfLines={3} style={{ flexWrap: 'nowrap' }}>
+              {this.props.biography}
+            </Text>
           </View>
         </View>
 
