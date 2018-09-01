@@ -21,9 +21,10 @@ export const profile = (state = profileInitialState, action) => {
       return {
         isFetching: false,
         username: action.info.main_username,
+        email: action.info.user.email,
         fullname: action.info.fullname,
         biography: action.info.bio,
-        profilePic: action.info.profile_pic,
+        profilePic: action.info.profile_picture,
         followersNumber: action.info.followers_number,
         followingNumber: action.info.following_number
       };
