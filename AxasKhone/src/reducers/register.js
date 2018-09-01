@@ -6,7 +6,8 @@ const registerInitialState = {
   RegsiterUsername: undefined,
   RegsiterFullname: undefined,
   RegsiterBiography: undefined,
-  RegsiterProfilePic: undefined
+  RegsiterProfilePic: undefined,
+  isFetching: false
 };
 
 export const register = (state = registerInitialState, action) => {
@@ -23,6 +24,29 @@ export const register = (state = registerInitialState, action) => {
         RegisterPassword: action.password
       };
 
+    case loginConstants.REGISTER_REQUEST:
+      return {
+        isFetching: true
+      };
+
+    case loginConstants.REGISTER_SUCCESS:
+      return {
+        ...state,
+
+        isFetching: false,
+        RegsiterEmail: action.user.email,
+        RegsiterPassword: action.user.password,
+        RegsiterUsername: action.user.username,
+        RegsiterFullname: action.user.fullname,
+        RegsiterBiography: action.user.bio,
+        RegsiterProfilePic: action.user.image
+      };
+
+    case loginConstants.REGISTER_FAILURE:
+      return {
+        isFetching: false,
+        error: action.error
+      };
     // case loginConstants.PROFILE_SUCCESS:
     //   return {
     //     isFetching: false,
