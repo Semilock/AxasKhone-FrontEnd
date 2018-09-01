@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import userRegister from '../../../actions/userRegister';
+import userActions from '../../../actions/userAuth';
 import validator from '../../../helpers/validator';
 import styles from '../../styles/login.style';
 
@@ -29,6 +30,9 @@ class RegisterComplement extends Component {
     super(props);
     this.state = {
       email: this.props.RegisterEmail,
+      username: '',
+      fullname: '',
+      bio: '',
       errors: {}
     };
   }
@@ -39,19 +43,28 @@ class RegisterComplement extends Component {
   };
 
   NextStep = () => {
-    const { email, password, passwordConfirm } = this.state;
-    const emailError = validator('email', email);
+    const password = this.props.RegisterPassword;
+    const { email, username, fullname, bio } = this.state;
+    const user = {
+      email,
+      password,
+      username,
+      fullname,
+      bio
+    };
+    this.props.register(user);
+    //TODO: compelte validation!!!
+    // const emailError = validator('email', email);
 
-    this.setState({
-      errors: {
-        email: emailError
-      }
-    });
-    if (!emailError) {
-      //   //TODO: dispatch login request api
-
-      this.props.navigation.navigate('RegisterComplement');
-    }
+    // this.setState({
+    //   errors: {
+    //     email: emailError
+    //   }
+    // });
+    // if (true) {
+    //   //TODO: dispatch login request api
+    // this.props.navigation.navigate('RegisterComplement');
+    // }
   };
 
   render() {
@@ -73,12 +86,16 @@ class RegisterComplement extends Component {
             <TextInput
               style={styles.inputText}
               placeholder="نام کاربری"
+              value={this.state.username}
               underlineColorAndroid="transparent"
+              onChangeText={this.HandleChange('username')}
             />
             <TextInput
               style={styles.inputText}
               placeholder="نام و نام خانوادگی"
+              value={this.state.fullname}
               underlineColorAndroid="transparent"
+              onChangeText={this.HandleChange('fullname')}
             />
             <TextInput
               style={styles.inputText}
@@ -90,9 +107,11 @@ class RegisterComplement extends Component {
             <TextInput
               style={[styles.inputText, { height: 150 }]}
               placeholder="درباره خودتون بگید"
+              value={this.state.bio}
               underlineColorAndroid="transparent"
+              onChangeText={this.HandleChange('bio')}
             />
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.NextStep}>
               <Text style={styles.loginButton}>تکمیل اطلاعات</Text>
             </TouchableOpacity>
           </View>
@@ -104,8 +123,7 @@ class RegisterComplement extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) =>
-      dispatch(userActions.login(username, password))
+    register: user => dispatch(userRegister.registerUser(user))
   };
 };
 
