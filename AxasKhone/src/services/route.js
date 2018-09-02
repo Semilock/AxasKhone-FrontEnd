@@ -5,6 +5,7 @@ const routes = {
   login: 'login',
   refreshToken: 'refresh',
   register: 'register',
+  register_validation: 'register_validation',
   registerCompliment: 'register_compliment',
   user: {
     basePath: 'user/',
