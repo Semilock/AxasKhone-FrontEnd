@@ -9,6 +9,27 @@ const setPassword = password => {
   return { type: loginConstants.SET_REGISTER_PASSWORD, password };
 };
 
+const firstStepRegisterValidation = (email, password) => {
+  return dispatch => {
+    userService.firstStepRegisterValidation(email, password).then(
+      res => {
+        dispatch(setEmail(email));
+        dispatch(setPassword(password));
+      },
+      err => {
+        const { status } = err.response;
+        const { data } = err.response;
+        if (status === 400) {
+          dispatch(failure(data.error));
+        }
+      }
+    );
+  };
+  function failure(error) {
+    return { type: loginConstants.VALIDATE_FIRST_REGISTER_FAILURE, error };
+  }
+};
+
 const registerUser = user => {
   return dispatch => {
     dispatch(request(user));
@@ -33,6 +54,11 @@ const registerUser = user => {
   }
 };
 
-const userRegister = { setEmail, setPassword, registerUser };
+const userRegister = {
+  setEmail,
+  setPassword,
+  registerUser,
+  firstStepRegisterValidation
+};
 
 export default userRegister;
