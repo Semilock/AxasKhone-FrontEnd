@@ -8,23 +8,25 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
+  ImageBackground,
   ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
 import userRegister from '../../../actions/userRegister';
 import userActions from '../../../actions/userAuth';
 import validator from '../../../helpers/validator';
 import styles from '../../styles/login.style';
 
 class RegisterComplement extends Component {
-  static navigationOptions = {
-    headerStyle: {
-      backgroundColor: 'rgb(25, 50, 75)',
-      elevation: 0
-    },
-    //  headerTintColor: 'rgb(180, 180, 180)',
-    headerTintColor: 'white'
-  };
+  // static navigationOptions = {
+  //   headerStyle: {
+  //     backgroundColor: 'rgb(25, 50, 75)',
+  //     elevation: 0
+  //   },
+  //   //  headerTintColor: 'rgb(180, 180, 180)',
+  //   headerTintColor: 'white'
+  // };
 
   constructor(props) {
     super(props);
@@ -33,7 +35,8 @@ class RegisterComplement extends Component {
       username: '',
       fullname: '',
       bio: '',
-      errors: {}
+      errors: {},
+      profilePicture: require('../../img/gallaryLogo.jpg')
     };
   }
 
@@ -67,6 +70,28 @@ class RegisterComplement extends Component {
     // }
   };
 
+  pickFromGallary() {
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      cropping: true
+    })
+      .then(image => {
+        this.setState({
+          profilePicture: {
+            uri: image.path,
+            width: image.width,
+            height: image.height,
+            mime: image.mime
+          }
+        });
+      })
+      .catch(e => {
+        console.log(e);
+        Alert.alert(e.message ? e.message : e);
+      });
+  }
+
   render() {
     return (
       <LinearGradient
@@ -74,14 +99,31 @@ class RegisterComplement extends Component {
         style={styles.linearGradient}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={styles.container}>
+          <View opacity={0.8} style={styles.container}>
             <StatusBar backgroundColor="rgb(25, 50, 75)" />
 
             <View
               opacity={0.8}
-              style={[(style = { alignItems: 'center', margin: 20 })]}
+              style={[
+                (style = {
+                  alignItems: 'center',
+                  margin: 20
+                })
+              ]}
             >
-              <Image borderRadius={45} />
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.pickFromGallary()}
+              >
+                <Image
+                  style={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: 45
+                  }}
+                  source={this.state.profilePicture}
+                />
+              </TouchableOpacity>
             </View>
             <TextInput
               style={styles.inputText}
