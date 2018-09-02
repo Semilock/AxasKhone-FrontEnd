@@ -7,6 +7,7 @@ const registerInitialState = {
   RegsiterFullname: undefined,
   RegsiterBiography: undefined,
   RegsiterProfilePic: undefined,
+  firstStepRegisterErrors: false,
   isFetching: false
 };
 
@@ -15,13 +16,21 @@ export const register = (state = registerInitialState, action) => {
     case loginConstants.SET_REGISTER_EMAIL:
       return {
         ...state,
-        RegisterEmail: action.email
+        RegisterEmail: action.email,
+        firstStepRegisterErrors: false
       };
 
     case loginConstants.SET_REGISTER_PASSWORD:
       return {
         ...state,
-        RegisterPassword: action.password
+        RegisterPassword: action.password,
+        firstStepRegisterErrors: false
+      };
+
+    case loginConstants.VALIDATE_FIRST_REGISTER_FAILURE:
+      return {
+        ...state,
+        firstStepRegisterErrors: action.error
       };
 
     case loginConstants.REGISTER_REQUEST:
@@ -47,22 +56,6 @@ export const register = (state = registerInitialState, action) => {
         isFetching: false,
         error: action.error
       };
-    // case loginConstants.PROFILE_SUCCESS:
-    //   return {
-    //     isFetching: false,
-    //     username: action.info.main_username,
-    //     fullname: action.info.fullname,
-    //     biography: action.info.bio,
-    //     profilePic: action.info.profile_pic,
-    //     followersNumber: action.info.followers_number,
-    //     followingNumber: action.info.following_number
-    //   };
-
-    // case loginConstants.PROFILE_FAILURE:
-    //   return {
-    //     isFetching: false,
-    //     errors: action.errors
-    //   };
 
     default:
       return state;
