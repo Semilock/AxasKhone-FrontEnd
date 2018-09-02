@@ -35,13 +35,19 @@ class Register extends Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      errors: {}
+      errors: {},
+      error: ''
     };
   }
 
   // set state e.g : [fieldName:value]
   HandleChange = fieldName => value => {
     this.setState({ [fieldName]: value });
+    this.setState({
+      errors: {
+        [fieldName]: validator(fieldName, value)
+      }
+    });
   };
 
   NextStep = () => {
@@ -61,10 +67,10 @@ class Register extends Component {
       }
     });
     if (!emailError && !passwordError && !passwordConfirmError) {
-      //   //TODO: dispatch login request api
-      this.props.setEmail(email);
-      this.props.setPassword(password);
-      this.props.navigation.navigate('RegisterComplement');
+      this.props.server_validation(email, password);
+      this.setState({
+        error: this.props.firstStepRegisterErrors
+      });
     }
   };
 
@@ -77,7 +83,9 @@ class Register extends Component {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.container}>
             <StatusBar backgroundColor="rgb(25, 50, 75)" />
-
+            {this.props.RegisterEmail !== undefined
+              ? this.props.navigation.navigate('RegisterComplement')
+              : undefined}
             <View
               opacity={0.8}
               style={[styles.item, (style = { alignItems: 'center' })]}
@@ -90,6 +98,9 @@ class Register extends Component {
               opacity={0.6}
               style={[styles.item, { justifyContent: 'center', flex: 5 }]}
             >
+              {this.state.error !== '' ? (
+                <Text style={styles.textError}> {this.state.error}</Text>
+              ) : null}
               <TextInput
                 style={[
                   styles.inputText,
@@ -181,16 +192,23 @@ class Register extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setEmail: email => dispatch(userRegister.setEmail(email)),
-    setPassword: pass => dispatch(userRegister.setPassword(pass))
+    server_validation: (email, password) =>
+      dispatch(userRegister.firstStepRegisterValidation(email, password))
   };
 };
 
 function mapStateToProps(state) {
-  const { RegisterEmail, RegisterPassword } = state.register;
+  const {
+    RegisterEmail,
+    RegisterPassword,
+    firstStepRegisterErrors,
+    RegsiterEmail
+  } = state.register;
   return {
     RegisterEmail,
-    RegisterPassword
+    RegisterPassword,
+    firstStepRegisterErrors,
+    RegsiterEmail
   };
 }
 
