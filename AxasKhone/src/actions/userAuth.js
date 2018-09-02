@@ -16,7 +16,11 @@ export const loginConstants = {
   SET_ACCESS_TOKEN: 'USER_ACCESS_TOKEN_CHANGE',
 
   SET_REGISTER_EMAIL: 'USER_REGISTER_EMAIL_SET',
-  SET_REGISTER_PASSWORD: 'USER_REGISTER_PASSWORD_SET'
+  SET_REGISTER_PASSWORD: 'USER_REGISTER_PASSWORD_SET',
+
+  REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
+  REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
+  REGISTER_FAILURE: 'USERS_REGISTER_FAILURE'
 };
 
 const login = (username, password) => {
@@ -59,8 +63,6 @@ const updateAccessToken = token => {
 };
 
 function logout() {
-  //TODO: implementing later
-  // userService.logout();
   return { type: loginConstants.LOGOUT };
 }
 

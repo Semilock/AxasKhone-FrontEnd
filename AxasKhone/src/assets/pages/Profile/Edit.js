@@ -14,10 +14,11 @@ import {
   TabBarBottom,
   navigatinOptions
 } from 'react-navigation';
-
+import { connect } from 'react-redux';
 import styles from './Profile.style';
+import profileActions from '../../../actions/userProfile';
 
-export default class Edit extends Component {
+class Edit extends Component {
   static navigationOptions = {
     tabBarVisible: true,
     headerStyle: {
@@ -40,7 +41,19 @@ export default class Edit extends Component {
       </Text>
     )
   };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      email:this.props.email,
+      username:this.props.username,
+      fullname:this.props.fullname,
+      biography:this.props.biography,
+      profilePic:this.props.profilePic,
+    };
+  }
+  componentDidMount() {
+    this.props.getProfile();
+  }
   render() {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -48,31 +61,33 @@ export default class Edit extends Component {
           <StatusBar backgroundColor="rgb(25, 50, 75)" />
 
           <View style={[(style = { alignItems: 'center', margin: 10 })]}>
-            <Image borderRadius={45} source={require('../../img/id1.jpg')} />
+            <Image
+              borderRadius={45}
+              style={{ width: 90, height: 90 }}
+              source={{ uri: `http://${this.state.profilePic}` }}
+            />
           </View>
 
           <View style={[{ justifyContent: 'center' }]}>
             <TextInput
               style={styles.inputText}
-              placeholder="samyar.mirkazemi"
+              value={this.state.username}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={styles.inputText}
-              placeholder="سامیار میرکاظمی"
-              secureTextEntry={false}
+              value={this.state.fullname}
               underlineColorAndroid="transparent"
             />
             <TextInput
-              style={styles.inputText}
-              placeholder="sammirkazemi@outlook.com"
-              secureTextEntry={false}
+              style={styles.email}
+              value={this.state.email}
+              editable={false}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={[styles.inputText, (style = { height: 150 })]}
-              placeholder="برنامه نویسی اندروید"
-              secureTextEntry={false}
+              value={this.state.biography}
               underlineColorAndroid="transparent"
             />
             <TouchableOpacity activeOpacity={0.8}>
@@ -84,3 +99,35 @@ export default class Edit extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfile: () => dispatch(profileActions.getProfile())
+  };
+};
+
+function mapStateToProps(state) {
+  const { isFetching, isAuthenticated } = state.auth;
+  const {
+    email,
+    username,
+    fullname,
+    biography,
+    profilePic,
+  } = state.profile;
+  const profileIsFetching = state.profile.isFetching;
+  return {
+    isFetching,
+    isAuthenticated,
+    email,
+    username,
+    fullname,
+    biography,
+    profilePic
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Edit);

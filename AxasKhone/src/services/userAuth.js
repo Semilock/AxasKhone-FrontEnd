@@ -5,7 +5,7 @@ const login = (username, password) => {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ username: username, password })
   };
   return fetch(`${routes.basePath}/${routes.login}/`, requestOptions)
     .then(handleResponse)
@@ -28,9 +28,13 @@ const logout = () => {
 };
 
 const getProfile = () => {
-  //TODO: implementing later
-
   return axiosInstance.get(`${routes.basePath}/${routes.user.profileInfo}/`);
+};
+
+const registerUser = user => {
+  return axiosInstance.post(`${routes.basePath}/${routes.register}/`, {
+    ...user
+  });
 };
 
 const handleResponse = response => {
@@ -48,5 +52,6 @@ const handleResponse = response => {
 export const userService = {
   login,
   logout,
-  getProfile
+  getProfile,
+  registerUser
 };

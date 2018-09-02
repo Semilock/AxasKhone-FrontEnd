@@ -3,7 +3,6 @@ import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native';
 // import { createStackNavigator, TabNavigator, TabBarBottom, rootNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
-import Reactotron from 'reactotron-react-native';
 import styles from './Profile.style';
 import ProfileTab from './ProfileTab';
 import profileActions from '../../../actions/userProfile';
@@ -52,7 +51,7 @@ class Profile extends Component {
               borderRadius={45}
               style={{ width: 90, height: 90 }}
               source={{
-                uri: this.props.profilePic
+                uri: `http://${this.props.profilePic}`
               }}
             />
           </View>
