@@ -2,24 +2,33 @@ import pass_validator from 'password-validator';
 
 const schema = {
   email: {
-    presence: 'ایمیل را وارد کنید',
+    presence: 'ایمیل را وارد کنید.',
     wrong: 'ایمیل صحیح وارد کنید'
   },
   password: {
-    min: 6,
+    min: 8,
     level: 'low',
-    presence: 'رمزعبور را وارد کنید',
+    presence: 'رمزعبور را وارد کنید.',
     wrong: 'رمزعبور ضعیف است'
   },
   confirm_password: {
-    presence: 'بخش تکرار رمزعبور را وارد کنید',
+    presence: 'بخش تکرار رمزعبور را وارد کنید.',
     wrong: 'بخش تکرار رمزعبور با رمزعبور یکسان نیست'
+  },
+  username: {
+    presence: 'نام کاربری را وارد کنید.',
+    wrong: 'نام کاربری را صحیح وارد کنید'
   }
 };
 
 const email_validator = email => {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
+};
+
+const user_validator = username => {
+  const re = /^[a-zA-Z][a-zA-Z.]+|[a-zA-Z_]+/;
+  return re.test(username);
 };
 
 const validator = (fieldName, value) => {
@@ -60,6 +69,16 @@ const validator = (fieldName, value) => {
       } else {
         if (value.password !== value.conf_password)
           return schema[`${fieldName}`].wrong;
+      }
+      break;
+
+    case 'username':
+      if (value.trim() === '') {
+        return schema[`${fieldName}`].presence;
+      } else {
+        if (!user_validator(value)) {
+          return schema[`${fieldName}`].wrong;
+        }
       }
       break;
 
