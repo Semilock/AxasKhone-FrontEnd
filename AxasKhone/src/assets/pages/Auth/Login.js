@@ -47,7 +47,6 @@ class Login extends Component {
     });
 
     if (!emailError && !passwordError) {
-      //   //TODO: dispatch login request api
       this.props.login(email, password);
     }
   };
@@ -77,8 +76,12 @@ class Login extends Component {
               style={[styles.item, { justifyContent: 'center', flex: 5 }]}
             >
               {/* showing server errors message */}
-              {this.props.error !== undefined ? (
-                <Text style={styles.textError}> {this.props.error}</Text>
+              {this.props.errors !== undefined ? (
+                <Text style={styles.textError}>
+                  {this.props.errors.wrong !== undefined
+                    ? this.props.errors.wrong
+                    : ''}
+                </Text>
               ) : null}
               <TextInput
                 style={[
@@ -100,6 +103,16 @@ class Login extends Component {
               {this.state.errors.email !== undefined ? (
                 <Text style={styles.textError}> {this.state.errors.email}</Text>
               ) : null}
+
+              {/* showing server errors message */}
+              {this.props.errors !== undefined ? (
+                <Text style={styles.textError}>
+                  {this.props.errors.email !== undefined
+                    ? this.props.errors.email
+                    : ''}
+                </Text>
+              ) : null}
+
               <TextInput
                 style={[
                   styles.inputText,
@@ -120,6 +133,14 @@ class Login extends Component {
                 <Text style={styles.textError}>
                   {' '}
                   {this.state.errors.password}
+                </Text>
+              ) : null}
+              {/* showing server errors message */}
+              {this.props.errors !== undefined ? (
+                <Text style={styles.textError}>
+                  {this.props.errors.password !== undefined
+                    ? this.props.errors.password
+                    : ''}
                 </Text>
               ) : null}
               <TouchableOpacity activeOpacity={0.8} onPress={this.HandlePress}>
@@ -163,12 +184,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 function mapStateToProps(state) {
-  const { isFetching, isAuthenticated, user, error } = state.auth;
+  const { isFetching, isAuthenticated, errors } = state.auth;
   return {
     isFetching,
     isAuthenticated,
-    user,
-    error
+    errors
   };
 }
 

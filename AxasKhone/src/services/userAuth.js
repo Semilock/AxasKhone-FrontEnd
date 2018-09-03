@@ -2,24 +2,10 @@ import routes from './route';
 import axiosInstance from './axios.config';
 
 const login = (username, password) => {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: username, password })
-  };
-  return fetch(`${routes.basePath}/${routes.login}/`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-      // login successful if there's a jwt token in the response
-      if (user.refresh) {
-        //TODO: implementing later
-        // store user details and jwt token in application state or storage to keep user logged in.
-        // axiosInstance
-        //   .get(`${routes.user.profileInfo}/`)
-        //   .then(error => console.log('my warn', error));
-      }
-      return user;
-    });
+  return axiosInstance.post(`${routes.basePath}/${routes.login}/`, {
+    username: username,
+    password
+  });
 };
 
 const logout = () => {

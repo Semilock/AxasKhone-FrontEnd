@@ -3,14 +3,14 @@ import { loginConstants } from '../actions/userAuth';
 const authInitialState = {
   isFetching: false,
   isAuthenticated: false,
-  error: undefined,
-  token: undefined
+  errors: undefined
 };
 
 export const authentication = (state = authInitialState, action) => {
   switch (action.type) {
     case loginConstants.LOGIN_REQUEST:
       return {
+        ...state,
         isFetching: true,
         isAuthenticated: false
       };
@@ -24,9 +24,10 @@ export const authentication = (state = authInitialState, action) => {
       };
     case loginConstants.LOGIN_FAILURE:
       return {
+        ...state,
         isFetching: false,
         isAuthenticated: false,
-        error: action.error
+        errors: action.error
       };
     case loginConstants.LOGOUT:
       return {

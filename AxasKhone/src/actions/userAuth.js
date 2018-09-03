@@ -31,14 +31,26 @@ export const loginConstants = {
 const login = (username, password) => {
   return dispatch => {
     dispatch(request({ username }));
-    //TODO: implementing later
     userService.login(username, password).then(
       user => {
-        dispatch(success(user));
-        if (user.refresh && user.access) dispatch(setToken(user));
+        dispatch(success(user.data));
+        if (user.data.refresh && user.data.access)
+          dispatch(setToken(user.data));
       },
       error => {
-        dispatch(failure(error));
+        if (error.response.status === 400) {
+          const errors = error.response.data;
+          let errorMsg = undefined;
+          if (errors.non_field_errors) {
+            errorMsg = { wrong: errors.non_field_errors[0] };
+          } else if (errors.username) {
+            errorMsg = { email: errors.username[0] };
+          } else if (errors.password) {
+            errorMsg = { password: errors.password[0] };
+          }
+          dispatch(failure(errorMsg));
+        }
+
         // dispatch(alertActions.error(error));
       }
     );
