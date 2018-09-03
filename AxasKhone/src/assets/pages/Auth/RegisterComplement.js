@@ -8,15 +8,13 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
-  ImageBackground,
   ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import userRegister from '../../../actions/userRegister';
-import userActions from '../../../actions/userAuth';
-import validator from '../../../helpers/validator';
 import styles from '../../styles/login.style';
+import validator from '../../../helpers/validator';
 
 class RegisterComplement extends Component {
   // static navigationOptions = {
@@ -43,31 +41,34 @@ class RegisterComplement extends Component {
   // set state e.g : [fieldName:value]
   HandleChange = fieldName => value => {
     this.setState({ [fieldName]: value });
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [fieldName]: validator(fieldName, value)
+      }
+    }));
   };
 
   NextStep = () => {
+    const usernameError = validator('username', this.state.username);
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        username: usernameError
+      }
+    }));
     const password = this.props.RegisterPassword;
-    const { email, username, fullname, bio } = this.state;
     const user = {
-      email,
+      email: this.state.email,
       password,
-      username,
-      fullname,
-      bio
+      username: this.state.username,
+      fullname: this.state.fullname,
+      bio: this.state.bio,
+      pic: this.state.profilePicture
     };
-    this.props.register(user);
-    //TODO: compelte validation!!!
-    // const emailError = validator('email', email);
-
-    // this.setState({
-    //   errors: {
-    //     email: emailError
-    //   }
-    // });
-    // if (true) {
-    //   //TODO: dispatch login request api
-    // this.props.navigation.navigate('RegisterComplement');
-    // }
+    if (!usernameError) {
+      this.props.register(user);
+    }
   };
 
   pickFromGallary() {
@@ -75,21 +76,16 @@ class RegisterComplement extends Component {
       width: 200,
       height: 200,
       cropping: true
-    })
-      .then(image => {
-        this.setState({
-          profilePicture: {
-            uri: image.path,
-            width: image.width,
-            height: image.height,
-            mime: image.mime
-          }
-        });
-      })
-      .catch(e => {
-        console.log(e);
-        Alert.alert(e.message ? e.message : e);
+    }).then(image => {
+      this.setState({
+        profilePicture: {
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+          mime: image.mime
+        }
       });
+    });
   }
 
   render() {
@@ -125,13 +121,25 @@ class RegisterComplement extends Component {
                 />
               </TouchableOpacity>
             </View>
+            {this.props.RegisterErrors !== false ? (
+              <Text style={styles.textError}>{this.props.RegisterErrors}</Text>
+            ) : null}
             <TextInput
-              style={styles.inputText}
+              style={[
+                styles.inputText,
+                this.state.errors.username !== undefined
+                  ? styles.borderError
+                  : null
+              ]}
               placeholder="نام کاربری"
               value={this.state.username}
               underlineColorAndroid="transparent"
               onChangeText={this.HandleChange('username')}
             />
+            {/* showing errors validation message */}
+            {this.state.errors.username !== undefined ? (
+              <Text style={styles.textError}>{this.state.errors.username}</Text>
+            ) : null}
             <TextInput
               style={styles.inputText}
               placeholder="نام و نام خانوادگی"
@@ -170,10 +178,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 function mapStateToProps(state) {
-  const { RegisterEmail, RegisterPassword } = state.register;
+  const { RegisterEmail, RegisterPassword, RegisterErrors } = state.register;
   return {
     RegisterEmail,
-    RegisterPassword
+    RegisterPassword,
+    RegisterErrors
   };
 }
 

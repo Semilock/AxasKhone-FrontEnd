@@ -8,6 +8,7 @@ const registerInitialState = {
   RegsiterBiography: undefined,
   RegsiterProfilePic: undefined,
   firstStepRegisterErrors: false,
+  RegisterErrors: false,
   isFetching: false
 };
 
@@ -35,6 +36,7 @@ export const register = (state = registerInitialState, action) => {
 
     case loginConstants.REGISTER_REQUEST:
       return {
+        ...state,
         isFetching: true
       };
 
@@ -53,9 +55,12 @@ export const register = (state = registerInitialState, action) => {
 
     case loginConstants.REGISTER_FAILURE:
       return {
-        isFetching: false,
-        error: action.error
+        ...state,
+        RegisterErrors: action.error
       };
+
+    case loginConstants.PROFILE_LOGOUT:
+      return registerInitialState;
 
     default:
       return state;

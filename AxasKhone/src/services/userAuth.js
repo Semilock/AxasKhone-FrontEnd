@@ -32,9 +32,24 @@ const getProfile = () => {
 };
 
 const registerUser = user => {
-  return axiosInstance.post(`${routes.basePath}/${routes.register}/`, {
-    ...user
+  return axiosInstance({
+    url: `${routes.basePath}/${routes.register}/`,
+    data: user,
+    headers: {
+      'content-type': `multipart/form-data;`
+    },
+    method: 'POST'
   });
+};
+
+const firstStepRegisterValidation = (email, password) => {
+  return axiosInstance.post(
+    `${routes.basePath}/${routes.register_validation}/`,
+    {
+      email,
+      password
+    }
+  );
 };
 
 const handleResponse = response => {
@@ -53,5 +68,6 @@ export const userService = {
   login,
   logout,
   getProfile,
-  registerUser
+  registerUser,
+  firstStepRegisterValidation
 };

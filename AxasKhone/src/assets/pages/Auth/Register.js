@@ -35,19 +35,19 @@ class Register extends Component {
       email: '',
       password: '',
       passwordConfirm: '',
-      errors: {},
-      error: ''
+      errors: {}
     };
   }
 
   // set state e.g : [fieldName:value]
   HandleChange = fieldName => value => {
     this.setState({ [fieldName]: value });
-    this.setState({
+    this.setState(prevState => ({
       errors: {
+        ...prevState.errors,
         [fieldName]: validator(fieldName, value)
       }
-    });
+    }));
   };
 
   NextStep = () => {
@@ -68,9 +68,6 @@ class Register extends Component {
     });
     if (!emailError && !passwordError && !passwordConfirmError) {
       this.props.server_validation(email, password);
-      this.setState({
-        error: this.props.firstStepRegisterErrors
-      });
     }
   };
 
@@ -98,8 +95,10 @@ class Register extends Component {
               opacity={0.6}
               style={[styles.item, { justifyContent: 'center', flex: 5 }]}
             >
-              {this.state.error !== '' ? (
-                <Text style={styles.textError}> {this.state.error}</Text>
+              {this.props.firstStepRegisterErrors !== false ? (
+                <Text style={styles.textError}>
+                  {this.props.firstStepRegisterErrors}
+                </Text>
               ) : null}
               <TextInput
                 style={[

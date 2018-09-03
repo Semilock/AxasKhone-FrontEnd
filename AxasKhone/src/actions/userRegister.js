@@ -1,3 +1,4 @@
+import FD from 'form-data';
 import { userService } from '../services/userAuth';
 import userActions, { loginConstants } from './userAuth';
 
@@ -33,13 +34,30 @@ const firstStepRegisterValidation = (email, password) => {
 const registerUser = user => {
   return dispatch => {
     dispatch(request(user));
-    userService.registerUser(user).then(
+    const data = new FD();
+    data.append('email', user.email);
+    data.append('password', user.password);
+    data.append('username', user.username);
+    data.append('fullname', user.fullname);
+    data.append('bio', user.bio);
+    if (user.pic.uri !== undefined) {
+      data.append('profile_picture', {
+        uri: user.pic.uri,
+        type: user.pic.mime,
+        name: 'profileName'
+      });
+    }
+    userService.registerUser(data).then(
       res => {
         dispatch(success(res.data.status));
         dispatch(userActions.login(user.email, user.password));
       },
       error => {
-        dispatch(failure(error));
+        const { status } = error.response;
+        const { data } = error.response;
+        if (status === 400) {
+          dispatch(failure(data.error));
+        }
       }
     );
   };
