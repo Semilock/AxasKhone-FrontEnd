@@ -23,7 +23,9 @@ export const loginConstants = {
 
   REGISTER_REQUEST: 'USERS_REGISTER_REQUEST',
   REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
-  REGISTER_FAILURE: 'USERS_REGISTER_FAILURE'
+  REGISTER_FAILURE: 'USERS_REGISTER_FAILURE',
+
+  PROFILE_LOGOUT: 'PROFILE_LOGOUT'
 };
 
 const login = (username, password) => {
@@ -66,7 +68,11 @@ const updateAccessToken = token => {
 };
 
 function logout() {
-  return { type: loginConstants.LOGOUT };
+  return dispatch => {
+    dispatch({ type: loginConstants.LOGOUT });
+    dispatch({ type: loginConstants.PROFILE_LOGOUT });
+  };
+  // return { type: loginConstants.LOGOUT };
 }
 
 const userActions = {
