@@ -1,4 +1,4 @@
-import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import Profile from './Profile';
 import Edit from './Edit';
@@ -19,9 +19,9 @@ const ProfileStack = createStackNavigator(
   }
 );
 
-// ProfileStack.navigationOptions = ({ navigation }) => {
-// return {
-// tabBarVisible: navigation.state.index === 0
-// };
-// };
+ProfileStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: navigation.state.index === 0
+  };
+};
 export default ProfileStack;
