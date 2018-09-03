@@ -6,8 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StatusBar,
-  ScrollView,
-  ActivityIndicator
+  ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -27,6 +26,12 @@ class Login extends Component {
   // set state e.g : [fieldName:value]
   HandleChange = fieldName => value => {
     this.setState({ [fieldName]: value });
+    this.setState(prevState => ({
+      errors: {
+        ...prevState.errors,
+        [fieldName]: validator(fieldName, value)
+      }
+    }));
   };
 
   // in button press handler to validation
