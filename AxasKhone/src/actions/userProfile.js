@@ -24,8 +24,32 @@ function getProfile() {
   }
 }
 
+const getProfilePosts = () => {
+  return dispatch => {
+    dispatch(request());
+    userService.getProfilePosts().then(
+      res => {
+        dispatch(success(res.data));
+      },
+      err => {
+        dispatch(failure(error.data));
+      }
+    );
+  };
+  function request() {
+    return { type: profileConst.PROFILE_POSTS_REQUEST };
+  }
+  function success(posts) {
+    return { type: profileConst.PROFILE_POSTS_SUCCESS, posts };
+  }
+  function failure(error) {
+    return { type: profileConst.PROFILE_POSTS_FAILURE, error };
+  }
+};
+
 const profileActions = {
-  getProfile
+  getProfile,
+  getProfilePosts
 };
 
 export default profileActions;

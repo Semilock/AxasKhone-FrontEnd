@@ -38,6 +38,12 @@ const firstStepRegisterValidation = (email, password) => {
   );
 };
 
+const getProfilePosts = (limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${routes.user.post}/?limit=${limit}&offset=${offset}"`
+  );
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -54,6 +60,7 @@ export const userService = {
   login,
   logout,
   getProfile,
+  getProfilePosts,
   registerUser,
   firstStepRegisterValidation
 };

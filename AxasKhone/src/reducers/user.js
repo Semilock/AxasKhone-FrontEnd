@@ -8,17 +8,20 @@ const profileInitialState = {
   profilePic: null,
   followersNumber: 0,
   followingNumber: 0,
+  posts: undefined,
   errors: undefined
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
     case profileConst.PROFILE_REQUEST:
       return {
+        ...state,
         isFetching: true
       };
 
     case profileConst.PROFILE_SUCCESS:
       return {
+        ...state,
         isFetching: false,
         username: action.info.main_username,
         email: action.info.email,
@@ -35,6 +38,25 @@ export const profile = (state = profileInitialState, action) => {
         errors: action.errors
       };
 
+    case profileConst.PROFILE_POSTS_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.PROFILE_POSTS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        posts: action.posts
+      };
+
+    case profileConst.PROFILE_POSTS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.error
+      };
     default:
       return state;
   }

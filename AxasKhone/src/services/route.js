@@ -12,6 +12,9 @@ const routes = {
     get profileInfo() {
       return `${this.basePath}profile_info`;
     },
+    get post() {
+      return `${this.basePath}post`;
+    },
     get changePassword() {
       return `${this.basePath}/change_password`;
     }
