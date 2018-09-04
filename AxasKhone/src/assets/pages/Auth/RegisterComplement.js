@@ -160,6 +160,8 @@ class RegisterComplement extends Component {
               value={this.state.bio}
               underlineColorAndroid="transparent"
               onChangeText={this.HandleChange('bio')}
+              multiline
+              numberOfLines={4}
             />
             <TouchableOpacity activeOpacity={0.8} onPress={this.NextStep}>
               <Text style={styles.loginButton}>تکمیل اطلاعات</Text>
