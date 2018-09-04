@@ -1,113 +1,82 @@
-import React from 'react';
-
+import React, { Component } from 'react';
+import { Image } from 'react-native';
 import {
-  AppRegistry,
+  Container,
+  Header,
+  Content,
+  Card,
+  CardItem,
+  Thumbnail,
   Text,
-  View,
-  Dimensions,
-  Image,
-  Animated
-} from 'react-native';
+  Button,
+  Icon,
+  Left,
+  Right,
+  Body
+} from 'native-base';
 
-import SlidingUpPanel from 'rn-sliding-up-panel';
-import CameraRollPicker from 'react-native-camera-roll-picker';
-
-const { height } = Dimensions.get('window');
-
-export default class HomeUser extends React.Component {
-  static defaultProps = {
-    draggableRange: {
-      top: height / 1.27,
-      bottom: 160
-    }
-  };
-
-  constructor() {
-    super();
-
-    this.state = {
-      selected: null
-    };
-  }
-
-  _draggedValue = new Animated.Value(-120);
-
-  getSelectedImages(images) {
-    this.setState({
-      selected: images
-    });
-  }
-
+export default class HomeUser extends Component {
   render() {
     return (
-      <View style={styles.containerUp}>
-        <Text>Hello world</Text>
-        <Image
-          style={{
-            width: 90,
-            height: 90,
-            borderRadius: 45
-          }}
-          source={this.state.selected}
-        />
-        <SlidingUpPanel
-          visible
-          startCollapsed
-          showBackdrop={false}
-          ref={c => (this._panel = c)}
-          draggableRange={this.props.draggableRange}
-          onDrag={v => this._draggedValue.setValue(v)}
-        >
-          <View style={styles.panel}>
-            <View style={styles.panelHeader}>
-              <View style={styles.oval} />
-            </View>
-            <View style={styles.containerDown}>
-              <CameraRollPicker
-                scrollRenderAheadDistance={12}
-                // selected={this.state.selected}
-                backgroundColor="rgb(239, 239, 239)"
-                imagesPerRow={3}
-                imageMargin={5}
-                selectSingleItem="true"
-                callback={this.getSelectedImages.bind(this)}
+      <Container>
+        <Content style={{ paddingHorizontal: 15, paddingTop: 20 }}>
+          <Card style={{ borderRadius: 8 }}>
+            <CardItem>
+              <Left>
+                <Button transparent style={{ paddingLeft: 15 }}>
+                  <Icon name="apps" />
+                </Button>
+                <Body>
+                  <Text style={{ marginRight: 20, textAlign: 'right' }}>
+                    سام میرکاظمی
+                  </Text>
+                  <Text style={{ textAlign: 'right' }} note>
+                    2 روز پیش
+                  </Text>
+                </Body>
+
+                {/* <Thumbnail source={{ uri: 'Image URL' }} /> */}
+                <Thumbnail source={require('../../img/id1.jpg')} />
+              </Left>
+            </CardItem>
+            <CardItem cardBody>
+              {/* <Image
+                source={{ uri: 'Image URL' }}
+                style={{ height: 200, width: null, flex: 1 }}
+              /> */}
+              <Image
+                source={require('../../img/id1.jpg')}
+                style={{ height: 200, width: null, flex: 1 }}
               />
-            </View>
-          </View>
-        </SlidingUpPanel>
-      </View>
+            </CardItem>
+            <CardItem>
+              <Text style={{ textAlign: 'right' }} numberOfLines={3}>
+                من در این روزی که بودم این چنین عاشق تو من در این روزی که بودم
+                این چنین عاشق تو من در این روزی که بودم این چنین عاشق تو من در
+                این روزی که بودم این چنین عاشق تو من در این روزی که بودم این من
+                در این روزی که بودم این چنین عاشق تو من در این روزی که بودم این
+                چنین عاشق تو من در این روزی که بودم این چنین عاشق تو من در این
+                روزی که بودم این چنین عاشق تو چنین عاشق تو
+              </Text>
+            </CardItem>
+            <CardItem>
+              <Left>
+                <Button transparent style={{ paddingLeft: 15 }}>
+                  <Icon active name="thumbs-up" />
+                  <Text>12</Text>
+                </Button>
+                <Button transparent style={{ paddingLeft: 15 }}>
+                  <Icon active name="chatbubbles" />
+                  <Text>4</Text>
+                </Button>
+              </Left>
+              <Right>
+                <Text style={{ textAlign: 'right' }}>سهروردی شمالی</Text>
+              </Right>
+            </CardItem>
+          </Card>
+        </Content>
+      </Container>
     );
   }
 }
-
-const styles = {
-  containerUp: {
-    flex: 1,
-    backgroundColor: 'yellow',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  containerDown: {
-    flex: 1
-  },
-  panel: {
-    flex: 1,
-    backgroundColor: 'black',
-    position: 'relative'
-  },
-  panelHeader: {
-    paddingTop: 5,
-    height: 20,
-    backgroundColor: 'rgb(239, 239, 239)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 0,
-    borderColor: 'black'
-  },
-  oval: {
-    width: 100,
-    height: 8,
-    borderRadius: 50,
-    backgroundColor: 'rgb(190, 190, 190)'
-  }
-};
