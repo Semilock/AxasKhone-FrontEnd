@@ -3,6 +3,7 @@ import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native';
 // import { createStackNavigator, TabNavigator, TabBarBottom, rootNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import Spinner from 'react-native-loading-spinner-overlay';
 import styles from './Profile.style';
 import ProfileTab from './ProfileTab';
 import profileActions from '../../../actions/userProfile';
@@ -17,6 +18,12 @@ class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Spinner
+          visible={this.props.profileIsFetching}
+          textContent="در حال بارگذاری پروفایل"
+          textStyle={{ color: '#fff' }}
+          overlayColor="rgba(0, 0, 0, 0.75)"
+        />
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
         <View style={styles.navBarContainer}>
           <TouchableOpacity
