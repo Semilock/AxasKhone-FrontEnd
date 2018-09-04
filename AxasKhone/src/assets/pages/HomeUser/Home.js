@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 
-export default class Notif extends Component {
+export default class Home extends Component {
   static navigationOptions = {
     tabBarLabel: ({ tintColor }) => (
       <Text style={{ color: tintColor, textAlign: 'center', marginBottom: 12 }}>
         search
       </Text>
     )
-    // tabBarIcon: return{ focused: boolean, tintColor: string }
   };
 
   render() {
