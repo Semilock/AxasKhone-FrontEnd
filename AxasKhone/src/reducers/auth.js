@@ -1,4 +1,4 @@
-import { loginConstants } from '../actions/userAuth';
+import loginConst from '../constants/loginConst';
 
 const authInitialState = {
   isFetching: false,
@@ -8,13 +8,13 @@ const authInitialState = {
 
 export const authentication = (state = authInitialState, action) => {
   switch (action.type) {
-    case loginConstants.LOGIN_REQUEST:
+    case loginConst.LOGIN_REQUEST:
       return {
         ...state,
         isFetching: true,
         isAuthenticated: false
       };
-    case loginConstants.LOGIN_SUCCESS:
+    case loginConst.LOGIN_SUCCESS:
       return {
         isFetching: false,
         isAuthenticated: true,
@@ -22,25 +22,25 @@ export const authentication = (state = authInitialState, action) => {
         refreshToken: action.user.refresh,
         accessToken: action.user.access
       };
-    case loginConstants.LOGIN_FAILURE:
+    case loginConst.LOGIN_FAILURE:
       return {
         ...state,
         isFetching: false,
         isAuthenticated: false,
         errors: action.error
       };
-    case loginConstants.LOGOUT:
+    case loginConst.LOGOUT:
       return {
         isFetching: false,
         isAuthenticated: false
       };
-    case loginConstants.SET_TOKENS:
+    case loginConst.SET_TOKENS:
       return {
         ...state,
         refreshToken: action.tokens.refresh,
         accessToken: action.tokens.access
       };
-    case loginConstants.SET_ACCESS_TOKEN:
+    case loginConst.SET_ACCESS_TOKEN:
       return {
         ...state,
         accessToken: action.token

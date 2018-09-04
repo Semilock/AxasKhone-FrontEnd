@@ -1,4 +1,4 @@
-import { loginConstants } from '../actions/userAuth';
+import registerConst from '../constants/registerConst';
 
 const registerInitialState = {
   RegsiterEmail: undefined,
@@ -14,33 +14,33 @@ const registerInitialState = {
 
 export const register = (state = registerInitialState, action) => {
   switch (action.type) {
-    case loginConstants.SET_REGISTER_EMAIL:
+    case registerConst.SET_REGISTER_EMAIL:
       return {
         ...state,
         RegisterEmail: action.email,
         firstStepRegisterErrors: false
       };
 
-    case loginConstants.SET_REGISTER_PASSWORD:
+    case registerConst.SET_REGISTER_PASSWORD:
       return {
         ...state,
         RegisterPassword: action.password,
         firstStepRegisterErrors: false
       };
 
-    case loginConstants.VALIDATE_FIRST_REGISTER_FAILURE:
+    case registerConst.VALIDATE_FIRST_REGISTER_FAILURE:
       return {
         ...state,
         firstStepRegisterErrors: action.error
       };
 
-    case loginConstants.REGISTER_REQUEST:
+    case registerConst.REGISTER_REQUEST:
       return {
         ...state,
         isFetching: true
       };
 
-    case loginConstants.REGISTER_SUCCESS:
+    case registerConst.REGISTER_SUCCESS:
       return {
         ...state,
 
@@ -53,13 +53,13 @@ export const register = (state = registerInitialState, action) => {
         RegsiterProfilePic: action.user.image
       };
 
-    case loginConstants.REGISTER_FAILURE:
+    case registerConst.REGISTER_FAILURE:
       return {
         ...state,
         RegisterErrors: action.error
       };
 
-    case loginConstants.PROFILE_LOGOUT:
+    case registerConst.PROFILE_LOGOUT:
       return registerInitialState;
 
     default:

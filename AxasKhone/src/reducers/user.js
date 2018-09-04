@@ -1,4 +1,4 @@
-import { loginConstants } from '../actions/userAuth';
+import profileConst from '../constants/profileConst';
 
 const profileInitialState = {
   isFetching: false,
@@ -12,24 +12,24 @@ const profileInitialState = {
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
-    case loginConstants.PROFILE_REQUEST:
+    case profileConst.PROFILE_REQUEST:
       return {
         isFetching: true
       };
 
-    case loginConstants.PROFILE_SUCCESS:
+    case profileConst.PROFILE_SUCCESS:
       return {
         isFetching: false,
         username: action.info.main_username,
-        email: action.info.user.email,
+        email: action.info.email,
         fullname: action.info.fullname,
         biography: action.info.bio,
         profilePic: action.info.profile_picture,
-        followersNumber: action.info.followers_number,
+        followersNumber: action.info.follower_number,
         followingNumber: action.info.following_number
       };
 
-    case loginConstants.PROFILE_FAILURE:
+    case profileConst.PROFILE_FAILURE:
       return {
         isFetching: false,
         errors: action.errors

@@ -1,13 +1,14 @@
 import FD from 'form-data';
 import { userService } from '../services/userAuth';
-import userActions, { loginConstants } from './userAuth';
+import userActions from './userAuth';
+import registerConst from '../constants/registerConst';
 
 const setEmail = email => {
-  return { type: loginConstants.SET_REGISTER_EMAIL, email };
+  return { type: registerConst.SET_REGISTER_EMAIL, email };
 };
 
 const setPassword = password => {
-  return { type: loginConstants.SET_REGISTER_PASSWORD, password };
+  return { type: registerConst.SET_REGISTER_PASSWORD, password };
 };
 
 const firstStepRegisterValidation = (email, password) => {
@@ -27,7 +28,7 @@ const firstStepRegisterValidation = (email, password) => {
     );
   };
   function failure(error) {
-    return { type: loginConstants.VALIDATE_FIRST_REGISTER_FAILURE, error };
+    return { type: registerConst.VALIDATE_FIRST_REGISTER_FAILURE, error };
   }
 };
 
@@ -62,13 +63,13 @@ const registerUser = user => {
     );
   };
   function request(user) {
-    return { type: loginConstants.REGISTER_REQUEST, user };
+    return { type: registerConst.REGISTER_REQUEST, user };
   }
   function success(user) {
-    return { type: loginConstants.REGISTER_SUCCESS, user };
+    return { type: registerConst.REGISTER_SUCCESS, user };
   }
   function failure(error) {
-    return { type: loginConstants.REGISTER_FAILURE, error };
+    return { type: registerConst.REGISTER_FAILURE, error };
   }
 };
 

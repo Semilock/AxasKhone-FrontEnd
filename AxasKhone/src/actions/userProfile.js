@@ -1,26 +1,26 @@
 import { userService } from '../services/userAuth';
-import { loginConstants } from './userAuth';
+import profileConst from '../constants/profileConst';
 
 function getProfile() {
-  //TODO: implementing later
   return dispatch => {
     dispatch(request());
     userService.getProfile().then(
-      info => dispatch(success(info.data)),
+      res => {
+        dispatch(success(res.data));
+      },
       error => {
         dispatch(failure(error));
-        // dispatch(alertActions.error(error));
       }
     );
   };
   function request() {
-    return { type: loginConstants.PROFILE_REQUEST };
+    return { type: profileConst.PROFILE_REQUEST };
   }
   function success(info) {
-    return { type: loginConstants.PROFILE_SUCCESS, info };
+    return { type: profileConst.PROFILE_SUCCESS, info };
   }
   function failure(error) {
-    return { type: loginConstants.PROFILE_FAILURE, error };
+    return { type: profileConst.PROFILE_FAILURE, error };
   }
 }
 

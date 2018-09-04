@@ -1,7 +1,8 @@
 import axios from 'axios';
 import routes from './route';
 import store from '../helpers/store';
-import { loginConstants } from '../actions/userAuth';
+import loginConst from '../constants/loginConst';
+import alertConst from '../constants/alertConst';
 
 const axiosInstance = axios.create({
   baseURL: `${routes.basePath}`,
@@ -58,7 +59,7 @@ axiosInstance.interceptors.response.use(
         })
         .then(res => {
           store.dispatch({
-            type: loginConstants.SET_ACCESS_TOKEN,
+            type: loginConst.SET_ACCESS_TOKEN,
             token: res.access
           });
           originalRequest.headers['Authorization'] =
@@ -70,6 +71,16 @@ axiosInstance.interceptors.response.use(
           console.warn(error);
         });
     }
+    // else if (error.response.status >= 500 || error.response.status == 0) {
+    //   store.dispatch({
+    //     type: loginConst.LOGIN_FAILURE,
+    //     error: 'سرور فعلا در دسترس نیست'
+    //   });
+    //   store.dispatch({
+    //     type: alertConst.SERVER_ERROR,
+    //     serverErrorMsg: 'سرور فعلا در دسترس نیست.'
+    //   });
+    // }
     // Do something with response error
     return Promise.reject(error);
   }
