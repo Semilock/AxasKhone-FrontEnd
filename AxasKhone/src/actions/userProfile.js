@@ -24,12 +24,12 @@ function getProfile() {
   }
 }
 
-const getProfilePosts = () => {
+const getProfilePosts = (limit, offset) => {
   return dispatch => {
     dispatch(request());
-    userService.getProfilePosts().then(
+    userService.getProfilePosts(limit, offset).then(
       res => {
-        dispatch(success(res.data));
+        dispatch(success(res.data.results));
       },
       err => {
         dispatch(failure(error.data));

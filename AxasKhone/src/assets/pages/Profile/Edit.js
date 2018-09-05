@@ -44,11 +44,11 @@ class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email:this.props.email,
-      username:this.props.username,
-      fullname:this.props.fullname,
-      biography:this.props.biography,
-      profilePic:this.props.profilePic,
+      email: this.props.email,
+      username: this.props.username,
+      fullname: this.props.fullname,
+      biography: this.props.biography,
+      profilePic: this.props.profilePic
     };
   }
   componentDidMount() {
@@ -69,9 +69,13 @@ class Edit extends Component {
           </View>
 
           <View style={[{ justifyContent: 'center' }]}>
+            <TouchableOpacity>
+              <Image resizeMode="stretch" source={this.state.image} />
+            </TouchableOpacity>
             <TextInput
               style={styles.inputText}
               value={this.state.username}
+              editable={false}
               underlineColorAndroid="transparent"
             />
             <TextInput
@@ -108,13 +112,7 @@ const mapDispatchToProps = dispatch => {
 
 function mapStateToProps(state) {
   const { isFetching, isAuthenticated } = state.auth;
-  const {
-    email,
-    username,
-    fullname,
-    biography,
-    profilePic,
-  } = state.profile;
+  const { email, username, fullname, biography, profilePic } = state.profile;
   const profileIsFetching = state.profile.isFetching;
   return {
     isFetching,

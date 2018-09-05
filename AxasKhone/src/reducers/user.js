@@ -48,7 +48,10 @@ export const profile = (state = profileInitialState, action) => {
       return {
         ...state,
         isFetching: false,
-        posts: action.posts
+        posts:
+          state.posts !== undefined
+            ? state.posts.concat(action.posts)
+            : action.posts
       };
 
     case profileConst.PROFILE_POSTS_FAILURE:
@@ -57,6 +60,9 @@ export const profile = (state = profileInitialState, action) => {
         isFetching: false,
         errors: action.error
       };
+
+    case profileConst.PROFILE_LOGOUT:
+      return profileInitialState;
     default:
       return state;
   }

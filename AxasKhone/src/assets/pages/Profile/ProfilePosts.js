@@ -1,24 +1,40 @@
 import React, { Component } from 'react';
-import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import profileActions from '../../../actions/userProfile';
 
 class Photo extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      offset: 0,
+      limit: 6
+    };
   }
 
   componentDidMount() {
-    this.props.getProfilePosts();
+    this.getPosts(this.state.limit, this.state.offset);
   }
+
+  getPosts(limit, offset) {
+    this.props.getProfilePosts(limit, offset);
+    this.setState(prevState => ({
+      offset: prevState.offset + prevState.limit
+    }));
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, margin: 3 }}>
           {this.props.posts !== undefined ? (
             <FlatList
-              data={this.props.posts.results}
+              data={this.props.posts}
               numColumns={2}
+              onEndReached={() =>
+                this.getPosts(this.state.limit, this.state.offset)
+              }
+              onEndReachedThreshold={0.5}
               renderItem={({ item }) => (
                 <View
                   style={{
@@ -37,9 +53,7 @@ class Photo extends Component {
                 </View>
               )}
             />
-          ) : (
-            <Text>not found</Text>
-          )}
+          ) : null}
         </View>
       </View>
     );
@@ -48,7 +62,8 @@ class Photo extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfilePosts: () => dispatch(profileActions.getProfilePosts())
+    getProfilePosts: (limit, offset) =>
+      dispatch(profileActions.getProfilePosts(limit, offset))
   };
 };
 
