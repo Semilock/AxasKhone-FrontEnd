@@ -60,6 +60,9 @@ export const profile = (state = profileInitialState, action) => {
         isFetching: false,
         errors: action.error
       };
+
+    case profileConst.PROFILE_LOGOUT:
+      return profileInitialState;
     default:
       return state;
   }
