@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList, Image, Text } from 'react-native';
+import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import profileActions from '../../../actions/userProfile';
 
@@ -14,7 +14,7 @@ class Photo extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, margin: 3 }}>
           {this.props.posts !== undefined ? (
             <FlatList
               data={this.props.posts.results}
@@ -24,14 +24,16 @@ class Photo extends Component {
                   style={{
                     flex: 0.5,
                     height: 180,
-                    margin: 2
+                    margin: 3
                   }}
                 >
-                  <Image
-                    style={{ width: '100%', height: 180 }}
-                    resizeMode="cover"
-                    source={{ uri: item.image }}
-                  />
+                  <TouchableOpacity activeOpacity={0.8}>
+                    <Image
+                      style={{ width: '100%', height: 180 }}
+                      resizeMode="cover"
+                      source={{ uri: item.image }}
+                    />
+                  </TouchableOpacity>
                 </View>
               )}
             />
