@@ -6,16 +6,6 @@ import profileActions from '../../../actions/userProfile';
 class Photo extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      posts: [
-        {
-          imageUrl: './../../img/logo.jpg'
-        },
-        {
-          imageUrl: './../../img/id1.jpg'
-        }
-      ]
-    };
   }
 
   componentDidMount() {
@@ -24,7 +14,7 @@ class Photo extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'space-around' }}>
+        <View style={{ flex: 1 }}>
           {this.props.posts !== undefined ? (
             <FlatList
               data={this.props.posts.results}
@@ -33,14 +23,13 @@ class Photo extends Component {
                 <View
                   style={{
                     flex: 0.5,
-                    borderWidth: 5,
-                    height: 150,
-                    borderColor: 'white'
+                    height: 180,
+                    margin: 2
                   }}
                 >
                   <Image
-                    style={{ width: 90, height: 150 }}
-                    // resizeMode="stretch"
+                    style={{ width: '100%', height: 180 }}
+                    resizeMode="cover"
                     source={{ uri: item.image }}
                   />
                 </View>
