@@ -14,6 +14,7 @@ import {
 
 export default class Posts extends Component {
   render() {
+    var { posts } = this.props;
     return (
       <Card style={{ borderRadius: 8 }}>
         <CardItem>
@@ -23,7 +24,7 @@ export default class Posts extends Component {
             </Button>
             <Body>
               <Text style={{ marginRight: 20, textAlign: 'right' }}>
-                سام میرکاظمی
+                {posts.profile.fullname}
               </Text>
               <Text style={{ textAlign: 'right' }} note>
                 2 روز پیش
@@ -46,12 +47,7 @@ export default class Posts extends Component {
         </CardItem>
         <CardItem>
           <Text style={{ textAlign: 'right' }} numberOfLines={3}>
-            من در این روزی که بودم این چنین عاشق تو من در این روزی که بودم این
-            چنین عاشق تو من در این روزی که بودم این چنین عاشق تو من در این روزی
-            که بودم این چنین عاشق تو من در این روزی که بودم این من در این روزی
-            که بودم این چنین عاشق تو من در این روزی که بودم این چنین عاشق تو من
-            در این روزی که بودم این چنین عاشق تو من در این روزی که بودم این چنین
-            عاشق تو چنین عاشق تو
+            {posts.caption}
           </Text>
         </CardItem>
         <CardItem>

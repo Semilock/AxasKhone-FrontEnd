@@ -36,11 +36,11 @@ export default class Home extends Component {
             url: 'http://127.0.0.1:8000/user/post/13/',
             image:
               'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
+            caption: 'من مستم و دیوانه ام',
             profile: {
-              fullname: 'a aa',
+              fullname: 'arghavan',
               bio: 'nemigam',
-              main_username: 'ddddd',
+              main_username: 'gogoli404',
               is_following: true,
               is_public: false,
               email: 'ddddd@gmail.com',
@@ -54,11 +54,11 @@ export default class Home extends Component {
             url: 'http://127.0.0.1:8000/user/post/11/',
             image:
               'http://127.0.0.1:8000/media/images/user_18/1536097384568.jpg',
-            caption: 'my caption',
+            caption: 'i am hungry',
             profile: {
-              fullname: 'a aa',
+              fullname: 'کیانا',
               bio: 'nemigam',
-              main_username: 'eeeee',
+              main_username: 'gospand',
               is_following: true,
               is_public: true,
               email: 'eeeee@gmail.com',
@@ -107,6 +107,6 @@ export default class Home extends Component {
     );
   }
   renderItem({ item }) {
-    return <Posts />;
+    return <Posts posts={item} />;
   }
 }
