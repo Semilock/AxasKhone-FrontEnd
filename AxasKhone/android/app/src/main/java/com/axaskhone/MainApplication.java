@@ -1,7 +1,7 @@
 package com.axaskhone;
 
 import android.app.Application;
-
+import com.wix.RNCameraKit.RNCameraKitPackage;
 import com.facebook.react.ReactApplication;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -28,7 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new PickerPackage(),
             new VectorIconsPackage(),
-            new LinearGradientPackage()
+            new LinearGradientPackage(),
+            new RNCameraKitPackage()
       );
     }
 
