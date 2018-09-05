@@ -40,7 +40,7 @@ const firstStepRegisterValidation = (email, password) => {
 
 const getProfilePosts = (limit, offset) => {
   return axiosInstance.get(
-    `${routes.basePath}/${routes.user.post}/?limit=${limit}&offset=${offset}"`
+    `${routes.basePath}/${routes.user.post}/?limit=${limit}&offset=${offset}`
   );
 };
 
