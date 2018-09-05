@@ -3,9 +3,24 @@ import { View, Text } from 'react-native';
 
 export default class FriendInvite extends Component {
   static navigationOptions = {
-    tabBarLabel: ({ tintColor }) => (
-      <Text style={{ color: tintColor, textAlign: 'center', marginBottom: 12 }}>
-        search
+    tabBarVisible: true,
+    headerStyle: {
+      backgroundColor: 'rgb(25, 50, 75)',
+      elevation: 0
+    },
+    headerTintColor: 'white',
+    headerRight: (
+      <Text
+        style={[
+          (style = {
+            alignItems: 'center',
+            margin: 10,
+            color: 'white',
+            fontSize: 18
+          })
+        ]}
+      >
+        دعوت از دوستان
       </Text>
     )
   };
