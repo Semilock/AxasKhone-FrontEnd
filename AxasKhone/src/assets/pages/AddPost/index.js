@@ -63,7 +63,7 @@ export default class AddPost extends React.Component {
       <View style={styles.containerUp}>
         <TouchableOpacity
           style={{ flex: 1 }}
-          // onPress={() => this.pickSingleWithCamera()}
+          onPress={() => this.pickSingleWithCamera()}
         >
           <CameraKitCamera
             ref={cam => (this.camera = cam)}
