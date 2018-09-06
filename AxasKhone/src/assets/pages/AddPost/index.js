@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Text, View, Dimensions, Image, Animated } from 'react-native';
-
+import { CameraKitCamera } from 'react-native-camera-kit';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import CameraRollPicker from 'react-native-camera-roll-picker';
 
@@ -34,14 +34,12 @@ export default class AddPost extends React.Component {
   render() {
     return (
       <View style={styles.containerUp}>
-        <Text>Hello world</Text>
-        <Image
+        <CameraKitCamera
+          ref={cam => (this.camera = cam)}
           style={{
-            width: 90,
-            height: 90,
-            borderRadius: 45
+            flex: 1,
+            backgroundColor: 'white'
           }}
-          source={this.state.selected}
         />
         <SlidingUpPanel
           visible
@@ -75,10 +73,7 @@ export default class AddPost extends React.Component {
 
 const styles = {
   containerUp: {
-    flex: 1,
-    backgroundColor: 'yellow',
-    alignItems: 'center',
-    justifyContent: 'center'
+    flex: 1
   },
   containerDown: {
     flex: 1
