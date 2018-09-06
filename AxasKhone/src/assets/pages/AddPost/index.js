@@ -1,9 +1,17 @@
 import React from 'react';
 
-import { Text, View, Dimensions, Image, Animated } from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  Image,
+  Animated,
+  TouchableOpacity
+} from 'react-native';
 import { CameraKitCamera } from 'react-native-camera-kit';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import CameraRollPicker from 'react-native-camera-roll-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const { height } = Dimensions.get('window');
 
@@ -14,6 +22,25 @@ export default class AddPost extends React.Component {
       bottom: 160
     }
   };
+
+  pickSingleWithCamera() {
+    ImagePicker.openCamera({
+      cropping: true,
+      width: 200,
+      height: 200,
+      includeExif: true
+    })
+      .then(image => {
+        this.setState({
+          selected: {
+            uri: image.path,
+            width: image.width,
+            height: image.height
+          }
+        });
+      })
+      .catch(e => alert(e));
+  }
 
   constructor() {
     super();
@@ -34,13 +61,18 @@ export default class AddPost extends React.Component {
   render() {
     return (
       <View style={styles.containerUp}>
-        <CameraKitCamera
-          ref={cam => (this.camera = cam)}
-          style={{
-            flex: 1,
-            backgroundColor: 'white'
-          }}
-        />
+        <TouchableOpacity
+          style={{ flex: 1 }}
+          // onPress={() => this.pickSingleWithCamera()}
+        >
+          <CameraKitCamera
+            ref={cam => (this.camera = cam)}
+            style={{
+              flex: 1,
+              backgroundColor: 'white'
+            }}
+          />
+        </TouchableOpacity>
         <SlidingUpPanel
           visible
           startCollapsed
