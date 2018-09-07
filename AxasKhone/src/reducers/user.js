@@ -9,7 +9,8 @@ const profileInitialState = {
   followersNumber: 0,
   followingNumber: 0,
   posts: undefined,
-  errors: undefined
+  errors: undefined,
+  profileEditStatus: undefined
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
@@ -59,6 +60,32 @@ export const profile = (state = profileInitialState, action) => {
         ...state,
         isFetching: false,
         errors: action.error
+      };
+
+    case profileConst.EDIT_PROFILE_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.EDIT_PROFILE_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        profileEditStatus: action.data
+      };
+
+    case profileConst.EDIT_PROFILE_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        profileEditStatus: action.error
+      };
+
+    case profileConst.EDIT_PROFILE_REMOVE_STORE:
+      return {
+        ...state,
+        profileEditStatus: undefined
       };
 
     case profileConst.PROFILE_LOGOUT:

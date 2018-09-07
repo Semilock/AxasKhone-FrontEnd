@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   Image,
   ScrollView,
+  Text,
   StatusBar,
   TouchableOpacity,
   TextInput
@@ -15,6 +15,7 @@ import {
   navigatinOptions
 } from 'react-navigation';
 import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-crop-picker';
 import styles from './Profile.style';
 import profileActions from '../../../actions/userProfile';
 
@@ -44,57 +45,119 @@ class Edit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: this.props.email,
-      username: this.props.username,
       fullname: this.props.fullname,
       biography: this.props.biography,
-      profilePic: this.props.profilePic
+      editProfilePic: false,
+      profilePic: { uri: `http://${this.props.profilePic}`, mime: 'image/jpeg' }
     };
   }
   componentDidMount() {
     this.props.getProfile();
   }
+
+  componentWillUnmount() {
+    this.props.removeEditProfileState();
+  }
+  // set state e.g : [fieldName:value]
+  HandleChange = fieldName => value => {
+    this.setState({ [fieldName]: value });
+  };
+
+  changeProfile = () => {
+    const user = {
+      fullname: this.state.fullname,
+      bio: this.state.biography
+    };
+    if (this.state.editProfilePic === true) {
+      user.pic = this.state.profilePic;
+    }
+
+    this.props.editProfile(user);
+    // this.props.getProfile();
+  };
+
+  pickFromGallary() {
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      cropping: true
+    })
+      .then(image => {
+        this.setState({
+          profilePic: {
+            uri: image.path,
+            width: image.width,
+            height: image.height,
+            mime: image.mime
+          },
+          editProfilePic: true
+        });
+      })
+      .catch(e => {
+        console.log(e);
+        Alert.alert(e.message ? e.message : e);
+      });
+  }
+
   render() {
     return (
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.container}>
           <StatusBar backgroundColor="rgb(25, 50, 75)" />
 
-          <View style={[(style = { alignItems: 'center', margin: 10 })]}>
-            <Image
-              borderRadius={45}
-              style={{ width: 90, height: 90 }}
-              source={{ uri: `http://${this.state.profilePic}` }}
-            />
+          <View
+            opacity={0.8}
+            style={[
+              (style = {
+                alignItems: 'center',
+                margin: 10
+              })
+            ]}
+          >
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => this.pickFromGallary()}
+            >
+              <Image
+                style={{
+                  width: 90,
+                  height: 90,
+                  borderRadius: 45
+                }}
+                source={this.state.profilePic}
+              />
+            </TouchableOpacity>
           </View>
 
           <View style={[{ justifyContent: 'center' }]}>
-            <TouchableOpacity>
-              <Image resizeMode="stretch" source={this.state.image} />
-            </TouchableOpacity>
+            {this.props.profileEditStatus !== undefined ? (
+              <Text>{this.props.profileEditStatus}</Text>
+            ) : null}
             <TextInput
-              style={styles.inputText}
-              value={this.state.username}
+              style={styles.email}
+              value={this.props.username}
               editable={false}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={styles.inputText}
               value={this.state.fullname}
+              onChangeText={this.HandleChange('fullname')}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={styles.email}
-              value={this.state.email}
+              value={this.props.email}
               editable={false}
               underlineColorAndroid="transparent"
             />
             <TextInput
               style={[styles.inputText, (style = { height: 150 })]}
               value={this.state.biography}
+              onChangeText={this.HandleChange('biography')}
               underlineColorAndroid="transparent"
             />
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.changeProfile}>
               <Text style={styles.buttomSubmit}>ذخیره تغییرات</Text>
             </TouchableOpacity>
           </View>
@@ -106,13 +169,23 @@ class Edit extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfile: () => dispatch(profileActions.getProfile())
+    getProfile: () => dispatch(profileActions.getProfile()),
+    editProfile: user => dispatch(profileActions.editProfile(user)),
+    removeEditProfileState: () =>
+      dispatch(profileActions.removeEditProfileState())
   };
 };
 
 function mapStateToProps(state) {
   const { isFetching, isAuthenticated } = state.auth;
-  const { email, username, fullname, biography, profilePic } = state.profile;
+  const {
+    email,
+    username,
+    fullname,
+    biography,
+    profilePic,
+    profileEditStatus
+  } = state.profile;
   const profileIsFetching = state.profile.isFetching;
   return {
     isFetching,
@@ -121,7 +194,8 @@ function mapStateToProps(state) {
     username,
     fullname,
     biography,
-    profilePic
+    profilePic,
+    profileEditStatus
   };
 }
 
