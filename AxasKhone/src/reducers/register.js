@@ -59,7 +59,7 @@ export const register = (state = registerInitialState, action) => {
         RegisterErrors: action.error
       };
 
-    case registerConst.PROFILE_LOGOUT:
+    case registerConst.REGISTER_RESET:
       return registerInitialState;
 
     default:
