@@ -103,21 +103,53 @@ class PassChange extends Component {
 
           <View style={[{ justifyContent: 'center' }]}>
             {this.props.profileEditStatus !== undefined ? (
-              <Text>{this.props.profileEditStatus}</Text>
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  justifyContent: 'center',
+                  marginTop: 15,
+                  height: 25,
+                  borderRadius: 50,
+                  backgroundColor: 'green'
+                }}
+              >
+                <Text
+                  style={{
+                    marginHorizontal: 20,
+
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 14
+                  }}
+                >
+                  {this.props.profileEditStatus}
+                </Text>
+              </View>
             ) : null}
 
             {this.props.errors !== undefined ? (
-              <Text
+              <View
                 style={{
                   marginHorizontal: 20,
+                  justifyContent: 'center',
                   marginTop: 15,
-                  textAlign: 'center',
-                  color: 'red',
-                  fontSize: 14
+                  height: 25,
+                  borderRadius: 50,
+                  backgroundColor: 'orange'
                 }}
               >
-                {this.props.errors}
-              </Text>
+                <Text
+                  style={{
+                    marginHorizontal: 20,
+
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 14
+                  }}
+                >
+                  {this.props.errors}
+                </Text>
+              </View>
             ) : null}
           </View>
 
