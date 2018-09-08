@@ -63,6 +63,15 @@ const getHomeFeeds = (limit, offset) => {
   );
 };
 
+const changePassword = user => {
+  return axiosInstance.post(
+    `${routes.basePath}/${routes.user.changePassword}/`,
+    {
+      old_password: user.old_password,
+      new_password: user.new_password
+    }
+  );
+};
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -83,5 +92,6 @@ export const userService = {
   getProfilePosts,
   registerUser,
   firstStepRegisterValidation,
-  getHomeFeeds
+  getHomeFeeds,
+  changePassword
 };

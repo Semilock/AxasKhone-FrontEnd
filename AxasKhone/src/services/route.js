@@ -16,7 +16,7 @@ const routes = {
       return `${this.basePath}post`;
     },
     get changePassword() {
-      return `${this.basePath}/change_password`;
+      return `${this.basePath}change_password`;
     },
     get homeFeed() {
       return `${this.basePath}home`;
