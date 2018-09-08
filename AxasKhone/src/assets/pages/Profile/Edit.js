@@ -146,7 +146,10 @@ class Edit extends Component {
               <Text>{this.props.email}</Text>
             </View>
             <TextInput
-              style={[styles.inputText, (style = { height: 150 })]}
+              style={[
+                styles.inputText,
+                (style = { height: 150, textAlignVertical: 'top' })
+              ]}
               value={this.state.biography}
               onChangeText={this.HandleChange('biography')}
               underlineColorAndroid="transparent"
