@@ -55,6 +55,14 @@ const editProfile = user => {
   });
 };
 
+const getHomeFeeds = (limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${
+      routes.user.homeFeed
+    }/?limit=${limit}&offset=${offset}`
+  );
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -74,5 +82,6 @@ export const userService = {
   editProfile,
   getProfilePosts,
   registerUser,
-  firstStepRegisterValidation
+  firstStepRegisterValidation,
+  getHomeFeeds
 };

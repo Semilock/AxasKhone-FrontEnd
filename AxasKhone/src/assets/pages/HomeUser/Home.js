@@ -7,70 +7,32 @@ import {
   FlatList
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 import styles from './HomeUser.style';
-import Posts from './Posts';
+import Feed from './Feed';
+import feedActions from '../../../actions/userFeed';
 
-export default class Home extends Component {
+class Home extends Component {
   static navigationOptions = {
     header: null
   };
   constructor(props) {
     super(props);
     this.state = {
-      // a: [
-      //   {
-      //     b: { key: 'a' },
-      //     c: { key: 'b' }
-      //   },
-      //   {
-      //     b: { key: 'a' },
-      //     c: { key: 'b' }
-      //   }
-      // ]
-      data: {
-        count: 2,
-        next: null,
-        previous: null,
-        results: [
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'من مستم و دیوانه ام',
-            profile: {
-              fullname: 'arghavan',
-              bio: 'nemigam',
-              main_username: 'gogoli404',
-              is_following: true,
-              is_public: false,
-              email: 'ddddd@gmail.com',
-              follower_number: 3,
-              following_number: 0,
-              profile_picture:
-                '127.0.0.1:8000/media/profile_photos/user_28/1536092427762.jpg'
-            }
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/11/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_18/1536097384568.jpg',
-            caption: 'i am hungry',
-            profile: {
-              fullname: 'کیانا',
-              bio: 'nemigam',
-              main_username: 'gospand',
-              is_following: true,
-              is_public: true,
-              email: 'eeeee@gmail.com',
-              follower_number: 1,
-              following_number: 0,
-              profile_picture:
-                '127.0.0.1:8000/media/profile_photos/user_29/1536092437897.jpg'
-            }
-          }
-        ]
-      }
+      offset: 0,
+      limit: 5
     };
+  }
+
+  componentDidMount() {
+    this.getFeeds(this.state.limit, this.state.offset);
+  }
+
+  getFeeds(limit, offset) {
+    this.props.getUserFeeds(limit, offset);
+    this.setState(prevState => ({
+      offset: prevState.offset + prevState.limit
+    }));
   }
 
   render() {
@@ -97,16 +59,41 @@ export default class Home extends Component {
           </Text>
         </View>
         <View style={[styles.container, { margin: 5 }]}>
-          <FlatList
-            data={this.state.data.results}
-            // renderItem={({ item }) => <Text>sam</Text>}
-            renderItem={this.renderItem}
-          />
+          {this.props.feeds !== undefined ? (
+            <FlatList
+              data={this.props.feeds}
+              // renderItem={({ item }) => <Text>sam</Text>}
+              renderItem={this.renderItem}
+            />
+          ) : null}
         </View>
       </View>
     );
   }
   renderItem({ item }) {
-    return <Posts posts={item} />;
+    return <Feed feeds={item} />;
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUserFeeds: (limit, offset) =>
+      dispatch(feedActions.getfeeds(limit, offset))
+  };
+};
+
+const mapStateToProps = state => {
+  const { isFetching, isAuthenticated, token } = state.auth;
+  const { feeds } = state.feed;
+  return {
+    isFetching,
+    isAuthenticated,
+    token,
+    feeds
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

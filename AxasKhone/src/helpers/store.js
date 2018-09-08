@@ -5,6 +5,7 @@ import { authentication } from '../reducers/auth';
 import { profile } from '../reducers/user';
 import { register } from '../reducers/register';
 import { alert } from '../reducers/alert';
+import { feed } from '../reducers/feed';
 
 const store = Reactotron.createStore(
   combineReducers({
@@ -12,6 +13,7 @@ const store = Reactotron.createStore(
     profile: profile,
     auth: authentication,
     register: register,
+    feed: feed,
     alert: alert
   }),
   applyMiddleware(thunkMiddleware)

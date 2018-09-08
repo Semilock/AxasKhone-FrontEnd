@@ -17,6 +17,9 @@ const routes = {
     },
     get changePassword() {
       return `${this.basePath}/change_password`;
+    },
+    get homeFeed() {
+      return `${this.basePath}home`;
     }
   }
 };

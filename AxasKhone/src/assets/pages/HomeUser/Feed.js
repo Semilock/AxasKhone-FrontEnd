@@ -12,9 +12,9 @@ import {
   Body
 } from 'native-base';
 
-export default class Posts extends Component {
+export default class Feed extends Component {
   render() {
-    var { posts } = this.props;
+    const feed = this.props.feeds;
     return (
       <Card style={{ borderRadius: 8 }}>
         <CardItem>
@@ -24,15 +24,17 @@ export default class Posts extends Component {
             </Button>
             <Body>
               <Text style={{ marginRight: 20, textAlign: 'right' }}>
-                {posts.profile.fullname}
+                {feed.profile.fullname}
               </Text>
               <Text style={{ textAlign: 'right' }} note>
                 2 روز پیش
               </Text>
             </Body>
 
-            {/* <Thumbnail source={{ uri: 'Image URL' }} /> */}
-            <Thumbnail source={require('../../img/id1.jpg')} />
+            <Thumbnail
+              source={{ uri: `http://${feed.profile.profile_picture}` }}
+            />
+            {/* <Thumbnail source={require('../../img/id1.jpg')} /> */}
           </Left>
         </CardItem>
         <CardItem cardBody>
@@ -41,13 +43,14 @@ export default class Posts extends Component {
                 style={{ height: 200, width: null, flex: 1 }}
               /> */}
           <Image
-            source={require('../../img/id1.jpg')}
+            // source={require('../../img/id1.jpg')}
+            source={{ uri: feed.image }}
             style={{ height: 200, width: null, flex: 1 }}
           />
         </CardItem>
         <CardItem>
           <Text style={{ textAlign: 'right' }} numberOfLines={3}>
-            {posts.caption}
+            {feed.caption}
           </Text>
         </CardItem>
         <CardItem>
