@@ -44,6 +44,17 @@ const getProfilePosts = (limit, offset) => {
   );
 };
 
+const editProfile = user => {
+  return axiosInstance({
+    url: `${routes.basePath}/${routes.user.profileInfo}/`,
+    data: user,
+    headers: {
+      'content-type': `multipart/form-data;`
+    },
+    method: 'POST'
+  });
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -60,6 +71,7 @@ export const userService = {
   login,
   logout,
   getProfile,
+  editProfile,
   getProfilePosts,
   registerUser,
   firstStepRegisterValidation

@@ -40,6 +40,7 @@ const registerUser = user => {
     data.append('password', user.password);
     data.append('username', user.username);
     data.append('fullname', user.fullname);
+    //TODO: checking file mime just to be a valid image mimes!
     data.append('bio', user.bio);
     if (user.pic.uri !== undefined) {
       data.append('profile_picture', {
@@ -51,6 +52,7 @@ const registerUser = user => {
     userService.registerUser(data).then(
       res => {
         dispatch(success(res.data.status));
+        dispatch({ type: registerConst.REGISTER_RESET });
         dispatch(userActions.login(user.email, user.password));
       },
       error => {
