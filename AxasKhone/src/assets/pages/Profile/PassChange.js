@@ -84,6 +84,23 @@ class PassChange extends Component {
             />
           </View>
 
+          <TextInput
+            style={styles.inputText}
+            placeholder="رمز قدیمی خود را وارد کنید "
+            secureTextEntry
+            value={this.state.oldPassword}
+            onChangeText={this.HandleChange('oldPassword')}
+            underlineColorAndroid="transparent"
+          />
+          <TextInput
+            style={styles.inputText}
+            placeholder=" رمز جدید را وارد کنید "
+            secureTextEntry
+            value={this.state.newPassword}
+            onChangeText={this.HandleChange('newPassword')}
+            underlineColorAndroid="transparent"
+          />
+
           <View style={[{ justifyContent: 'center' }]}>
             {this.props.profileEditStatus !== undefined ? (
               <Text>{this.props.profileEditStatus}</Text>
@@ -93,30 +110,15 @@ class PassChange extends Component {
               <Text
                 style={{
                   marginHorizontal: 20,
-                  textAlign: 'right',
-                  color: 'orange',
-                  fontSize: 16
+                  marginTop: 15,
+                  textAlign: 'center',
+                  color: 'red',
+                  fontSize: 14
                 }}
               >
                 {this.props.errors}
               </Text>
             ) : null}
-            <TextInput
-              style={styles.inputText}
-              placeholder="رمز قدیمی خود را وارد کنید "
-              secureTextEntry
-              value={this.state.oldPassword}
-              onChangeText={this.HandleChange('oldPassword')}
-              underlineColorAndroid="transparent"
-            />
-            <TextInput
-              style={styles.inputText}
-              placeholder=" رمز جدید را وارد کنید "
-              secureTextEntry
-              value={this.state.newPassword}
-              onChangeText={this.HandleChange('newPassword')}
-              underlineColorAndroid="transparent"
-            />
           </View>
 
           <View style={[{ flex: 1, justifyContent: 'flex-end' }]}>
