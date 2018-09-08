@@ -130,9 +130,6 @@ class Edit extends Component {
           </View>
 
           <View style={[{ justifyContent: 'center' }]}>
-            {this.props.profileEditStatus !== undefined ? (
-              <Text>{this.props.profileEditStatus}</Text>
-            ) : null}
             <View style={styles.holderTextInput}>
               <Text>{this.props.username}</Text>
             </View>
@@ -154,8 +151,34 @@ class Edit extends Component {
               onChangeText={this.HandleChange('biography')}
               underlineColorAndroid="transparent"
             />
+            {this.props.profileEditStatus !== undefined ? (
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  justifyContent: 'center',
+                  marginTop: 15,
+                  height: 25,
+                  borderRadius: 50,
+                  backgroundColor: 'green'
+                }}
+              >
+                <Text
+                  style={{
+                    marginHorizontal: 20,
+
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 14
+                  }}
+                >
+                  {this.props.profileEditStatus}
+                </Text>
+              </View>
+            ) : null}
             <TouchableOpacity activeOpacity={0.8} onPress={this.changeProfile}>
-              <Text style={styles.buttomSubmit}>ذخیره تغییرات</Text>
+              <Text style={[styles.buttomSubmit, { justifyContent: 'center' }]}>
+                ذخیره تغییرات
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

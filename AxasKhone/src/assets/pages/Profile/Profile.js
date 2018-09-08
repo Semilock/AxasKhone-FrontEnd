@@ -26,17 +26,19 @@ class Profile extends Component {
         /> */}
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
         <View style={styles.navBarContainer}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Edit')}
-          >
-            <Icon
-              style={{}}
-              name="md-more"
-              size={30}
-              color="rgb(239, 239, 239)"
-              // onPress={() => this.props.navigation.navigate('Edit')}
-            />
-          </TouchableOpacity>
+          <View style={{ width: 25 }}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Edit')}
+            >
+              <Icon
+                style={{}}
+                name="md-more"
+                size={30}
+                color="rgb(239, 239, 239)"
+                // onPress={() => this.props.navigation.navigate('Edit')}
+              />
+            </TouchableOpacity>
+          </View>
           <Text style={[styles.titleNavbar, { flex: 1, textAlign: 'center' }]}>
             {this.props.username}
           </Text>
