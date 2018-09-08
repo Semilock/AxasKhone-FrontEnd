@@ -89,6 +89,7 @@ export default (AppStackNavigator = TabNavigator(
         backgroundColor: 'rgb(25, 50, 75)'
       },
       activeTintColor: 'white'
-    }
+    },
+    lazy: true
   }
 ));
