@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Dimensions
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/EvilIcons';
+import Tags from './TagInput/index';
 
 const { height } = Dimensions.get('window');
 
@@ -46,7 +47,7 @@ export default class CompletionAddPost extends Component {
           </View>
         </View>
         <View style={styles.gioBox}>
-          <Icon name="md-location" size={30} color="black" />
+          <Icon name="location" size={30} color="black" />
           <TextInput
             style={[
               styles.inputText,
@@ -59,17 +60,17 @@ export default class CompletionAddPost extends Component {
             placeholder="موقعیت"
           />
         </View>
-        <View style={styles.gioBox}>
-          <TextInput
-            style={[
-              styles.inputText,
-              (style = {
-                width: 290,
-                fontSize: 10
-              })
-            ]}
-            underlineColorAndroid="transparent"
-            placeholder="اضافه کردن تگ"
+        <View style={styles.tagBox}>
+          <Tags
+            onChangeTags={tags => console.log(tags)}
+            inputStyle={{
+              color: 'rgb(125, 125, 125)',
+              backgroundColor: 'white'
+            }}
+            tagContainerStyle={{
+              backgroundColor: 'rgb(25, 50, 75)'
+            }}
+            placeholder="تگ ها"
           />
         </View>
         <View style={styles.submitBox}>
@@ -98,17 +99,16 @@ const styles = {
   },
   pictureBox: {
     flex: 3,
-    backgroundColor: 'black',
+    backgroundColor: 'gray',
     marginLeft: 10,
     borderRadius: 5
   },
   captionBox: {
     flex: 7,
-    // backgroundColor: 'yellow',
     borderRadius: 10
   },
   inputText: {
-    color: 'black',
+    color: 'gray',
     paddingHorizontal: 10,
     borderRadius: 5,
     textAlign: 'right',
@@ -125,7 +125,14 @@ const styles = {
     flexDirection: 'row-reverse',
     padding: 5,
     paddingHorizontal: 15,
-    height: 50,
+    height: 55,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+    alignItems: 'center'
+  },
+  tagBox: {
+    padding: 5,
+    paddingHorizontal: 15,
     borderBottomWidth: 1,
     borderColor: 'gray'
   },
