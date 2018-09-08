@@ -85,7 +85,27 @@ export const profile = (state = profileInitialState, action) => {
     case profileConst.EDIT_PROFILE_REMOVE_STORE:
       return {
         ...state,
-        profileEditStatus: undefined
+        profileEditStatus: undefined,
+        errors: undefined
+      };
+
+    case profileConst.CHANGE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        profileEditStatus: undefined,
+        errors: undefined
+      };
+    case profileConst.CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        profileEditStatus: action.data,
+        errors: undefined
+      };
+    case profileConst.CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        profileEditStatus: undefined,
+        errors: action.error
       };
 
     case profileConst.PROFILE_LOGOUT:

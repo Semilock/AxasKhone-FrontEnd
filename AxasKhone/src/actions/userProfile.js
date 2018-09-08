@@ -108,11 +108,39 @@ const removeEditProfileState = () => {
   };
 };
 
+const changePassword = user => {
+  return dispatch => {
+    dispatch(request());
+    userService.changePassword(user).then(
+      res => {
+        dispatch(success(res.data.status));
+      },
+      error => {
+        const { status } = error.response;
+        const { data } = error.response;
+        if (status === 400) {
+          dispatch(failure(data.error));
+        }
+      }
+    );
+  };
+  function request() {
+    return { type: profileConst.CHANGE_PASSWORD_REQUEST };
+  }
+  function success(data) {
+    return { type: profileConst.CHANGE_PASSWORD_SUCCESS, data };
+  }
+  function failure(error) {
+    return { type: profileConst.CHANGE_PASSWORD_FAILURE, error };
+  }
+};
+
 const profileActions = {
   removeEditProfileState,
   getProfile,
   editProfile,
-  getProfilePosts
+  getProfilePosts,
+  changePassword
 };
 
 export default profileActions;
