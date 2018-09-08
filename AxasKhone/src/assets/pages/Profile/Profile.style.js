@@ -84,5 +84,16 @@ export default (styles = StyleSheet.create({
     flexDirection: 'row-reverse'
     // justifyContent: 'space-around'
     // justifyContent: 'right'
+  },
+  holderTextInput: {
+    backgroundColor: 'white',
+    color: 'rgb(182, 182, 182)',
+    fontSize: 20,
+    borderRadius: 5,
+    marginTop: 5,
+    // marginBottom: 15,
+    flexDirection: 'row-reverse',
+    marginHorizontal: 15,
+    padding: 10
   }
 }));

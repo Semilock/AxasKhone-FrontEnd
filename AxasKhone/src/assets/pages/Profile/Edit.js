@@ -133,24 +133,18 @@ class Edit extends Component {
             {this.props.profileEditStatus !== undefined ? (
               <Text>{this.props.profileEditStatus}</Text>
             ) : null}
-            <TextInput
-              style={styles.email}
-              value={this.props.username}
-              editable={false}
-              underlineColorAndroid="transparent"
-            />
+            <View style={styles.holderTextInput}>
+              <Text>{this.props.username}</Text>
+            </View>
             <TextInput
               style={styles.inputText}
               value={this.state.fullname}
               onChangeText={this.HandleChange('fullname')}
               underlineColorAndroid="transparent"
             />
-            <TextInput
-              style={styles.email}
-              value={this.props.email}
-              editable={false}
-              underlineColorAndroid="transparent"
-            />
+            <View style={styles.holderTextInput}>
+              <Text>{this.props.email}</Text>
+            </View>
             <TextInput
               style={[styles.inputText, (style = { height: 150 })]}
               value={this.state.biography}
