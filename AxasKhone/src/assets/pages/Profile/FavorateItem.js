@@ -11,7 +11,7 @@ export default class FavorateItem extends Component {
       <View style={styles.pictureContainerFavoriteBox}>
         <TouchableOpacity activeOpacity={0.6}>
           <Image
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: '100%', height: '100%', borderRadius: 10 }}
             resizeMode="cover"
             source={{ uri: favoriteItem.image }}
           />

@@ -23,8 +23,7 @@ export default class FavoriteBox extends Component {
           },
           {
             url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
+            image: 'https://cdn.isna.ir/d/2018/06/02/3/57688748.jpg',
             caption: 'my caption',
             pk: 1
           },
