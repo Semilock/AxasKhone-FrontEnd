@@ -95,5 +95,32 @@ export default (styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginHorizontal: 15,
     padding: 10
+  },
+  favoriteContainer: {
+    height: 125
+    // borderTopWidth: 1,
+    // borderColor: 'gray'
+    // backgroundColor: 'red'
+  },
+  favoriteNavbar: {
+    height: 25,
+    // backgroundColor: 'yellow',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  favoriteMain: {
+    flex: 1,
+    // backgroundColor: 'pink',
+    flexDirection: 'row-reverse',
+    alignItems: 'center'
+  },
+  pictureContainerFavoriteBox: {
+    width: 90,
+    height: 90,
+    backgroundColor: 'gray',
+    borderRadius: 10,
+    marginLeft: 10
   }
 }));

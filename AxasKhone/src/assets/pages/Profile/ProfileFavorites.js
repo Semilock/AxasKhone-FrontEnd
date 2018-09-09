@@ -1,29 +1,45 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import profileActions from '../../../actions/userProfile';
+import styles from './Profile.style';
+import FavoriteBox from './FavoriteBox';
 
 class Favorites extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: {
+        count: 1,
+        next: null,
+        previous: null,
+        results: [
+          {
+            title: 'عکس های صغرا خانوم',
+            pk: 2
+          },
+          {
+            title: 'ماه اصل علی خانی',
+            pk: 2
+          }
+        ]
+      }
+    };
+  }
+
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'rgb(239, 239, 239)',
-          justifyContent: 'center'
-        }}
-      >
-        <Text
-          style={{
-            textAlign: 'center',
-            Color: 'rgb(57, 57, 57)',
-            fontSize: 24
-          }}
-        >
-          hi :))
-        </Text>
+      <View style={styles.container}>
+        <FlatList
+          data={this.state.data.results}
+          renderItem={this.renderFavoriteBox}
+          // renderItem={({ item }) => <Text>sam</Text>}
+        />
       </View>
     );
+  }
+  renderFavoriteBox({ item }) {
+    return <FavoriteBox favoriteBox={item} />;
   }
 }
 
