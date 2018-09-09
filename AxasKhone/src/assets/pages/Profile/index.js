@@ -4,14 +4,14 @@ import Profile from './Profile';
 import Edit from './Edit';
 import Setting from './Setting';
 import PassChange from './PassChange';
-// import FavorateFullpage from './FavorateFullpage';
+import FavorateFullpage from './FavorateFullpage';
 
 const ProfileStack = createStackNavigator(
   {
     Profile: { screen: Profile },
-    // FavorateFullpage: { screen: FavorateFullpage },
     Setting: { screen: Setting },
     Edit: { screen: Edit },
+    FavorateFullpage: { screen: FavorateFullpage },
     PassChange: { screen: PassChange }
   },
   {

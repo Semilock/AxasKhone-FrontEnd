@@ -54,6 +54,13 @@ export default class FavorateFullpage extends Component {
               'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
             caption: 'my caption',
             pk: 1
+          },
+          {
+            url: 'http://127.0.0.1:8000/user/post/13/',
+            image:
+              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
+            caption: 'my caption',
+            pk: 1
           }
         ]
       }
@@ -61,6 +68,7 @@ export default class FavorateFullpage extends Component {
   }
 
   render() {
+    const data = this.state.data;
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
@@ -101,8 +109,31 @@ export default class FavorateFullpage extends Component {
               color="rgb(239, 239, 239)"
             />
           </TouchableOpacity>
+        </View
+        <View style={{ flex: 1, margin: 3 }}>
+          <FlatList
+            data={data.results}
+            numColumns={3}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  flex: 0.333,
+                  height: 120,
+                  margin: 3,
+                  backgroundColor: 'gray'
+                }}
+              >
+                <TouchableOpacity activeOpacity={0.8}>
+                  <Image
+                    style={{ width: '100%', height: 120 }}
+                    resizeMode="cover"
+                    source={{ uri: item.image }}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
-        <View style={{ backgroundColor: 'black', flex: 1 }} />
       </View>
     );
   }
