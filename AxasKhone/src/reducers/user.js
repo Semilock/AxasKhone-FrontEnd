@@ -67,6 +67,7 @@ export const profile = (state = profileInitialState, action) => {
       return {
         ...state,
         profileEditStatus: undefined,
+        errors: undefined,
         isFetching: true
       };
 
@@ -74,6 +75,7 @@ export const profile = (state = profileInitialState, action) => {
       return {
         ...state,
         isFetching: false,
+        errors: undefined,
         profileEditStatus: action.data
       };
 
