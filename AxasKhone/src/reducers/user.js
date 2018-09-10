@@ -66,6 +66,7 @@ export const profile = (state = profileInitialState, action) => {
     case profileConst.EDIT_PROFILE_REQUEST:
       return {
         ...state,
+        profileEditStatus: undefined,
         isFetching: true
       };
 
@@ -80,7 +81,8 @@ export const profile = (state = profileInitialState, action) => {
       return {
         ...state,
         isFetching: false,
-        profileEditStatus: action.error
+        profileEditStatus: undefined,
+        errors: action.error
       };
 
     case profileConst.EDIT_PROFILE_REMOVE_STORE:

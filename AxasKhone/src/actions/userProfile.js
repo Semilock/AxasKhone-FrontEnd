@@ -77,19 +77,30 @@ const editProfile = user => {
         });
       }
     }
-    userService.editProfile(data).then(
-      res => {
-        dispatch(success(res.data.status));
-        dispatch(getProfile());
-      },
-      error => {
+    return userService
+      .editProfile(data)
+      .then(
+        res => {
+          dispatch(success(res.data.status));
+          dispatch(getProfile());
+          return 'ویرایش شد';
+        }
+        // ,error => {
+        //   const { status } = error.response;
+        //   const { data } = error.response;
+        //   if (status === 400) {
+        //     dispatch(failure(data.error));
+        //   }
+        // }
+      )
+      .catch(error => {
         const { status } = error.response;
         const { data } = error.response;
         if (status === 400) {
           dispatch(failure(data.error));
         }
-      }
-    );
+        return 'ویرایش ناموفق بود';
+      });
   };
   function request(user) {
     return { type: profileConst.EDIT_PROFILE_REQUEST, user };
@@ -154,6 +165,7 @@ const addPost = post => {
       .addPost(data)
       .then(res => {
         dispatch(success(res.data.status));
+        dispatch(getProfilePosts(6, 0));
         // nav.navigate();
       })
       .catch(err => {
