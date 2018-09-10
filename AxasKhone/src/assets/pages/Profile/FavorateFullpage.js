@@ -25,15 +25,19 @@ export default class FavorateFullpage extends Component {
         results: [
           {
             url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
+            image: 'http://shomanews.com/files/fa/news/1395/7/13/26443_311.jpg',
             caption: 'my caption',
             pk: 1
           },
           {
             url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
+            image: 'http://media.jamnews.ir/EditorMedia/1/1395/07/12/03.jpg',
+            caption: 'my caption',
+            pk: 1
+          },
+          {
+            url: 'http://127.0.0.1:8000/user/post/13/',
+            image: 'http://aftabnews.ir/images/docs/000096/n00096715-b.jpg',
             caption: 'my caption',
             pk: 1
           },
@@ -64,16 +68,16 @@ export default class FavorateFullpage extends Component {
   }
 
   render() {
+    const data = this.state.data;
     return (
-      <View>
+      <View style={styles.container}>
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
         <View style={styles.navBarContainer}>
           <View style={{ width: 25 }}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Edit')}
+            // onPress={() => this.props.navigation.navigate('Edit')}
             >
               <Icon
-                style={{}}
                 name="ios-arrow-round-back"
                 size={40}
                 color="rgb(239, 239, 239)"
@@ -105,35 +109,30 @@ export default class FavorateFullpage extends Component {
               color="rgb(239, 239, 239)"
             />
           </TouchableOpacity>
-        </View>
-        <View style={styles.container}>
-          <View style={{ flex: 1, margin: 3 }}>
-            <FlatList
-              data={this.props.posts}
-              numColumns={2}
-              onEndReached={() =>
-                this.getPosts(this.state.limit, this.state.offset)
-              }
-              onEndReachedThreshold={0.5}
-              renderItem={({ item }) => (
-                <View
-                  style={{
-                    flex: 0.5,
-                    height: 180,
-                    margin: 3
-                  }}
-                >
-                  <TouchableOpacity activeOpacity={0.8}>
-                    <Image
-                      style={{ width: '100%', height: 180 }}
-                      resizeMode="cover"
-                      source={{ uri: item.image }}
-                    />
-                  </TouchableOpacity>
-                </View>
-              )}
-            />
-          </View>
+        </View
+        <View style={{ flex: 1, margin: 3 }}>
+          <FlatList
+            data={data.results}
+            numColumns={3}
+            renderItem={({ item }) => (
+              <View
+                style={{
+                  flex: 0.333,
+                  height: 120,
+                  margin: 3,
+                  backgroundColor: 'gray'
+                }}
+              >
+                <TouchableOpacity activeOpacity={0.8}>
+                  <Image
+                    style={{ width: '100%', height: 120 }}
+                    resizeMode="cover"
+                    source={{ uri: item.image }}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
       </View>
     );
