@@ -15,14 +15,15 @@ class Tags extends React.Component {
     };
   }
 
-  componentWillReceiveProps(props) {
-    const { initialTags = [], initialText = ' ' } = props;
+  // BUG!!!
+  // componentWillReceiveProps(props) {
+  //   const { initialTags = [], initialText = ' ' } = props;
 
-    this.setState({
-      tags: initialTags,
-      text: initialText
-    });
-  }
+  //   this.setState({
+  //     tags: initialTags,
+  //     text: initialText
+  //   });
+  // }
 
   onChangeText = text => {
     if (text.length === 0) {
