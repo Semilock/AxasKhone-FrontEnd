@@ -72,6 +72,17 @@ const changePassword = user => {
     }
   );
 };
+
+const addPost = post => {
+  return axiosInstance({
+    url: `${routes.basePath}/${routes.user.post}/`,
+    data: post,
+    // headers: {
+    //   'content-type': `multipart/form-data;`
+    // },
+    method: 'POST'
+  });
+};
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -93,5 +104,6 @@ export const userService = {
   registerUser,
   firstStepRegisterValidation,
   getHomeFeeds,
-  changePassword
+  changePassword,
+  addPost
 };

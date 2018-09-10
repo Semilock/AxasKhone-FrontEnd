@@ -135,12 +135,49 @@ const changePassword = user => {
   }
 };
 
+const addPost = post => {
+  return dispatch => {
+    const data = new FD();
+    data.append('caption', post.caption);
+    data.append('tag_string', post.tag_string);
+    data.append('location', post.location);
+    //TODO: checking file mime just to be a valid image mimes!
+    if (post.image.uri !== undefined) {
+      data.append('image', {
+        uri: post.image.uri,
+        type: post.image.mime,
+        name: 'addPost.jpg'
+      });
+    }
+    dispatch(request());
+    return userService
+      .addPost(data)
+      .then(res => {
+        dispatch(success(res.data.status));
+        // nav.navigate();
+      })
+      .catch(err => {
+        dispatch(failure(err));
+      });
+  };
+  function request() {
+    return { type: profileConst.ADD_POST_REQUEST };
+  }
+  function success(data) {
+    return { type: profileConst.ADD_POST_SUCCESS, data };
+  }
+  function failure(error) {
+    return { type: profileConst.ADD_POST_FAILURE, error };
+  }
+};
+
 const profileActions = {
   removeEditProfileState,
   getProfile,
   editProfile,
   getProfilePosts,
-  changePassword
+  changePassword,
+  addPost
 };
 
 export default profileActions;
