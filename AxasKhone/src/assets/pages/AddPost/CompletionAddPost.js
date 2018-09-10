@@ -4,14 +4,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
+import { connect } from 'react-redux';
+import profileActions from '../../../actions/userProfile';
+
 import Tags from './TagInput/index';
 
 const { height } = Dimensions.get('window');
 
-export default class CompletionAddPost extends Component {
+class CompletionAddPost extends Component {
   static navigationOptions = {
     tabBarVisible: true,
     headerStyle: {
@@ -22,12 +26,62 @@ export default class CompletionAddPost extends Component {
     // headerRight: <Text style={styles.headerRightStyle}>ثبت توضیح</Text>
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: undefined,
+      caption: undefined,
+      location: undefined,
+      tags: undefined
+    };
+  }
+
+  componentDidMount = () => {
+    const image = this.props.navigation.getParam('image');
+    this.setState({ image });
+    // if (this.state.image === undefined)
+    //   this.props.navigation.navigate('PickPicture');
+  };
+
+  HandleChange = fieldName => value => {
+    this.setState({ [fieldName]: value });
+  };
+
+  changeTags = tags => {
+    this.setState({ tags });
+  };
+
+  addPost = () => {
+    let post = {
+      image: this.state.image,
+      caption: this.state.caption,
+      tag_string: this.state.tags,
+      location: this.state.location
+    };
+    this.setState({
+      image: undefined,
+      caption: undefined,
+      location: undefined,
+      tags: undefined
+    });
+    this.props.addPost(post).then(res => {
+      this.props.navigation.navigate('Profile');
+    });
+  };
+
   render() {
-    // var { picture } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.topBox}>
-          <View style={styles.pictureBox} />
+          <View style={styles.pictureBox}>
+            <Image
+              style={{
+                width: 110,
+                height: 90
+              }}
+              source={this.state.image}
+            />
+          </View>
           <View style={styles.captionBox}>
             <TextInput
               style={[
@@ -43,6 +97,8 @@ export default class CompletionAddPost extends Component {
               underlineColorAndroid="transparent"
               placeholder="توضیحات عکس"
               multiline
+              value={this.state.caption}
+              onChangeText={this.HandleChange('caption')}
             />
           </View>
         </View>
@@ -58,11 +114,13 @@ export default class CompletionAddPost extends Component {
             ]}
             underlineColorAndroid="transparent"
             placeholder="موقعیت"
+            value={this.state.location}
+            onChangeText={this.HandleChange('location')}
           />
         </View>
         <View style={styles.tagBox}>
           <Tags
-            onChangeTags={tags => console.log(tags)}
+            onChangeTags={this.changeTags}
             inputStyle={{
               color: 'rgb(125, 125, 125)',
               backgroundColor: 'white'
@@ -74,7 +132,7 @@ export default class CompletionAddPost extends Component {
           />
         </View>
         <View style={styles.submitBox}>
-          <TouchableOpacity activeOpacity={0.8}>
+          <TouchableOpacity activeOpacity={0.8} onPress={this.addPost}>
             <Text style={styles.buttomSubmit}> ارسال پست</Text>
           </TouchableOpacity>
         </View>
@@ -82,6 +140,21 @@ export default class CompletionAddPost extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPost: post => dispatch(profileActions.addPost(post))
+  };
+};
+
+function mapStateToProps(state) {
+  return {};
+}
+
+export default connect(
+  undefined,
+  mapDispatchToProps
+)(CompletionAddPost);
 
 const styles = {
   container: {

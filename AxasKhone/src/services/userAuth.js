@@ -79,6 +79,17 @@ const sendContact = listContact => {
   });
 };
 
+const addPost = post => {
+  return axiosInstance({
+    url: `${routes.basePath}/${routes.user.post}/`,
+    data: post,
+    // headers: {
+    //   'content-type': `multipart/form-data;`
+    // },
+    method: 'POST'
+  });
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -101,5 +112,6 @@ export const userService = {
   firstStepRegisterValidation,
   getHomeFeeds,
   changePassword,
-  sendContact
+  sendContact,
+  addPost
 };

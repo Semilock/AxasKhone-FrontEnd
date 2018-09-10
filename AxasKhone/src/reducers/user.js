@@ -10,7 +10,8 @@ const profileInitialState = {
   followingNumber: 0,
   posts: undefined,
   errors: undefined,
-  profileEditStatus: undefined
+  profileEditStatus: undefined,
+  addPostStatus: false
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
@@ -108,6 +109,21 @@ export const profile = (state = profileInitialState, action) => {
         errors: action.error
       };
 
+    case profileConst.ADD_POST_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case profileConst.ADD_POST_SUCCESS:
+      return {
+        ...state,
+        isFetching: false
+      };
+    case profileConst.ADD_POST_FAILURE:
+      return {
+        ...state,
+        isFetching: false
+      };
     case profileConst.PROFILE_LOGOUT:
       return profileInitialState;
     default:
