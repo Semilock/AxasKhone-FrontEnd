@@ -58,7 +58,7 @@ class Edit extends Component {
     };
   }
   componentDidMount() {
-    this.props.getProfile();
+    // this.props.getProfile();
   }
 
   componentWillUnmount() {
@@ -78,17 +78,16 @@ class Edit extends Component {
       if (this.state.editProfilePic === true) {
         user.pic = this.state.profilePic;
       }
-      this.props.editProfile(user).then(
-        res => {
+      this.props
+        .editProfile(user)
+        .then(res => {
           ToastAndroid.show(res, ToastAndroid.SHORT);
-          this.props.navigation.pop();
-        },
-        err => {
-          this.setState({ changed: false }, () =>
-            ToastAndroid.show(err, ToastAndroid.SHORT)
-          );
-        }
-      );
+          // this.props.navigation.pop();
+        })
+        .catch(err => {
+          ToastAndroid.show(err, ToastAndroid.SHORT);
+          // this.setState({ changed: false }, () =>);
+        });
     }
   };
 
