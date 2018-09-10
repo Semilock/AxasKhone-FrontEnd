@@ -28,12 +28,12 @@ class Home extends Component {
     this.getFeeds(this.state.limit, this.state.offset);
   }
 
-  getFeeds(limit, offset) {
+  getFeeds = (limit, offset) => {
     this.props.getUserFeeds(limit, offset);
     this.setState(prevState => ({
       offset: prevState.offset + prevState.limit
     }));
-  }
+  };
 
   render() {
     return (
@@ -63,6 +63,10 @@ class Home extends Component {
             <FlatList
               data={this.props.feeds}
               // renderItem={({ item }) => <Text>sam</Text>}
+              onEndReached={() =>
+                this.getFeeds(this.state.limit, this.state.offset)
+              }
+              onEndReachedThreshold={0.5}
               renderItem={this.renderItem}
             />
           ) : null}

@@ -7,10 +7,13 @@ const feedInitialState = {
 export const feed = (state = feedInitialState, action) => {
   switch (action.type) {
     case feedConst.GET_FEED_REQUEST:
-      return {};
+      return {
+        ...state
+      };
 
     case feedConst.GET_FEED_SUCCESS:
       return {
+        ...state,
         feeds:
           state.feeds !== undefined
             ? state.feeds.concat(action.feed)
@@ -18,7 +21,11 @@ export const feed = (state = feedInitialState, action) => {
       };
 
     case feedConst.GET_FEED_FAILURE:
-      return {};
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.error
+      };
     default:
       return state;
   }
