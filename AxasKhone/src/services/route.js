@@ -20,6 +20,9 @@ const routes = {
     },
     get homeFeed() {
       return `${this.basePath}home`;
+    },
+    get sendContact() {
+      return `${this.basePath}invite_friends`;
     }
   }
 };

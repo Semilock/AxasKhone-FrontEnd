@@ -72,6 +72,13 @@ const changePassword = user => {
     }
   );
 };
+
+const sendContact = listContact => {
+  return axiosInstance.post(`${routes.basePath}/${routes.user.sendContact}/`, {
+    contact_list: listContact
+  });
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -93,5 +100,6 @@ export const userService = {
   registerUser,
   firstStepRegisterValidation,
   getHomeFeeds,
-  changePassword
+  changePassword,
+  sendContact
 };
