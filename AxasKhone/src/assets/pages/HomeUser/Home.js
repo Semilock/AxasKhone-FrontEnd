@@ -35,6 +35,19 @@ class Home extends Component {
     }));
   };
 
+  refreshHandling = () => {
+    this.props.refreshUserFeeds();
+    this.setState(
+      {
+        offset: 0,
+        limit: 5
+      },
+      () => {
+        this.getFeeds(this.state.limit, this.state.offset);
+      }
+    );
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -68,6 +81,8 @@ class Home extends Component {
               }
               onEndReachedThreshold={0.5}
               renderItem={this.renderItem}
+              refreshing={this.props.FeedIsFetching}
+              onRefresh={this.refreshHandling}
             />
           ) : null}
         </View>
@@ -82,18 +97,21 @@ class Home extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     getUserFeeds: (limit, offset) =>
-      dispatch(feedActions.getfeeds(limit, offset))
+      dispatch(feedActions.getfeeds(limit, offset)),
+    refreshUserFeeds: () => dispatch(feedActions.refreshFeeds())
   };
 };
 
 const mapStateToProps = state => {
   const { isFetching, isAuthenticated, token } = state.auth;
   const { feeds } = state.feed;
+  const FeedIsFetching = state.feed.isFetching;
   return {
     isFetching,
     isAuthenticated,
     token,
-    feeds
+    feeds,
+    FeedIsFetching
   };
 };
 
