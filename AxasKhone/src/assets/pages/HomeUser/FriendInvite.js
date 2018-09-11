@@ -39,8 +39,8 @@ class FriendInvite extends Component {
   FetchContacts = () => {
     Contacts.getAll((err, contacts) => {
       if (err) throw err;
-      Reactotron.log(contacts);
-      let allContac = { contact_list: [] };
+      // Reactotron.log(contacts);
+      let allContac = {};
       contacts.map(item => {
         if (item.emailAddresses.length > 0) {
           let contact = null;
@@ -51,10 +51,11 @@ class FriendInvite extends Component {
                 ? item.givenName
                 : `${item.givenName} ${item.familyName}`
           };
-          allContac.contact_list = [...allContac.contact_list, contact];
+          allContac = [...allContac, contact];
         }
       });
-      // Reactotron.warn(allContac);
+      Reactotron.warn(allContac);
+      this.props.getContact(allContac);
     });
   };
 
@@ -69,7 +70,7 @@ class FriendInvite extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getContact: allContac => dispatch(feedActions.sendContact1(allContac))
+    getContact: allContac => dispatch(feedActions.sendContact(allContac))
   };
 };
 
@@ -81,6 +82,6 @@ const mapStateToProps = state => {
 };
 
 export default connect(
-  mapStateToProps,
+  undefined,
   mapDispatchToProps
 )(FriendInvite);

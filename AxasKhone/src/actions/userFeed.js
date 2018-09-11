@@ -51,14 +51,12 @@ const sendContact = listContact => {
   }
 };
 
-const feedActions = { getfeeds };
-
 const refreshFeeds = () => {
   return dispatch => {
     dispatch({ type: feedConst.REFRESH_FEEDS });
   };
 };
 
-const feedActions = { getfeeds, refreshFeeds };
+const feedActions = { getfeeds, refreshFeeds, sendContact };
 
 export default feedActions;
