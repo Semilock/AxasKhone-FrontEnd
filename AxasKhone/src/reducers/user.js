@@ -10,6 +10,7 @@ const profileInitialState = {
   followingNumber: 0,
   posts: undefined,
   errors: undefined,
+  favoriteList: undefined,
   profileEditStatus: undefined,
   addPostStatus: false
 };
@@ -36,6 +37,7 @@ export const profile = (state = profileInitialState, action) => {
 
     case profileConst.PROFILE_FAILURE:
       return {
+        ...state,
         isFetching: false,
         errors: action.errors
       };
@@ -57,6 +59,61 @@ export const profile = (state = profileInitialState, action) => {
       };
 
     case profileConst.PROFILE_POSTS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.error
+      };
+
+    case profileConst.REFRESH_PROFILE_POSTS:
+      return {
+        ...state,
+        posts: undefined
+      };
+
+    case profileConst.FAVORITE_LIST_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.FAVORITE_LIST_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        favoriteList: action.favList
+      };
+
+    case profileConst.FAVORITE_LIST_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.error
+      };
+
+    case profileConst.FAVORITE_ITEMS_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.FAVORITE_ITEMS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        favoriteList:
+          state.favoriteList !== undefined
+            ? state.favoriteList.map(item => {
+                if (item.pk === action.id) {
+                  return { ...item, items: [...action.item] };
+                } else {
+                  return item;
+                }
+              })
+            : undefined
+      };
+
+    case profileConst.FAVORITE_ITEMS_FAILURE:
       return {
         ...state,
         isFetching: false,
@@ -97,18 +154,21 @@ export const profile = (state = profileInitialState, action) => {
     case profileConst.CHANGE_PASSWORD_REQUEST:
       return {
         ...state,
+        isFetching: true,
         profileEditStatus: undefined,
         errors: undefined
       };
     case profileConst.CHANGE_PASSWORD_SUCCESS:
       return {
         ...state,
+        isFetching: false,
         profileEditStatus: action.data,
         errors: undefined
       };
     case profileConst.CHANGE_PASSWORD_FAILURE:
       return {
         ...state,
+        isFetching: false,
         profileEditStatus: undefined,
         errors: action.error
       };
