@@ -29,11 +29,28 @@ export default class ProfileTab extends Component {
   render() {
     return (
       <Container>
-        <Tabs>
-          <Tab heading="هشتگ">
+        <Tabs
+          locked
+          tabBarUnderlineStyle={{
+            backgroundColor: 'gray'
+          }}
+        >
+          <Tab
+            heading="علاقه مندی ها"
+            activeTabStyle={{ backgroundColor: 'white', color: 'black' }}
+            tabStyle={{ backgroundColor: 'white', color: 'black' }}
+            textStyle={{ color: 'black' }}
+            activeTextStyle={{ color: 'black' }}
+          >
             <Favorites />
           </Tab>
-          <Tab heading="کاربران">
+          <Tab
+            heading="عکس ها"
+            activeTabStyle={{ backgroundColor: 'white' }}
+            tabStyle={{ backgroundColor: 'white' }}
+            textStyle={{ color: 'black' }}
+            activeTextStyle={{ color: 'black' }}
+          >
             <Photo />
           </Tab>
         </Tabs>
