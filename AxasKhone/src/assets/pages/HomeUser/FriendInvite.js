@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Contacts from 'react-native-contacts';
 import Reactotron from 'reactotron-react-native';
+import { connect } from 'react-redux';
+import feedActions from '../../../actions/userFeed';
 
-export default class FriendInvite extends Component {
+class FriendInvite extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,3 +66,21 @@ export default class FriendInvite extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getContact: allContac => dispatch(feedActions.sendContact1(allContac))
+  };
+};
+
+const mapStateToProps = state => {
+  const { contacts } = state.contact;
+  return {
+    contacts
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FriendInvite);
