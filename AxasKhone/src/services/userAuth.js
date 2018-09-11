@@ -1,3 +1,4 @@
+import Reactotron from 'reactotron-react-native';
 import routes from './route';
 import axiosInstance from './axios.config';
 
@@ -44,6 +45,22 @@ const getProfilePosts = (limit, offset) => {
   );
 };
 
+const getProfileFavoriteList = (limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${
+      routes.user.favorites.favoriteLists
+    }/?limit=${limit}&offset=${offset}`
+  );
+};
+
+const getProfileFavoriteItems = (id, limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${
+      routes.user.favorites.index
+    }${id}/list_posts/?limit=${limit}&offset=${offset}`
+  );
+};
+
 const editProfile = user => {
   return axiosInstance({
     url: `${routes.basePath}/${routes.user.profileInfo}/`,
@@ -83,6 +100,7 @@ const addPost = post => {
     method: 'POST'
   });
 };
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -101,6 +119,8 @@ export const userService = {
   getProfile,
   editProfile,
   getProfilePosts,
+  getProfileFavoriteList,
+  getProfileFavoriteItems,
   registerUser,
   firstStepRegisterValidation,
   getHomeFeeds,

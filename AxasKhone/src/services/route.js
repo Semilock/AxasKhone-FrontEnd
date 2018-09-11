@@ -20,6 +20,25 @@ const routes = {
     },
     get homeFeed() {
       return `${this.basePath}home`;
+    },
+    // favorites: {
+
+    // get favoriteListItems() {
+    //   return `${this.basePath}/list_posts`;
+    // }
+    // },
+    get favorites() {
+      return {
+        basePath: 'user/favorites/',
+        get index() {
+          return `${this.basePath}`;
+        },
+        get favoriteLists() {
+          return `${this.basePath}list_favorites`;
+        }
+      };
+
+      // ,return `${this.basePath}favorites`;
     }
   }
 };

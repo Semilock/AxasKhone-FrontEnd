@@ -109,7 +109,7 @@ export default class FavorateFullpage extends Component {
               color="rgb(239, 239, 239)"
             />
           </TouchableOpacity>
-        </View
+        </View>
         <View style={{ flex: 1, margin: 3 }}>
           <FlatList
             data={data.results}
