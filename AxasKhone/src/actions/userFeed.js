@@ -24,6 +24,12 @@ const getfeeds = (limit, offset) => {
   }
 };
 
-const feedActions = { getfeeds };
+const refreshFeeds = () => {
+  return dispatch => {
+    dispatch({ type: feedConst.REFRESH_FEEDS });
+  };
+};
+
+const feedActions = { getfeeds, refreshFeeds };
 
 export default feedActions;
