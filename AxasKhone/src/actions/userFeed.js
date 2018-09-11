@@ -24,6 +24,33 @@ const getfeeds = (limit, offset) => {
   }
 };
 
+const sendContact = listContact => {
+  return dispatch => {
+    dispatch(request());
+    userService.sendContact(listContact).then(
+      res => {
+        dispatch(success(res.data.status));
+      },
+      error => {
+        const { status } = error.response;
+        const { data } = error.response;
+        if (status === 400) {
+          dispatch(failure(data.error));
+        }
+      }
+    );
+  };
+  function request() {
+    return { type: feedConst.SEND_CONTACT_REQUEST };
+  }
+  function success(data) {
+    return { type: feedConst.SEND_CONTACT_SUCCESS, data };
+  }
+  function failure(error) {
+    return { type: feedConst.SEND_CONTACT_FAILURE, error };
+  }
+};
+
 const feedActions = { getfeeds };
 
 export default feedActions;
