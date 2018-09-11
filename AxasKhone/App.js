@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Text } from 'react-native';
-import store from './src/helpers/store';
+import { Text, ActivityIndicator } from 'react-native';
+import { PersistGate } from 'redux-persist/es/integration/react';
+import { store, persistor } from './src/store';
 import Start from './Start';
 import './ReactotronConfig';
 import ReactotronConfig from './ReactotronConfig';
-import Reactotron from 'reactotron-react-native';
 
 console.disableYellowBox = true;
 export default class App extends Component {
@@ -21,11 +21,16 @@ export default class App extends Component {
   //   },2000)
   // }
 
+  loading = () => {
+    <ActivityIndicator size="large" />;
+  };
   render() {
     // return (<Bazi>{this.state.s ? <Text>How Are You?</Text> : <Text>Hello</Text>}</Bazi>);
     return (
       <Provider store={store}>
-        <Start />
+        <PersistGate loading={this.loading()} persistor={persistor}>
+          <Start />
+        </PersistGate>
       </Provider>
     );
   }

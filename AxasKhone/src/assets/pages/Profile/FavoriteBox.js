@@ -10,77 +10,88 @@ class FavoriteBox extends Component {
   constructor() {
     super();
     this.state = {
-      data: {
-        count: 2,
-        next: null,
-        previous: null,
-        results: [
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image: 'https://cdn.isna.ir/d/2018/06/02/3/57688748.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          }
-        ]
-      }
+      FavoriteItem: undefined,
+      limit: 6,
+      offset: 0
     };
   }
+  componentDidMount() {
+    this.getFavoriteListItem(
+      this.props.favoriteBox.pk,
+      this.state.limit,
+      this.state.offset
+    );
+  }
+
+  getFavoriteListItem = (id, limit, offset) => {
+    this.props.getProfileFavoriteListItem(id, limit, offset).then(res => {
+      this.setState({ FavoriteItem: res });
+    });
+    this.setState(prevState => ({
+      offset: prevState.offset + prevState.limit
+    }));
+  };
+
+  renderFavoriteItem = ({ item }) => {
+    return <FavoriteItem favoriteItem={item} />;
+  };
+
+  gotoFavoriteFullPage = () => {};
 
   render() {
-    const favoriteBox = this.props.favoriteBox;
     return (
+      // const favoriteBox = this.props.favoriteBox;
       <View style={styles.favoriteContainer}>
         <View style={styles.favoriteNavbar}>
-          <TouchableOpacity activeOpacity={0.6}>
-            <Text
-              onPress={() => this.props.navigation.navigate('FavorateFullpage')}
-              style={{ fontSize: 14 }}
-            >
-              همه
-            </Text>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => {
+              this.props.navigation.navigate('FavorateFullpage', {
+                id: 1
+              });
+            }}
+          >
+            <Text style={{ fontSize: 14 }}>همه</Text>
           </TouchableOpacity>
-          <Text style={{ fontSize: 14 }}>{favoriteBox.title}</Text>
+          <Text style={{ fontSize: 14 }}>{this.props.favoriteBox.title}</Text>
         </View>
         <View style={styles.favoriteMain}>
-          <FlatList
-            data={this.state.data.results}
-            renderItem={this.renderFavoriteItem}
-            horizontal
-          />
+          {this.state.FavoriteItem !== undefined ? (
+            <FlatList
+              data={this.state.FavoriteItem}
+              renderItem={this.renderFavoriteItem}
+              horizontal
+            />
+          ) : null}
         </View>
       </View>
     );
   }
-  renderFavoriteItem({ item }) {
-    return <FavoriteItem favoriteItem={item} />;
-  }
 }
-export default withNavigation(FavoriteBox);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfileFavoriteList: (limit, offset) =>
+      dispatch(profileActions.getProfileFavoriteList(limit, offset)),
+    getProfileFavoriteListItem: (id, limit, offset) =>
+      dispatch(profileActions.getProfileFavoriteListItems(id, limit, offset))
+  };
+};
+
+const mapStateToProps = state => {
+  const { isFetching, isAuthenticated, token } = state.auth;
+  const { favoriteList } = state.profile;
+  const profilePostisFetching = state.profile.isFetching;
+  return {
+    isFetching,
+    isAuthenticated,
+    token,
+    favoriteList,
+    profilePostisFetching
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(FavoriteBox));

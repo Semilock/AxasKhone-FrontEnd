@@ -1,6 +1,7 @@
 import feedConst from '../constants/feedConst';
 
 const feedInitialState = {
+  isFetching: false,
   feeds: undefined
 };
 
@@ -8,12 +9,14 @@ export const feed = (state = feedInitialState, action) => {
   switch (action.type) {
     case feedConst.GET_FEED_REQUEST:
       return {
-        ...state
+        ...state,
+        isFetching: true
       };
 
     case feedConst.GET_FEED_SUCCESS:
       return {
         ...state,
+        isFetching: false,
         feeds:
           state.feeds !== undefined
             ? state.feeds.concat(action.feed)
@@ -25,6 +28,12 @@ export const feed = (state = feedInitialState, action) => {
         ...state,
         isFetching: false,
         errors: action.error
+      };
+
+    case feedConst.REFRESH_FEEDS:
+      return {
+        ...state,
+        feeds: undefined
       };
     default:
       return state;

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import routes from './route';
-import store from '../helpers/store';
+// import store from '../helpers/store';
+import { store } from '../store';
+
 import loginConst from '../constants/loginConst';
 import alertConst from '../constants/alertConst';
 

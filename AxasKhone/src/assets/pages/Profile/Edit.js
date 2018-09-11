@@ -6,7 +6,8 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  ToastAndroid
 } from 'react-native';
 import {
   createStackNavigator,
@@ -16,6 +17,7 @@ import {
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
+import Reactotron from 'reactotron-react-native';
 import styles from './Profile.style';
 import profileActions from '../../../actions/userProfile';
 
@@ -48,11 +50,15 @@ class Edit extends Component {
       fullname: this.props.fullname,
       biography: this.props.biography,
       editProfilePic: false,
-      profilePic: { uri: `http://${this.props.profilePic}`, mime: 'image/jpeg' }
+      profilePic: {
+        uri: `http://${this.props.profilePic}`,
+        mime: 'image/jpeg'
+      },
+      changed: false
     };
   }
   componentDidMount() {
-    this.props.getProfile();
+    // this.props.getProfile();
   }
 
   componentWillUnmount() {
@@ -60,20 +66,29 @@ class Edit extends Component {
   }
   // set state e.g : [fieldName:value]
   HandleChange = fieldName => value => {
-    this.setState({ [fieldName]: value });
+    this.setState({ [fieldName]: value, changed: true });
   };
 
   changeProfile = () => {
-    const user = {
-      fullname: this.state.fullname,
-      bio: this.state.biography
-    };
-    if (this.state.editProfilePic === true) {
-      user.pic = this.state.profilePic;
+    if (this.props.profileIsFetching === false && this.state.changed === true) {
+      const user = {
+        fullname: this.state.fullname,
+        bio: this.state.biography
+      };
+      if (this.state.editProfilePic === true) {
+        user.pic = this.state.profilePic;
+      }
+      this.props
+        .editProfile(user)
+        .then(res => {
+          ToastAndroid.show(res, ToastAndroid.SHORT);
+          // this.props.navigation.pop();
+        })
+        .catch(err => {
+          ToastAndroid.show(err, ToastAndroid.SHORT);
+          // this.setState({ changed: false }, () =>);
+        });
     }
-
-    this.props.editProfile(user);
-    // this.props.getProfile();
   };
 
   pickFromGallary() {
@@ -90,7 +105,8 @@ class Edit extends Component {
             height: image.height,
             mime: image.mime
           },
-          editProfilePic: true
+          editProfilePic: true,
+          changed: true
         });
       })
       .catch(e => {
@@ -150,8 +166,10 @@ class Edit extends Component {
               value={this.state.biography}
               onChangeText={this.HandleChange('biography')}
               underlineColorAndroid="transparent"
+              multiline
+              numberOfLines={4}
             />
-            {this.props.profileEditStatus !== undefined ? (
+            {/* {this.props.profileEditStatus !== undefined ? (
               <View
                 style={{
                   marginHorizontal: 20,
@@ -174,8 +192,37 @@ class Edit extends Component {
                   {this.props.profileEditStatus}
                 </Text>
               </View>
+            ) : null} */}
+
+            {this.props.errors !== undefined ? (
+              <View
+                style={{
+                  marginHorizontal: 20,
+                  justifyContent: 'center',
+                  marginTop: 15,
+                  height: 25,
+                  borderRadius: 50,
+                  backgroundColor: 'orange'
+                }}
+              >
+                <Text
+                  style={{
+                    marginHorizontal: 20,
+
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 14
+                  }}
+                >
+                  {this.props.errors}
+                </Text>
+              </View>
             ) : null}
-            <TouchableOpacity activeOpacity={0.8} onPress={this.changeProfile}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={this.changeProfile}
+              disabled={!this.state.changed}
+            >
               <Text style={[styles.buttomSubmit, { justifyContent: 'center' }]}>
                 ذخیره تغییرات
               </Text>
@@ -204,7 +251,8 @@ function mapStateToProps(state) {
     fullname,
     biography,
     profilePic,
-    profileEditStatus
+    profileEditStatus,
+    errors
   } = state.profile;
   const profileIsFetching = state.profile.isFetching;
   return {
@@ -215,7 +263,9 @@ function mapStateToProps(state) {
     fullname,
     biography,
     profilePic,
-    profileEditStatus
+    profileEditStatus,
+    errors,
+    profileIsFetching
   };
 }
 
