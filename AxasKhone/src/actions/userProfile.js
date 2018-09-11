@@ -48,6 +48,60 @@ const getProfilePosts = (limit, offset) => {
   }
 };
 
+const getProfileFavoriteList = (limit, offset) => {
+  return dispatch => {
+    dispatch(request());
+    userService.getProfileFavoriteList(limit, offset).then(
+      res => {
+        dispatch(success(res.data.results));
+      },
+      err => {
+        dispatch(failure(err.data));
+      }
+    );
+  };
+  function request() {
+    return { type: profileConst.FAVORITE_LIST_REQUEST };
+  }
+  function success(favList) {
+    return { type: profileConst.FAVORITE_LIST_SUCCESS, favList };
+  }
+  function failure(error) {
+    return { type: profileConst.FAVORITE_LIST_FAILURE, error };
+  }
+};
+
+const getProfileFavoriteListItems = (id, limit, offset) => {
+  return dispatch => {
+    dispatch(request());
+    return userService.getProfileFavoriteItems(id, limit, offset).then(
+      res => {
+        dispatch(success(res.data.results, id));
+        return res.data.results;
+      },
+      err => {
+        dispatch(failure(err.data));
+      }
+    );
+  };
+  function request() {
+    return { type: profileConst.FAVORITE_ITEMS_REQUEST };
+  }
+  function success(items, id) {
+    return { type: profileConst.FAVORITE_ITEMS_SUCCESS, item: items, id: id };
+  }
+  function failure(error) {
+    return { type: profileConst.FAVORITE_ITEMS_FAILURE, error };
+  }
+};
+
+const refreshProfilePosts = () => {
+  return dispatch => {
+    dispatch({ type: profileConst.REFRESH_PROFILE_POSTS });
+    // dispatch(getProfilePosts(limit, offset));
+  };
+};
+
 const editProfile = user => {
   return dispatch => {
     dispatch(request(user));
@@ -188,6 +242,9 @@ const profileActions = {
   getProfile,
   editProfile,
   getProfilePosts,
+  refreshProfilePosts,
+  getProfileFavoriteList,
+  getProfileFavoriteListItems,
   changePassword,
   addPost
 };
