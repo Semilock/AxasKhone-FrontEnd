@@ -23,6 +23,19 @@ class Photo extends Component {
     }));
   }
 
+  refreshPosts = () => {
+    this.props.refreshProfilePosts();
+    this.setState(
+      {
+        offset: 0,
+        limit: 6
+      },
+      () => {
+        this.getPosts(this.state.limit, this.state.offset);
+      }
+    );
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -35,6 +48,8 @@ class Photo extends Component {
                 this.getPosts(this.state.limit, this.state.offset)
               }
               onEndReachedThreshold={0.5}
+              refreshing={this.props.ProfileIsFetching}
+              onRefresh={this.refreshPosts}
               renderItem={({ item }) => (
                 <View
                   style={{
@@ -63,7 +78,8 @@ class Photo extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     getProfilePosts: (limit, offset) =>
-      dispatch(profileActions.getProfilePosts(limit, offset))
+      dispatch(profileActions.getProfilePosts(limit, offset)),
+    refreshProfilePosts: () => dispatch(profileActions.refreshProfilePosts())
   };
 };
 
