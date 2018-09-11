@@ -3,6 +3,7 @@ package com.axaskhone;
 import android.app.Application;
 import com.wix.RNCameraKit.RNCameraKitPackage;
 import com.facebook.react.ReactApplication;
+import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeContacts(),
             new PickerPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),

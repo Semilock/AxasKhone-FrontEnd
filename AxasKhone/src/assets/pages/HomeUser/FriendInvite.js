@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import Contacts from 'react-native-contacts';
+import Reactotron from 'reactotron-react-native';
 
 export default class FriendInvite extends Component {
+  constructor() {
+    super();
+    this.state = {
+      contact: null
+    };
+  }
+
   static navigationOptions = {
     tabBarVisible: true,
     headerStyle: {
@@ -25,24 +34,32 @@ export default class FriendInvite extends Component {
     )
   };
 
+  FetchContacts = () => {
+    Contacts.getAll((err, contacts) => {
+      if (err) throw err;
+      Reactotron.log(contacts);
+      let allContac = { contact_list: [] };
+      contacts.map(item => {
+        if (item.emailAddresses.length > 0) {
+          let contact = null;
+          contact = {
+            email: item.emailAddresses[0].email,
+            name:
+              item.familyName === null
+                ? item.givenName
+                : `${item.givenName} ${item.familyName}`
+          };
+          allContac.contact_list = [...allContac.contact_list, contact];
+        }
+      });
+      // Reactotron.warn(allContac);
+    });
+  };
+
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'rgb(239, 239, 239)',
-          justifyContent: 'center'
-        }}
-      >
-        <Text
-          style={{
-            textAlign: 'center',
-            Color: 'rgb(57, 57, 57)',
-            fontSize: 24
-          }}
-        >
-          under develop :))
-        </Text>
+      <View>
+        <Text onPress={this.FetchContacts}>ffff</Text>
       </View>
     );
   }

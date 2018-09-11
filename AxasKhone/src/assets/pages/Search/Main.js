@@ -18,10 +18,8 @@ import {
   Tab,
   Tabs
 } from 'native-base';
-import Favorites from './ProfileFavorites';
-import Photo from './ProfilePosts';
 
-export default class ProfileTab extends Component {
+export default class Main extends Component {
   static navigationOptions = {
     header: null
   };
@@ -29,14 +27,15 @@ export default class ProfileTab extends Component {
   render() {
     return (
       <Container>
-        <Tabs>
-          <Tab heading="هشتگ">
-            <Favorites />
-          </Tab>
-          <Tab heading="کاربران">
-            <Photo />
-          </Tab>
-        </Tabs>
+        <Content>
+          <Header searchBar rounded>
+            <StatusBar backgroundColor="rgb(63, 81, 181)" />
+            <Item>
+              <Input placeholder="جستجو" onKeyPress />
+              <Icon name="ios-search" />
+            </Item>
+          </Header>
+        </Content>
       </Container>
     );
   }

@@ -18,12 +18,6 @@ class Profile extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Spinner
-          visible={this.props.profileIsFetching}
-          textContent="در حال بارگذاری پروفایل"
-          textStyle={{ color: '#fff' }}
-          overlayColor="rgba(0, 0, 0, 0.75)"
-        /> */}
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
         <View style={styles.navBarContainer}>
           <View style={{ width: 25 }}>

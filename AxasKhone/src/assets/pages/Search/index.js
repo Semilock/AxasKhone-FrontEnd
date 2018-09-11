@@ -1,35 +1,23 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 
-export default class Search extends Component {
-  static navigationOptions = {
-    tabBarLabel: ({ tintColor }) => (
-      <Text style={{ color: tintColor, textAlign: 'center', marginBottom: 12 }}>
-        search
-      </Text>
-    )
-    // tabBarIcon: return{ focused: boolean, tintColor: string }
-  };
+import Main from './Main';
+import Search from './Search';
 
-  render() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: 'rgb(239, 239, 239)',
-          justifyContent: 'center'
-        }}
-      >
-        <Text
-          style={{
-            textAlign: 'center',
-            Color: 'rgb(57, 57, 57)',
-            fontSize: 24
-          }}
-        >
-          under develop :))
-        </Text>
-      </View>
-    );
+const SearchStack = createStackNavigator(
+  {
+    Search: { screen: Search },
+    Main: { screen: Main }
+  },
+  {
+    navigationOptions: {
+      tabBarVisible: false
+    }
   }
-}
+);
+
+SearchStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: navigation.state.index === 0
+  };
+};
+export default SearchStack;

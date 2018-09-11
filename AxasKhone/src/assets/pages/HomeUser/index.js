@@ -2,10 +2,12 @@ import { createStackNavigator } from 'react-navigation';
 
 import Home from './Home';
 import FriendInvite from './FriendInvite';
+import SingelPost from './SingelPost';
 
 const HomeUser = createStackNavigator(
   {
     Home: { screen: Home },
+    SingelPost: { screen: SingelPost },
     FriendInvite: { screen: FriendInvite }
   },
   {

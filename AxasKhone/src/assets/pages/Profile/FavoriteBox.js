@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import { connect } from 'react-redux';
-import Reactotron from 'reactotron-react-native';
+import { withNavigation } from 'react-navigation';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
 import FavoriteItem from './FavorateItem';
@@ -46,7 +46,7 @@ class FavoriteBox extends Component {
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => {
-              this.props.navigation.navigate('Photo', {
+              this.props.navigation.navigate('FavorateFullpage', {
                 id: 1
               });
             }}
@@ -94,4 +94,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FavoriteBox);
+)(withNavigation(FavoriteBox));

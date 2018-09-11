@@ -90,6 +90,12 @@ const changePassword = user => {
   );
 };
 
+const sendContact = listContact => {
+  return axiosInstance.post(`${routes.basePath}/${routes.user.sendContact}/`, {
+    contact_list: listContact
+  });
+};
+
 const addPost = post => {
   return axiosInstance({
     url: `${routes.basePath}/${routes.user.post}/`,
@@ -125,5 +131,6 @@ export const userService = {
   firstStepRegisterValidation,
   getHomeFeeds,
   changePassword,
+  sendContact,
   addPost
 };

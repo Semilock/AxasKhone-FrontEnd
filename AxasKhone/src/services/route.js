@@ -9,6 +9,9 @@ const routes = {
   registerCompliment: 'register_compliment',
   user: {
     basePath: 'user/',
+    get sendContact() {
+      return `${this.basePath}invite_friends`;
+    },
     get profileInfo() {
       return `${this.basePath}profile_info`;
     },
@@ -21,12 +24,6 @@ const routes = {
     get homeFeed() {
       return `${this.basePath}home`;
     },
-    // favorites: {
-
-    // get favoriteListItems() {
-    //   return `${this.basePath}/list_posts`;
-    // }
-    // },
     get favorites() {
       return {
         basePath: 'user/favorites/',
@@ -37,8 +34,6 @@ const routes = {
           return `${this.basePath}list_favorites`;
         }
       };
-
-      // ,return `${this.basePath}favorites`;
     }
   }
 };
