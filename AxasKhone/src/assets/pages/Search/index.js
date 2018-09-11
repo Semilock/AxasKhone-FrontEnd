@@ -1,32 +1,23 @@
-import React, { Component } from 'react';
-import {
-  Container,
-  Header,
-  Item,
-  Input,
-  Icon,
-  Button,
-  Text,
-  Tab,
-  Tabs
-} from 'native-base';
+import { createStackNavigator } from 'react-navigation';
 
-export default class Search extends Component {
-  render() {
-    return (
-      <Container>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-people" />
-            <Input placeholder="جستجو" />
-            <Icon name="ios-search" />
-          </Item>
-        </Header>
-        <Tabs>
-          <Tab heading="کاربران">{/* <Tab1 /> */}</Tab>
-          <Tab heading="هشتگ">{/* <Tab2 /> */}</Tab>
-        </Tabs>
-      </Container>
-    );
+import Main from './Main';
+import Search from './Search';
+
+const SearchStack = createStackNavigator(
+  {
+    Search: { screen: Search },
+    Main: { screen: Main }
+  },
+  {
+    navigationOptions: {
+      tabBarVisible: false
+    }
   }
-}
+);
+
+SearchStack.navigationOptions = ({ navigation }) => {
+  return {
+    tabBarVisible: navigation.state.index === 0
+  };
+};
+export default SearchStack;

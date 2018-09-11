@@ -135,56 +135,6 @@ const changePassword = user => {
   }
 };
 
-const sendContact = listContact => {
-  return dispatch => {
-    dispatch(request());
-    userService.sendContact(listContact).then(
-      res => {
-        dispatch(success(res.data.status));
-      },
-      error => {
-        const { status } = error.response;
-        const { data } = error.response;
-        if (status === 400) {
-          dispatch(failure(data.error));
-        }
-      }
-    );
-  };
-  function request() {
-    return { type: profileConst.SEND_CONTACT_REQUEST };
-  }
-  function success(data) {
-    return { type: profileConst.SEND_CONTACT_SUCCESS, data };
-  }
-  function failure(error) {
-    return { type: profileConst.SEND_CONTACT_FAILURE, error };
-  }
-};
-
-// function sendContact() {
-//   return dispatch => {
-//     dispatch(request());
-//     userService.getProfile().then(
-//       res => {
-//         dispatch(success(res.data));
-//       },
-//       error => {
-//         dispatch(failure(error));
-//       }
-//     );
-//   };
-//   function request() {
-//     return { type: profileConst.PROFILE_REQUEST };
-//   }
-//   function success(info) {
-//     return { type: profileConst.PROFILE_SUCCESS, info };
-//   }
-//   function failure(error) {
-//     return { type: profileConst.PROFILE_FAILURE, error };
-//   }
-// }
-
 const addPost = post => {
   return dispatch => {
     const data = new FD();

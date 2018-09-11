@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
 import FavoriteItem from './FavorateItem';
 
-export default class FavoriteBox extends Component {
+class FavoriteBox extends Component {
   constructor() {
     super();
     this.state = {
@@ -59,7 +60,12 @@ export default class FavoriteBox extends Component {
       <View style={styles.favoriteContainer}>
         <View style={styles.favoriteNavbar}>
           <TouchableOpacity activeOpacity={0.6}>
-            <Text style={{ fontSize: 14 }}>همه</Text>
+            <Text
+              onPress={() => this.props.navigation.navigate('FavorateFullpage')}
+              style={{ fontSize: 14 }}
+            >
+              همه
+            </Text>
           </TouchableOpacity>
           <Text style={{ fontSize: 14 }}>{favoriteBox.title}</Text>
         </View>
@@ -77,3 +83,4 @@ export default class FavoriteBox extends Component {
     return <FavoriteItem favoriteItem={item} />;
   }
 }
+export default withNavigation(FavoriteBox);
