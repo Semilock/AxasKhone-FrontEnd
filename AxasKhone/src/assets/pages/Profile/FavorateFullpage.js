@@ -8,75 +8,80 @@ import {
   FlatList
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
+import Reactotron from 'reactotron-react-native';
+import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
 
-export default class FavorateFullpage extends Component {
+class FavorateFullpage extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: null
   });
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      data: {
-        count: 2,
-        next: null,
-        previous: null,
-        results: [
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image: 'http://shomanews.com/files/fa/news/1395/7/13/26443_311.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image: 'http://media.jamnews.ir/EditorMedia/1/1395/07/12/03.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image: 'http://aftabnews.ir/images/docs/000096/n00096715-b.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          },
-          {
-            url: 'http://127.0.0.1:8000/user/post/13/',
-            image:
-              'http://127.0.0.1:8000/media/images/user_17/1536097997528.jpg',
-            caption: 'my caption',
-            pk: 1
-          }
-        ]
-      }
+      offset: 0,
+      limit: 6,
+      FavoriteItem: undefined,
+      favoriteId: undefined,
+      favoriteTitle: undefined
     };
   }
 
+  componentDidMount() {
+    this.setState(
+      {
+        favoriteId: this.props.navigation.getParam('favoriteId'),
+        favoriteTitle: this.props.navigation.getParam('favoriteTitle')
+      },
+      () =>
+        this.getFavoriteListItem(
+          this.state.favoriteId,
+          this.state.limit,
+          this.state.offset
+        )
+    );
+  }
+
+  getFavoriteListItem = (id, limit, offset) => {
+    this.props.getProfileFavoriteListItem(id, limit, offset).then(res => {
+      this.setState({ FavoriteItem: res });
+    });
+    this.setState(prevState => ({
+      offset: prevState.offset + prevState.limit
+    }));
+  };
+
+  getMore = () => {
+    this.getFavoriteListItem(
+      this.state.favoriteId,
+      this.state.limit,
+      this.state.offset
+    );
+  };
+
+  // refreshFavoriteItems = () => {
+  //   this.props.refreshFavoriteItems();
+  //   this.setState(
+  //     {
+  //       offset: 0,
+  //       limit: 6
+  //     },
+  //     () => {
+  //       this.getPosts(this.state.limit, this.state.offset);
+  //     }
+  //   );
+  // };
+
   render() {
-    const data = this.state.data;
+    // const data = this.state.data;
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
         <View style={styles.navBarContainer}>
           <View style={{ width: 25 }}>
-            <TouchableOpacity
-            // onPress={() => this.props.navigation.navigate('Edit')}
-            >
+            <TouchableOpacity onPress={() => this.props.navigation.pop()}>
               <Icon
                 name="ios-arrow-round-back"
                 size={40}
@@ -85,8 +90,7 @@ export default class FavorateFullpage extends Component {
             </TouchableOpacity>
           </View>
           <Text style={[styles.titleNavbar, { flex: 1, textAlign: 'center' }]}>
-            {/* {this.props.username} */}
-            عکس قدیمی صغرا خانوم
+            {this.state.favoriteTitle}
           </Text>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Setting')}
@@ -111,30 +115,63 @@ export default class FavorateFullpage extends Component {
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1, margin: 3 }}>
-          <FlatList
-            data={data.results}
-            numColumns={3}
-            renderItem={({ item }) => (
-              <View
-                style={{
-                  flex: 0.333,
-                  height: 120,
-                  margin: 3,
-                  backgroundColor: 'gray'
-                }}
-              >
-                <TouchableOpacity activeOpacity={0.8}>
-                  <Image
-                    style={{ width: '100%', height: 120 }}
-                    resizeMode="cover"
-                    source={{ uri: item.image }}
-                  />
-                </TouchableOpacity>
-              </View>
-            )}
-          />
+          {this.state.FavoriteItem !== undefined ? (
+            <FlatList
+              data={this.state.FavoriteItem}
+              numColumns={3}
+              //TODO: complete onRefreshing
+              // onEndReached={this.getMore}
+              // onEndReachedThreshold={0.5}
+              // refreshing={this.props.profilePostisFetching}
+              // onRefresh={this.refreshPosts}
+              renderItem={({ item }) => (
+                <View
+                  style={{
+                    flex: 0.333,
+                    height: 120,
+                    margin: 3,
+                    backgroundColor: 'gray'
+                  }}
+                >
+                  <TouchableOpacity activeOpacity={0.8}>
+                    <Image
+                      style={{ width: '100%', height: 120 }}
+                      resizeMode="cover"
+                      source={{ uri: item.image }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          ) : null}
         </View>
       </View>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getProfileFavoriteListItem: (id, limit, offset) =>
+      dispatch(profileActions.getProfileFavoriteListItems(id, limit, offset))
+    // ,refreshFavoriteItems: () => dispatch(profileActions.refreshFavoriteItems())
+  };
+};
+
+const mapStateToProps = state => {
+  const { isFetching, isAuthenticated, token } = state.auth;
+  const { favoriteList } = state.profile;
+  const profilePostisFetching = state.profile.isFetching;
+  return {
+    isFetching,
+    isAuthenticated,
+    token,
+    favoriteList,
+    profilePostisFetching
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FavorateFullpage);

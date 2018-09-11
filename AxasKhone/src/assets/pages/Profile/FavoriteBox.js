@@ -47,7 +47,8 @@ class FavoriteBox extends Component {
             activeOpacity={0.6}
             onPress={() => {
               this.props.navigation.navigate('FavorateFullpage', {
-                id: 1
+                favoriteId: this.props.favoriteBox.pk,
+                favoriteTitle: this.props.favoriteBox.title
               });
             }}
           >
