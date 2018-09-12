@@ -34,6 +34,12 @@ const routes = {
           return `${this.basePath}list_favorites`;
         }
       };
+    },
+    get tagsSearch() {
+      return `${this.basePath}tags/search/`;
+    },
+    get usersSearch() {
+      return `${this.basePath}names/search/`;
     }
   }
 };
