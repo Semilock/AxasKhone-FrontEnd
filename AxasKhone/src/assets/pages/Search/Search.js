@@ -16,14 +16,28 @@ import {
   Button,
   Text,
   Tab,
-  Tabs
+  Tabs,
+  List,
+  ListItem,
+  Left,
+  Body,
+  Right,
+  Thumbnail
 } from 'native-base';
 import navigationOptions from 'react-navigation';
+import HashtagTab from './HashtagTab';
+import PersonsTag from './PersonsTag';
 
 export default class Search extends Component {
   static navigationOptions = {
     header: null
   };
+
+  // renderPersons = ({ item }) => {
+  //   return <HashtagTab favoriteBox={item} />;
+
+  // renderHashtag = ({ item }) => {
+  //   return <PersonsTag favoriteBox={item} />;
 
   render() {
     return (
@@ -38,8 +52,22 @@ export default class Search extends Component {
             </Item>
           </Header>
           <Tabs>
-            <Tab heading="هشتگ">{/* <Tab2 /> */}</Tab>
-            <Tab heading="کاربران">{/* <Tab1 /> */}</Tab>
+            <Tab heading="هشتگ">
+              <Container>
+                {/* <FlatList
+                  data={this.props.favoriteList}
+                  renderItem={this.renderHashtag}
+                /> */}
+              </Container>
+            </Tab>
+            <Tab heading="کاربران">
+              <View>
+                {/* <FlatList
+                  data={this.props.favoriteList}
+                  renderItem={this.renderPersons}
+                /> */}
+              </View>
+            </Tab>
           </Tabs>
         </Content>
       </Container>
