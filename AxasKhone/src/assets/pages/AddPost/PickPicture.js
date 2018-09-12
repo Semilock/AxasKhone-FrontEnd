@@ -56,7 +56,7 @@ export default class PickPicture extends React.Component {
           //   height: image.height,
           //   mime: image.mime
           // },
-          selected: 'select'
+          selected: null
         });
         this.props.navigation.navigate('CompletionAddPost', {
           image: {
@@ -71,26 +71,30 @@ export default class PickPicture extends React.Component {
       .catch(e => {
         console.log(e);
         Alert.alert(e.message ? e.message : e);
+        this.setState({ selected: null });
       });
   }
 
   pickSingleWithCamera() {
     ImagePicker.openCamera({
       // cropping: true,
-      width: 200,
-      height: 200
+      // width: 200,
+      // height: 200
     }).then(image => {
-      this.setState({
-        // image: {
-        //   uri: image.path,
-        //   width: image.width,
-        //   height: image.height,
-        //   mime: image.mime
-        // },
-        selected: {
-          uri: image.path
-        }
-      });
+      this.setState(
+        {
+          // image: {
+          //   uri: image.path,
+          //   width: image.width,
+          //   height: image.height,
+          //   mime: image.mime
+          // },
+          selected: {
+            uri: image.path
+          }
+        },
+        () => this.cropLast(this.state.selected)
+      );
     });
     // .catch(e => alert(e));
   }
