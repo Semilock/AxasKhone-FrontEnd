@@ -98,6 +98,7 @@ class Login extends Component {
                 value={this.state.email}
                 onChangeText={this.HandleChange('email')}
                 onSubmitEditing={() => this.password.focus()}
+                maxLength={50}
               />
               {/* showing errors validation message */}
               {this.state.errors.email !== undefined ? (
@@ -127,6 +128,7 @@ class Login extends Component {
                 value={this.state.password}
                 ref={input => (this.password = input)}
                 onChangeText={this.HandleChange('password')}
+                maxLength={32}
               />
               {/* showing errors validation message */}
               {this.state.errors.password !== undefined ? (

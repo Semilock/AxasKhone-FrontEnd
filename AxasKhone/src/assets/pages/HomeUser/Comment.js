@@ -6,11 +6,7 @@ import { connect } from 'react-redux';
 class FavoriteBox extends Component {
   constructor() {
     super();
-    this.state = {
-      FavoriteItem: undefined,
-      limit: 6,
-      offset: 0
-    };
+    this.state = {};
   }
 
   render() {

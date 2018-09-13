@@ -114,6 +114,7 @@ class Register extends Component {
                 value={this.state.email}
                 onChangeText={this.HandleChange('email')}
                 underlineColorAndroid="transparent"
+                maxLength={50}
               />
               {/* showing errors validation message */}
               {this.state.errors.email !== undefined ? (
@@ -134,6 +135,7 @@ class Register extends Component {
                 value={this.state.password}
                 underlineColorAndroid="transparent"
                 onChangeText={this.HandleChange('password')}
+                maxLength={32}
               />
               {/* showing errors validation message */}
               {this.state.errors.password !== undefined ? (
@@ -156,6 +158,7 @@ class Register extends Component {
                 value={this.state.passwordConfirm}
                 onChangeText={this.HandleChange('passwordConfirm')}
                 underlineColorAndroid="transparent"
+                maxLength={32}
               />
               {/* showing errors validation message */}
               {this.state.errors.passwordConfirm !== undefined ? (
