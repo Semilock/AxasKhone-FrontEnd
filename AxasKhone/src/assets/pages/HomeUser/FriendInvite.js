@@ -36,6 +36,10 @@ class FriendInvite extends Component {
     )
   };
 
+  componentDidMount() {
+    this.FetchContacts();
+  }
+
   FetchContacts = () => {
     Contacts.getAll((err, contacts) => {
       if (err) throw err;
@@ -54,7 +58,7 @@ class FriendInvite extends Component {
           allContac = [...allContac, contact];
         }
       });
-      Reactotron.warn(allContac);
+      // Reactotron.warn({ contact_list: allContac });
       this.props.getContact(allContac);
     });
   };
@@ -62,7 +66,10 @@ class FriendInvite extends Component {
   render() {
     return (
       <View>
-        <Text onPress={this.FetchContacts}>ffff</Text>
+        <Text>
+          salam
+          {this.props.contacts}
+        </Text>
       </View>
     );
   }
@@ -76,12 +83,13 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   const { contacts } = state.contact;
+  // const contacts = state.contact.contacts;
   return {
     contacts
   };
 };
 
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps
 )(FriendInvite);
