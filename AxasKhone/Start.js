@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AuthStack from './src/assets/pages/Auth';
-import ProfileScreen from './src/components/ProfileScreen';
+// import ProfileScreen from './src/components/ProfileScreen';
+import Screens from './src/components/Screens';
 
 class Start extends Component {
   render() {
@@ -15,11 +16,7 @@ class Start extends Component {
           textStyle={{ color: '#fff' }}
           overlayColor="rgba(0, 0, 0, 0.75)"
         />
-        {this.props.isAuthenticated === true ? (
-          <ProfileScreen />
-        ) : (
-          <AuthStack />
-        )}
+        {this.props.isAuthenticated === true ? <Screens /> : <AuthStack />}
       </View>
     );
   }
