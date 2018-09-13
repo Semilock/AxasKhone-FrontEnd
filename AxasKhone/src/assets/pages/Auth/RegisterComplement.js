@@ -135,6 +135,7 @@ class RegisterComplement extends Component {
               value={this.state.username}
               underlineColorAndroid="transparent"
               onChangeText={this.HandleChange('username')}
+              maxLength={30}
             />
             {/* showing errors validation message */}
             {this.state.errors.username !== undefined ? (
@@ -146,6 +147,7 @@ class RegisterComplement extends Component {
               value={this.state.fullname}
               underlineColorAndroid="transparent"
               onChangeText={this.HandleChange('fullname')}
+              maxLength={30}
             />
             <TextInput
               style={styles.inputText}
@@ -153,6 +155,7 @@ class RegisterComplement extends Component {
               editable={false}
               value={this.state.email}
               underlineColorAndroid="transparent"
+              maxLength={50}
             />
             <TextInput
               style={[styles.inputText, { height: 150 }]}
@@ -162,6 +165,7 @@ class RegisterComplement extends Component {
               onChangeText={this.HandleChange('bio')}
               multiline
               numberOfLines={4}
+              maxLength={190}
             />
             <TouchableOpacity activeOpacity={0.8} onPress={this.NextStep}>
               <Text style={styles.loginButton}>تکمیل اطلاعات</Text>

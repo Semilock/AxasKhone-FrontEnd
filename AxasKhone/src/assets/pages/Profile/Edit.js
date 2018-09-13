@@ -154,6 +154,7 @@ class Edit extends Component {
               value={this.state.fullname}
               onChangeText={this.HandleChange('fullname')}
               underlineColorAndroid="transparent"
+              maxLength={45}
             />
             <View style={styles.holderTextInput}>
               <Text>{this.props.email}</Text>
@@ -168,6 +169,7 @@ class Edit extends Component {
               underlineColorAndroid="transparent"
               multiline
               numberOfLines={4}
+              maxLength={190}
             />
             {/* {this.props.profileEditStatus !== undefined ? (
               <View

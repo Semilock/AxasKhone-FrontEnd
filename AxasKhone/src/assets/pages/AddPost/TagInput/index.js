@@ -109,6 +109,7 @@ class Tags extends React.Component {
                 onChangeText={this.onChangeText}
                 underlineColorAndroid="transparent"
                 placeholder={this.props.placeholder}
+                maxLength={90}
               />
             </View>
           )}

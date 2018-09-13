@@ -91,6 +91,7 @@ class PassChange extends Component {
             value={this.state.oldPassword}
             onChangeText={this.HandleChange('oldPassword')}
             underlineColorAndroid="transparent"
+            maxLength={32}
           />
           <TextInput
             style={styles.inputText}
@@ -99,6 +100,7 @@ class PassChange extends Component {
             value={this.state.newPassword}
             onChangeText={this.HandleChange('newPassword')}
             underlineColorAndroid="transparent"
+            maxLength={32}
           />
 
           <View style={[{ justifyContent: 'center' }]}>
