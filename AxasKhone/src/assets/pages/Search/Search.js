@@ -31,9 +31,9 @@ import PersonsTag from './PersonsTag';
 import searchActions from '../../../actions/search';
 
 class Search extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     header: null
-  };
+  });
 
   renderPersons = ({ item }) => {
     return <PersonsTag person={item} />;

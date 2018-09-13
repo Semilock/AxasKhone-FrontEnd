@@ -53,6 +53,35 @@ const searchByUser = user => {
     return { type: searchConst.SEARCH_USER_FAILURE, error };
   }
 };
-const searchActions = { search };
+
+const getTagPostItems = (tag, limit, offset) => {
+  return dispatch => {
+    dispatch(request());
+    return searchService
+      .getTagItems(tag, limit, offset)
+      .then(res => {
+        dispatch(success(res.data.results));
+      })
+      .catch(err => {
+        dispatch(failure(err.data));
+      });
+  };
+  function request() {
+    return { type: searchConst.SEARCH_TAG_POST_ITEMS_REQUEST };
+  }
+  function success(items) {
+    return { type: searchConst.SEARCH_TAG_POST_ITEMS_SUCCESS, items };
+  }
+  function failure(error) {
+    return { type: searchConst.SEARCH_TAG_POST_ITEMS_FAILURE, error };
+  }
+};
+const refreshTagPostItems = () => {
+  return dispatch => {
+    dispatch({ type: searchConst.REFRESH_TAG_POST_ITEMS });
+  };
+};
+
+const searchActions = { search, getTagPostItems, refreshTagPostItems };
 
 export default searchActions;

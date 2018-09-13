@@ -1,7 +1,9 @@
 import searchConst from '../constants/searchConst';
 
 const searchInitialState = {
+  isFetching: false,
   tags: undefined,
+  tagPostItems: undefined,
   users: undefined,
   tagErrors: undefined,
   userErrors: undefined
@@ -47,6 +49,34 @@ export const search = (state = searchInitialState, action) => {
         ...state,
         isFetching: false,
         userErrors: action.error
+      };
+
+    case searchConst.SEARCH_TAG_POST_ITEMS_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case searchConst.SEARCH_TAG_POST_ITEMS_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        // tagPostItems: action.items
+        tagPostItems:
+          state.tagPostItems !== undefined
+            ? state.tagPostItems.concat(action.items)
+            : action.items
+      };
+    case searchConst.SEARCH_TAG_POST_ITEMS_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        tagErrors: action.error
+      };
+
+    case searchConst.REFRESH_TAG_POST_ITEMS:
+      return {
+        ...state,
+        tagPostItems: undefined
       };
 
     default:

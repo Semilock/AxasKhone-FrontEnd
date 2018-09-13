@@ -40,6 +40,9 @@ const routes = {
     },
     get usersSearch() {
       return `${this.basePath}names/search/`;
+    },
+    get tagSearchItems() {
+      return `${this.basePath}tags/list_posts/?tag`;
     }
   }
 };

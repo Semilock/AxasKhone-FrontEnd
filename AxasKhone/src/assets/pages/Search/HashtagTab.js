@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import { Icon } from 'native-base';
+import { withNavigation } from 'react-navigation';
 
-export default class HashtagTab extends Component {
+class HashtagTab extends Component {
   constructor() {
     super();
     this.state = {
@@ -10,6 +11,11 @@ export default class HashtagTab extends Component {
     };
   }
 
+  openTag = () => {
+    this.props.navigation.navigate('Tags', {
+      tag: this.props.hashTag
+    });
+  };
   render() {
     return (
       // const favoriteBox = this.props.favoriteBox;
@@ -33,18 +39,20 @@ export default class HashtagTab extends Component {
         >
           <Icon type="FontAwesome" name="hashtag" style={{ fontSize: 15 }} />
         </View>
-        <View
-          style={{
-            flex: 2,
-            flexDirection: 'column',
-            paddingRight: 5,
-            justifyContent: 'center'
-          }}
-        >
-          <Text style={{ textAlign: 'right', fontSize: 18 }}>
-            {this.props.hashTag}
-          </Text>
-        </View>
+        <TouchableOpacity onPress={this.openTag}>
+          <View
+            style={{
+              flex: 2,
+              flexDirection: 'column',
+              paddingRight: 5,
+              justifyContent: 'center'
+            }}
+          >
+            <Text style={{ textAlign: 'right', fontSize: 18 }}>
+              {this.props.hashTag}
+            </Text>
+          </View>
+        </TouchableOpacity>
         <View
           style={{
             flex: 2,
@@ -56,3 +64,4 @@ export default class HashtagTab extends Component {
     );
   }
 }
+export default withNavigation(HashtagTab);
