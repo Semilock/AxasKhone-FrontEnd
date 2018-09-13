@@ -203,9 +203,21 @@ const changePassword = user => {
 const addPost = post => {
   return dispatch => {
     const data = new FD();
-    data.append('caption', post.caption);
-    data.append('tag_string', post.tag_string);
-    data.append('location', post.location);
+    if (post.caption !== undefined && post.caption !== null) {
+      data.append('caption', post.caption);
+    } else {
+      data.append('caption', '');
+    }
+    if (post.tag_string !== undefined && post.tag_string !== null) {
+      data.append('tag_string', post.tag_string.join(' '));
+    } else {
+      data.append('tag_string', '');
+    }
+    if (post.location !== undefined && post.location !== null) {
+      data.append('location', post.location);
+    } else {
+      data.append('location', '');
+    }
     //TODO: checking file mime just to be a valid image mimes!
     if (post.image.uri !== undefined) {
       data.append('image', {

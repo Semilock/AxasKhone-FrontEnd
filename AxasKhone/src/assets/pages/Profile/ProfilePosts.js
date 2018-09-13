@@ -13,6 +13,7 @@ class Photo extends Component {
   }
 
   componentDidMount() {
+    this.props.refreshProfilePosts();
     this.getPosts(this.state.limit, this.state.offset);
   }
 

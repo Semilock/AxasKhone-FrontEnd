@@ -24,20 +24,28 @@ import {
   Right,
   Thumbnail
 } from 'native-base';
+import { connect } from 'react-redux';
 import navigationOptions from 'react-navigation';
 import HashtagTab from './HashtagTab';
 import PersonsTag from './PersonsTag';
+import searchActions from '../../../actions/search';
 
-export default class Search extends Component {
-  static navigationOptions = {
+class Search extends Component {
+  static navigationOptions = ({ navigation }) => ({
     header: null
+  });
+
+  renderPersons = ({ item }) => {
+    return <PersonsTag person={item} />;
   };
 
-  // renderPersons = ({ item }) => {
-  //   return <HashtagTab favoriteBox={item} />;
+  renderHashtag = ({ item }) => {
+    return <HashtagTab hashTag={item} />;
+  };
 
-  // renderHashtag = ({ item }) => {
-  //   return <PersonsTag favoriteBox={item} />;
+  searchTag = tag => {
+    this.props.searchByTag(tag);
+  };
 
   render() {
     return (
@@ -47,25 +55,34 @@ export default class Search extends Component {
             <StatusBar backgroundColor="rgb(63, 81, 181)" />
             <Item>
               <Icon name="ios-people" />
-              <Input placeholder="جستجو" />
+              <Input
+                placeholder="جستجو"
+                onChangeText={text => {
+                  this.props.search(text);
+                }}
+              />
               <Icon name="ios-search" />
             </Item>
           </Header>
           <Tabs>
             <Tab heading="هشتگ">
               <Container>
-                {/* <FlatList
-                  data={this.props.favoriteList}
-                  renderItem={this.renderHashtag}
-                /> */}
+                {this.props.tags !== undefined ? (
+                  <FlatList
+                    data={this.props.tags}
+                    renderItem={this.renderHashtag}
+                  />
+                ) : null}
               </Container>
             </Tab>
             <Tab heading="کاربران">
               <View>
-                {/* <FlatList
-                  data={this.props.favoriteList}
-                  renderItem={this.renderPersons}
-                /> */}
+                {this.props.users !== undefined ? (
+                  <FlatList
+                    data={this.props.users}
+                    renderItem={this.renderPersons}
+                  />
+                ) : null}
               </View>
             </Tab>
           </Tabs>
@@ -74,3 +91,21 @@ export default class Search extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    search: input => dispatch(searchActions.search(input))
+  };
+};
+const mapStateToProps = state => {
+  const { tags, users } = state.search;
+  return {
+    tags,
+    users
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);
