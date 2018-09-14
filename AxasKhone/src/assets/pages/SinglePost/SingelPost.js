@@ -1,0 +1,260 @@
+import React, { Component } from 'react';
+import {
+  View,
+  StatusBar,
+  TouchableOpacity,
+  FlatList,
+  TextInput,
+  ScrollView,
+  Image,
+  ToastAndroid
+} from 'react-native';
+import {
+  Card,
+  CardItem,
+  Thumbnail,
+  Text,
+  Button,
+  Icon,
+  Left,
+  Right,
+  Body,
+  List,
+  ListItem,
+  Content
+} from 'native-base';
+import Reactotoron from 'reactotron-react-native';
+import { connect } from 'react-redux';
+import Comment from './Comment';
+import userProfile from '../../../actions/userProfile';
+
+class SingelPost extends Component {
+  // static navigationOptions = {
+  //   header: null
+  // };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      commentText: undefined,
+      post: undefined,
+      limit: 5,
+      offset: 0
+    };
+  }
+
+  componentWillMount() {
+    this.setState({
+      post: this.props.post
+    });
+  }
+
+  componentDidMount() {
+    this.props.refreshComments();
+    this.getComments();
+  }
+
+  getComments = () => {
+    this.props.getComments(
+      this.state.post.pk,
+      this.state.limit,
+      this.state.offset
+    );
+    this.setState(prevState => ({
+      offset: prevState.offset + prevState.limit
+    }));
+  };
+
+  renderComment = ({ item }) => {
+    return <Comment comment={item} />;
+  };
+
+  sendComment = () => {
+    this.props
+      .sendComment(this.state.post.pk, this.state.commentText)
+      .then(res => {
+        ToastAndroid.show(res, ToastAndroid.SHORT);
+      });
+  };
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={{ backgroundColor: 'white', flex: 1 }}>
+            <Card>
+              <CardItem>
+                <Left>
+                  <Button transparent style={{ paddingLeft: 15 }}>
+                    <Icon name="apps" />
+                  </Button>
+                  <Body>
+                    <Text style={{ marginRight: 20, textAlign: 'right' }}>
+                      {this.state.post.profile.fullname}
+                    </Text>
+                    <Text style={{ textAlign: 'right' }} note>
+                      2 روز پیش
+                    </Text>
+                  </Body>
+
+                  <Thumbnail
+                    source={{
+                      uri: `http://${this.state.post.profile.profile_picture}`
+                    }}
+                  />
+                </Left>
+              </CardItem>
+              <CardItem cardBody>
+                <Image
+                  source={{ uri: this.state.post.image }}
+                  style={{ height: 200, width: null, flex: 1 }}
+                />
+              </CardItem>
+              <CardItem>
+                <Text style={{ textAlign: 'right' }}>
+                  {this.state.post.caption}
+                </Text>
+              </CardItem>
+              <CardItem>
+                <Left>
+                  <Button transparent style={{ paddingLeft: 15 }}>
+                    <Icon active name="thumbs-up" />
+                    <Text>{this.state.post.like_number}</Text>
+                  </Button>
+                  <Button transparent style={{ paddingLeft: 15 }}>
+                    <Icon active name="chatbubbles" />
+                    <Text>{this.state.post.comment_number}</Text>
+                  </Button>
+                </Left>
+                <Right>
+                  <Text style={{ textAlign: 'right' }}>
+                    {this.state.post.location}
+                  </Text>
+                </Right>
+              </CardItem>
+              <CardItem>
+                <View style={{ flex: 1 }}>
+                  {this.props.postComments !== undefined ? (
+                    <FlatList
+                      data={this.props.postComments}
+                      renderItem={this.renderFavoriteBox}
+                      renderItem={this.renderComment}
+                    />
+                  ) : null}
+                </View>
+              </CardItem>
+            </Card>
+          </View>
+        </ScrollView>
+        <View style={{ height: 50 }}>
+          <View
+            style={{
+              height: 50,
+              // backgroundColor: 'orange',
+              flexDirection: 'row-reverse',
+              paddingLeft: 15
+            }}
+          >
+            <View
+              style={{
+                // backgroundColor: 'yellow',
+                justifyContent: 'center',
+                marginHorizontal: 5
+              }}
+            >
+              <Image
+                borderRadius={20}
+                style={{ width: 40, height: 40 }}
+                source={{ uri: `http://${this.props.profilePic}` }}
+              />
+            </View>
+            <View
+              style={{
+                // backgroundColor: 'red',
+                flex: 8,
+                flexDirection: 'column',
+                paddingRight: 5,
+                justifyContent: 'center'
+              }}
+            >
+              <TextInput
+                style={{
+                  borderColor: 'gray',
+                  borderWidth: 1,
+                  borderRadius: 5,
+                  fontSize: 9,
+                  height: 40
+                }}
+                onChangeText={text => this.setState({ commentText: text })}
+                maxLength={500}
+                multiline
+                underlineColorAndroid="transparent"
+                placeholder="نظر خود را وارد کنید .."
+              />
+            </View>
+            <View
+              style={{
+                flex: 2,
+                justifyContent: 'center',
+                alignContent: 'center'
+              }}
+            >
+              <TouchableOpacity activeOpacity={0.8} onPress={this.sendComment}>
+                <View
+                  style={{
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                    padding: 5,
+                    borderColor: 'gray',
+                    borderWidth: 1,
+                    backgroundColor: 'gray'
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      textAlign: 'center',
+                      color: 'white',
+                      height: 20,
+                      marginTop: 5
+                    }}
+                  >
+                    ارسال
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getComments: (postId, limit, offset) =>
+      dispatch(userProfile.getComments(postId, limit, offset)),
+    refreshComments: () => dispatch(userProfile.refreshComments()),
+    sendComment: (postId, text) =>
+      dispatch(userProfile.sendComment(postId, text))
+  };
+};
+const mapStateToProps = state => {
+  const { isFetching, isAuthenticated, token } = state.auth;
+  const { profilePic, postComments } = state.profile;
+  const profileIsFetching = state.profile.isFetching;
+  return {
+    isFetching,
+    isAuthenticated,
+    token,
+    profilePic,
+    profileIsFetching,
+    postComments
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingelPost);
