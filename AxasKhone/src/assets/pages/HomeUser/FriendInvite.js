@@ -179,10 +179,10 @@ class ContactItem extends Component {
                   marginHorizontal: 15,
                   padding: 5,
                   backgroundColor: [
-                    this.state.mode === 'follow' ? 'green' : null,
-                    this.state.mode === 'unfollow' ? 'gray' : null,
-                    this.state.mode === 'invite' ? 'blue' : null,
-                    this.state.mode === 'invited' ? 'gray' : null
+                    this.state.mode === 'follow' ? 'rgb(0,70,40)' : null,
+                    this.state.mode === 'unfollow' ? 'rgb(70,70,70)' : null,
+                    this.state.mode === 'invite' ? 'rgb(0,0,100)' : null,
+                    this.state.mode === 'invited' ? 'rgb(70,70,70)' : null
                   ].filter(item => {
                     if (item !== null) {
                       return item;
