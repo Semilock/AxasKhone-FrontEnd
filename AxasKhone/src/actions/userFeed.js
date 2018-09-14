@@ -1,3 +1,4 @@
+import Reactotron from 'reactotron-react-native';
 import { userService } from '../services/userAuth';
 import feedConst from '../constants/feedConst';
 
@@ -29,7 +30,7 @@ const sendContact = listContact => {
     dispatch(request());
     userService.sendContact(listContact).then(
       res => {
-        dispatch(success(res.data.status));
+        dispatch(success(res.data.contacts));
       },
       error => {
         const { status } = error.response;
