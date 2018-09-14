@@ -24,6 +24,9 @@ const routes = {
     get homeFeed() {
       return `${this.basePath}home`;
     },
+    get follow() {
+      return `${this.basePath}follow/`;
+    },
     get favorites() {
       return {
         basePath: 'user/favorites/',

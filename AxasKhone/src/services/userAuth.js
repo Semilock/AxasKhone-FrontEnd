@@ -107,6 +107,22 @@ const addPost = post => {
   });
 };
 
+const getComments = (postId, limit, offset) => {
+  return axiosInstance.get(
+    `${routes.user.post}/${postId}/comment/?limit=${limit}&offset=${offset}`
+  );
+};
+
+const sendComment = (postId, text = '') => {
+  return axiosInstance.post(`${routes.user.post}/${postId}/comment/`, { text });
+};
+
+const follow = username => {
+  return axiosInstance.post(`${routes.basePath}/${routes.user.follow}`, {
+    username
+  });
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -132,5 +148,8 @@ export const userService = {
   getHomeFeeds,
   changePassword,
   sendContact,
-  addPost
+  addPost,
+  follow,
+  getComments,
+  sendComment
 };

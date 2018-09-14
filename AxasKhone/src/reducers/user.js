@@ -12,7 +12,10 @@ const profileInitialState = {
   errors: undefined,
   favoriteList: undefined,
   profileEditStatus: undefined,
-  addPostStatus: false
+  addPostStatus: false,
+  followRequestStatus: undefined,
+  postComments: undefined,
+  sendCommentStatus: undefined
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
@@ -188,6 +191,69 @@ export const profile = (state = profileInitialState, action) => {
         ...state,
         isFetching: false
       };
+
+    case profileConst.POST_COMMENT_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.POST_COMMENT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        postComments:
+          state.postComments !== undefined
+            ? state.postComments.concat(action.comments)
+            : action.comments
+      };
+
+    case profileConst.POST_COMMENT_FAILURE:
+      return {
+        ...state,
+        isFetching: false
+      };
+
+    case profileConst.ADD_COMMENT_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case profileConst.ADD_COMMENT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        sendCommentStatus: action.response
+      };
+
+    case profileConst.ADD_COMMENT_FAILURE:
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.error
+      };
+
+    case profileConst.REFRESH_COMMENTS:
+      return {
+        ...state,
+        postComments: undefined
+      };
+
+    case profileConst.FOLLOW_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+        followRequestStatus: undefined
+      };
+
+    case profileConst.FOLLOW_RESPONSE:
+      return {
+        ...state,
+        isFetching: false,
+        followRequestStatus: action.response
+      };
+
     case profileConst.PROFILE_LOGOUT:
       return profileInitialState;
     default:
