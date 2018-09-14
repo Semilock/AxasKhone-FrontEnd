@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import {
   Card,
   CardItem,
@@ -11,8 +11,20 @@ import {
   Right,
   Body
 } from 'native-base';
+import Reactotron from 'reactotron-react-native';
+import { withNavigation } from 'react-navigation';
 
-export default class Feed extends Component {
+class Feed extends Component {
+  openPost = () => {
+    this.props.navigation.navigate('SinglePost', {
+      post: this.props.feeds
+    });
+  };
+  openUserProfile = () => {
+    this.props.navigation.navigate('OtherUserProfile', {
+      profile: this.props.feeds.profile
+    });
+  };
   render() {
     const feed = this.props.feeds;
     return (
@@ -23,31 +35,30 @@ export default class Feed extends Component {
               <Icon name="apps" />
             </Button>
             <Body>
-              <Text style={{ marginRight: 20, textAlign: 'right' }}>
-                {feed.profile.fullname}
-              </Text>
+              <TouchableOpacity onPress={this.openUserProfile}>
+                <Text style={{ marginRight: 20, textAlign: 'right' }}>
+                  {feed.profile.fullname}
+                </Text>
+              </TouchableOpacity>
               <Text style={{ textAlign: 'right' }} note>
                 2 روز پیش
               </Text>
             </Body>
-
-            <Thumbnail
-              source={{ uri: `http://${feed.profile.profile_picture}` }}
-            />
-            {/* <Thumbnail source={require('../../img/id1.jpg')} /> */}
+            <TouchableOpacity onPress={this.openUserProfile}>
+              <Thumbnail
+                source={{ uri: `http://${feed.profile.profile_picture}` }}
+              />
+            </TouchableOpacity>
           </Left>
         </CardItem>
-        <CardItem cardBody>
-          {/* <Image
-                source={{ uri: 'Image URL' }}
-                style={{ height: 200, width: null, flex: 1 }}
-              /> */}
-          <Image
-            // source={require('../../img/id1.jpg')}
-            source={{ uri: feed.image }}
-            style={{ height: 200, width: null, flex: 1 }}
-          />
-        </CardItem>
+        <TouchableOpacity onPress={this.openPost}>
+          <CardItem cardBody>
+            <Image
+              source={{ uri: feed.image }}
+              style={{ height: 200, width: null, flex: 1 }}
+            />
+          </CardItem>
+        </TouchableOpacity>
         <CardItem>
           <Text style={{ textAlign: 'right' }} numberOfLines={3}>
             {feed.caption}
@@ -57,18 +68,24 @@ export default class Feed extends Component {
           <Left>
             <Button transparent style={{ paddingLeft: 15 }}>
               <Icon active name="thumbs-up" />
-              <Text>12</Text>
+              <Text>{feed.like_number}</Text>
             </Button>
-            <Button transparent style={{ paddingLeft: 15 }}>
+            <Button
+              transparent
+              style={{ paddingLeft: 15 }}
+              onPress={this.openPost}
+            >
               <Icon active name="chatbubbles" />
-              <Text>4</Text>
+              <Text>{feed.comment_number}</Text>
             </Button>
           </Left>
           <Right>
-            <Text style={{ textAlign: 'right' }}>سهروردی شمالی</Text>
+            <Text style={{ textAlign: 'right' }}>{feed.location}</Text>
           </Right>
         </CardItem>
       </Card>
     );
   }
 }
+
+export default withNavigation(Feed);
