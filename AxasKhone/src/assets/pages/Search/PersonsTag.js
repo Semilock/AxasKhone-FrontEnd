@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ToastAndroid
+} from 'react-native';
+import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import profileActions from '../../../actions/userProfile';
 
-export default class PersonsTag extends Component {
+class PersonsTag extends Component {
   constructor() {
     super();
     this.state = {
+      person: undefined,
       profilePic: undefined,
       username: undefined,
       fullname: undefined,
@@ -15,12 +25,20 @@ export default class PersonsTag extends Component {
   componentWillReceiveProps() {
     const { person } = this.props;
     this.setState({
+      // person,
       profilePic: person.profile_picture,
       username: person.main_username,
       fullname: person.fullname,
       mode: person.is_following
     });
   }
+
+  followUser = () => {
+    this.props.follow(this.state.username).then(res => {
+      ToastAndroid.show(res, ToastAndroid.SHORT);
+      this.setState(prevState => ({ mode: !prevState.mode }));
+    });
+  };
 
   render() {
     return (
@@ -53,12 +71,20 @@ export default class PersonsTag extends Component {
               justifyContent: 'center'
             }}
           >
-            <Text style={{ textAlign: 'right', fontSize: 15 }}>
-              {this.state.username}
-            </Text>
-            <Text style={{ textAlign: 'right', fontSize: 9, color: 'gray' }}>
-              {this.state.fullname}
-            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('OtherUserProfile', {
+                  profile: this.props.person
+                })
+              }
+            >
+              <Text style={{ textAlign: 'right', fontSize: 15 }}>
+                {this.state.username}
+              </Text>
+              <Text style={{ textAlign: 'right', fontSize: 9, color: 'gray' }}>
+                {this.state.fullname}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
@@ -67,7 +93,7 @@ export default class PersonsTag extends Component {
               alignContent: 'center'
             }}
           >
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.followUser}>
               <View
                 style={{
                   borderRadius: 5,
@@ -111,3 +137,21 @@ export default class PersonsTag extends Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    follow: username => dispatch(profileActions.follow(username))
+  };
+};
+const mapStateToProps = state => {
+  const { isFetching, isAuthenticated, token } = state.auth;
+  return {
+    isFetching,
+    isAuthenticated,
+    token
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(PersonsTag));
