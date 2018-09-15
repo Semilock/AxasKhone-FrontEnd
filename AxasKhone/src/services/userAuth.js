@@ -45,6 +45,19 @@ const getProfilePosts = (limit, offset) => {
   );
 };
 
+const addToFavorites = (postId, favorite) => {
+  return axiosInstance.post(`${routes.user.addToFavorites}`, {
+    post_id: postId,
+    favorite
+  });
+};
+
+const removeFavorite = postId => {
+  return axiosInstance.post(`${routes.user.removeFavorites}`, {
+    favorite_id: postId
+  });
+};
+
 const getProfileFavoriteList = (limit, offset) => {
   return axiosInstance.get(
     `${routes.basePath}/${
@@ -151,5 +164,7 @@ export const userService = {
   addPost,
   follow,
   getComments,
-  sendComment
+  sendComment,
+  addToFavorites,
+  removeFavorite
 };

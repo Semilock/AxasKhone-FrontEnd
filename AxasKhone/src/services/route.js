@@ -38,6 +38,12 @@ const routes = {
         }
       };
     },
+    get addToFavorites() {
+      return `${this.basePath}add_to_favorites/`;
+    },
+    get removeFavorites() {
+      return `${this.basePath}remove_from_favorites/`;
+    },
     get tagsSearch() {
       return `${this.basePath}tags/search/`;
     },
