@@ -94,6 +94,12 @@ export const profile = (state = profileInitialState, action) => {
         errors: action.error
       };
 
+    case profileConst.REFRESH_PROFILE_FAVORITE_LIST:
+      return {
+        ...state,
+        favoriteList: undefined
+      };
+
     case profileConst.FAVORITE_ITEMS_REQUEST:
       return {
         ...state,

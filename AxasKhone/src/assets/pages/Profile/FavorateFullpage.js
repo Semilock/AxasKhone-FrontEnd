@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
+import DeleteModal from '../../../components/DeleteModal';
 
 class FavorateFullpage extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -25,7 +26,9 @@ class FavorateFullpage extends Component {
       limit: 6,
       FavoriteItem: undefined,
       favoriteId: undefined,
-      favoriteTitle: undefined
+      favoriteTitle: undefined,
+      isModalVisible: false,
+      removeFavorite: false
     };
   }
 
@@ -44,6 +47,10 @@ class FavorateFullpage extends Component {
     );
   }
 
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
   getFavoriteListItem = (id, limit, offset) => {
     this.props.getProfileFavoriteListItem(id, limit, offset).then(res => {
       this.setState({ FavoriteItem: res });
@@ -51,6 +58,12 @@ class FavorateFullpage extends Component {
     this.setState(prevState => ({
       offset: prevState.offset + prevState.limit
     }));
+  };
+
+  openPost = post => {
+    this.props.navigation.navigate('SinglePost', {
+      post
+    });
   };
 
   getMore = () => {
@@ -78,7 +91,17 @@ class FavorateFullpage extends Component {
     // const data = this.state.data;
     return (
       <View style={styles.container}>
+        {this.state.removeFavorite === true
+          ? this.props.navigation.pop()
+          : null}
         <StatusBar backgroundColor="rgb(25, 50, 75)" />
+        <DeleteModal
+          favoriteId={this.state.favoriteId}
+          DeleteFavoriteAction={this.props.removeFavorite}
+          isModalVisible={this.state.isModalVisible}
+          BackdropFunc={() => this.setState({ isModalVisible: false })}
+          isDeleteFavorite={() => this.setState({ removeFavorite: true })}
+        />
         <View style={styles.navBarContainer}>
           <View style={{ width: 25 }}>
             <TouchableOpacity onPress={() => this.props.navigation.pop()}>
@@ -93,7 +116,7 @@ class FavorateFullpage extends Component {
             {this.state.favoriteTitle}
           </Text>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Setting')}
+            onPress={this._toggleModal}
             style={{ marginRight: 15 }}
           >
             <Icon
@@ -103,9 +126,7 @@ class FavorateFullpage extends Component {
               color="rgb(239, 239, 239)"
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Setting')}
-          >
+          <TouchableOpacity onPress={() => alert('ADD')}>
             <Icon
               style={{}}
               name="md-add"
@@ -133,7 +154,10 @@ class FavorateFullpage extends Component {
                     backgroundColor: 'gray'
                   }}
                 >
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.openPost(item)}
+                  >
                     <Image
                       style={{ width: '100%', height: 120 }}
                       resizeMode="cover"
@@ -153,7 +177,8 @@ class FavorateFullpage extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     getProfileFavoriteListItem: (id, limit, offset) =>
-      dispatch(profileActions.getProfileFavoriteListItems(id, limit, offset))
+      dispatch(profileActions.getProfileFavoriteListItems(id, limit, offset)),
+    removeFavorite: postId => dispatch(profileActions.removeFavorite(postId))
     // ,refreshFavoriteItems: () => dispatch(profileActions.refreshFavoriteItems())
   };
 };

@@ -64,6 +64,56 @@ const getProfilePosts = (limit, offset) => {
   }
 };
 
+const addPostToFavorite = (postId, favorite) => {
+  return dispatch => {
+    dispatch(request());
+    userService
+      .addToFavorites(postId, favorite)
+      .then(res => {
+        dispatch(success(res.data.statuas));
+        dispatch(refreshProfileFavoriteList());
+        dispatch(getProfileFavoriteList(5, 0));
+      })
+      .catch(err => {
+        dispatch(failure(err.data.error));
+      });
+  };
+  function request() {
+    return { type: profileConst.ADD_FAVORITE_REQUEST };
+  }
+  function success(favorite) {
+    return { type: profileConst.ADD_FAVORITE_SUCCESS, favorite };
+  }
+  function failure(error) {
+    return { type: profileConst.ADD_FAVORITE_FAILURE, error };
+  }
+};
+
+const removeFavorite = postId => {
+  return dispatch => {
+    dispatch(request());
+    return userService
+      .removeFavorite(postId)
+      .then(res => {
+        dispatch(success(res.data.statuas));
+        dispatch(refreshProfileFavoriteList());
+        dispatch(getProfileFavoriteList(5, 0));
+      })
+      .catch(err => {
+        dispatch(failure(err.data.error));
+      });
+  };
+  function request() {
+    return { type: profileConst.REMOVE_FAVORITE_REQUEST };
+  }
+  function success(status) {
+    return { type: profileConst.REMOVE_FAVORITE_SUCCESS, status };
+  }
+  function failure(error) {
+    return { type: profileConst.REMOVE_FAVORITE_FAILURE, error };
+  }
+};
+
 const getProfileFavoriteList = (limit, offset) => {
   return dispatch => {
     dispatch(request());
@@ -85,6 +135,12 @@ const getProfileFavoriteList = (limit, offset) => {
   function failure(error) {
     return { type: profileConst.FAVORITE_LIST_FAILURE, error };
   }
+};
+
+const refreshProfileFavoriteList = () => {
+  return dispatch => {
+    dispatch({ type: profileConst.REFRESH_PROFILE_FAVORITE_LIST });
+  };
 };
 
 const getProfileFavoriteListItems = (id, limit, offset) => {
@@ -326,13 +382,16 @@ const profileActions = {
   getProfilePosts,
   refreshProfilePosts,
   getProfileFavoriteList,
+  refreshProfileFavoriteList,
   getProfileFavoriteListItems,
   changePassword,
   addPost,
   follow,
   getComments,
   sendComment,
-  refreshComments
+  refreshComments,
+  addPostToFavorite,
+  removeFavorite
 };
 
 export default profileActions;

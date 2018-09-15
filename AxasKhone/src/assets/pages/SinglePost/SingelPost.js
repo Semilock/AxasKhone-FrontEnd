@@ -27,6 +27,7 @@ import Reactotoron from 'reactotron-react-native';
 import { connect } from 'react-redux';
 import Comment from './Comment';
 import userProfile from '../../../actions/userProfile';
+import CModal from '../../../components/Modal';
 
 class SingelPost extends Component {
   // static navigationOptions = {
@@ -39,7 +40,8 @@ class SingelPost extends Component {
       commentText: undefined,
       post: undefined,
       limit: 5,
-      offset: 0
+      offset: 0,
+      isModalVisible: false
     };
   }
 
@@ -54,6 +56,10 @@ class SingelPost extends Component {
     this.getComments();
   }
 
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
   getComments = () => {
     this.props.getComments(
       this.state.post.pk,
@@ -65,6 +71,19 @@ class SingelPost extends Component {
     }));
   };
 
+  refreshComments = () => {
+    this.props.refreshComments();
+    this.setState(
+      {
+        offset: 0,
+        limit: 6
+      },
+      () => {
+        this.getComments();
+      }
+    );
+  };
+
   renderComment = ({ item }) => {
     return <Comment comment={item} />;
   };
@@ -73,6 +92,7 @@ class SingelPost extends Component {
     this.props
       .sendComment(this.state.post.pk, this.state.commentText)
       .then(res => {
+        this.getComments();
         ToastAndroid.show(res, ToastAndroid.SHORT);
       });
   };
@@ -81,11 +101,22 @@ class SingelPost extends Component {
     return (
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <CModal
+            postId={this.state.post.pk}
+            addFavoriteAction={this.props.addFavorite}
+            favoriteList={this.props.favoriteList}
+            isModalVisible={this.state.isModalVisible}
+            BackdropFunc={() => this.setState({ isModalVisible: false })}
+          />
           <View style={{ backgroundColor: 'white', flex: 1 }}>
             <Card>
               <CardItem>
                 <Left>
-                  <Button transparent style={{ paddingLeft: 15 }}>
+                  <Button
+                    transparent
+                    style={{ paddingLeft: 15 }}
+                    onPress={this._toggleModal}
+                  >
                     <Icon name="apps" />
                   </Button>
                   <Body>
@@ -137,8 +168,11 @@ class SingelPost extends Component {
                   {this.props.postComments !== undefined ? (
                     <FlatList
                       data={this.props.postComments}
-                      renderItem={this.renderFavoriteBox}
                       renderItem={this.renderComment}
+                      onEndReached={this.getComments}
+                      onEndReachedThreshold={0.5}
+                      refreshing={this.props.profileIsFetching}
+                      onRefresh={this.refreshComments}
                     />
                   ) : null}
                 </View>
@@ -237,12 +271,14 @@ const mapDispatchToProps = dispatch => {
       dispatch(userProfile.getComments(postId, limit, offset)),
     refreshComments: () => dispatch(userProfile.refreshComments()),
     sendComment: (postId, text) =>
-      dispatch(userProfile.sendComment(postId, text))
+      dispatch(userProfile.sendComment(postId, text)),
+    addFavorite: (postId, favorite) =>
+      dispatch(userProfile.addPostToFavorite(postId, favorite))
   };
 };
 const mapStateToProps = state => {
   const { isFetching, isAuthenticated, token } = state.auth;
-  const { profilePic, postComments } = state.profile;
+  const { profilePic, postComments, favoriteList } = state.profile;
   const profileIsFetching = state.profile.isFetching;
   return {
     isFetching,
@@ -250,7 +286,8 @@ const mapStateToProps = state => {
     token,
     profilePic,
     profileIsFetching,
-    postComments
+    postComments,
+    favoriteList
   };
 };
 
