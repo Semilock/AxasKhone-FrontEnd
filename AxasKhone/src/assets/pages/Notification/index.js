@@ -4,116 +4,134 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  TextInput
+  TextInput,
+  Image
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { Icon } from 'native-base';
+import { connect } from 'react-redux';
+import notificationActions from '../../../actions/userNotifications';
 
-export default class Notif extends Component {
-  state = {
-    isModalVisible: false
-  };
-
-  _toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+class Notif extends Component {
+  constructor() {
+    super();
+    this.state = {
+      fullname: 'null',
+      userId: 'null',
+      mode: 'accept',
+      profilePic:
+        'http://images.hamshahrionline.ir/images/2018/9/position24/18-9-10-151411.jpg'
+    };
+  }
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'yellow' }}>
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
-        <Modal
-          isVisible={this.state.isModalVisible}
-          style={{ alignSelf: 'center' }}
-          onBackdropPress={() => this.setState({ isModalVisible: false })}
+      <View>
+        <View
+          style={{
+            height: 50,
+            // backgroundColor: 'red',
+            flexDirection: 'row-reverse',
+            borderBottomColor: 'gray',
+            borderBottomWidth: 0.5
+          }}
         >
           <View
             style={{
-              width: 250,
-              height: 350,
-              backgroundColor: 'rgba(255,255,255,0.9)',
-              borderRadius: 5
+              // backgroundColor: 'yellow',
+              justifyContent: 'center',
+              marginHorizontal: 5
             }}
           >
-            <View
-              style={{
-                height: 60,
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
-                اضافه به علاقه مندی ها
-              </Text>
-              <Text style={{ fontSize: 11 }}>
-                یکی از برد های زیر را انتخاب کنید
-              </Text>
-            </View>
+            <Image
+              borderRadius={20}
+              style={{ width: 40, height: 40 }}
+              // source={{ uri: `http://${this.props.profilePic}` }}
+              source={{ uri: `${this.state.profilePic}` }}
+            />
+          </View>
+          <View
+            style={{
+              flex: 2,
+              flexDirection: 'column',
+              paddingRight: 5,
+              justifyContent: 'center'
+            }}
+          >
+            <Text style={{ textAlign: 'right', fontSize: 15 }}>
+              {this.state.userId}
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 2,
+              justifyContent: 'center',
+              alignContent: 'center'
+            }}
+          >
             <TouchableOpacity activeOpacity={0.8}>
               <View
                 style={{
-                  backgroundColor: 'rgba(200,200,200,1)',
-                  height: 40,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  justifyContent: 'space-around',
-                  flexDirection: 'row'
+                  borderRadius: 5,
+                  textAlign: 'center',
+                  marginHorizontal: 15,
+                  padding: 5,
+                  backgroundColor: [
+                    this.state.mode === 'follow' ? 'green' : null,
+                    this.state.mode === 'accept' ? 'rgb(50,50,50)' : null,
+                    this.state.mode === 'request' ? 'rgb(200,150,0)' : null
+                  ].filter(item => {
+                    if (item !== null) {
+                      return item;
+                    }
+                  })[0]
                 }}
               >
-                <TextInput
+                <Text
                   style={{
-                    height: 25,
-                    borderColor: 'gray',
-                    borderWidth: 0.5,
-                    width: 200,
-                    textAlign: 'right'
+                    alignContent: 'center',
+                    textAlign: 'center',
+
+                    color: 'white'
                   }}
-                  onChangeText={text => this.setState({ text })}
-                  value={this.state.text}
-                  placeholder=" ساخت برد جدید"
-                  underlineColorAndroid="transparent"
-                  maxLength={20}
-                  fontSize={7}
-                />
-                <TouchableOpacity>
-                  <Icon
-                    style={{ fontSize: 22, paddingRight: 10 }}
-                    name="add-circle"
-                  />
-                </TouchableOpacity>
+                >
+                  {
+                    [
+                      this.state.mode === 'follow' ? 'دنبال کردن' : null,
+                      this.state.mode === 'accept' ? 'پذیرش' : null,
+                      this.state.mode === 'request' ? 'درخواست داده شد' : null
+                    ].filter(item => {
+                      if (item !== null) {
+                        return item;
+                      }
+                    })[0]
+                  }
+                </Text>
               </View>
             </TouchableOpacity>
-            <FlatList
-              data={this.props.favoriteList}
-              renderItem={this.renderFavoriteBox}
-              // renderItem={({ item }) => <Text>sam</Text>}
-            />
           </View>
-        </Modal>
+        </View>
       </View>
     );
   }
 }
 
-class Quote extends Component {
-  render() {
-    return (
-      <TouchableOpacity activeOpacity={0.5}>
-        <View
-          style={{
-            borderBottomColor: 'rgba(200,200,200,1)',
-            borderBottomWidth: 0.5,
-            height: 40,
-            justifyContent: 'center',
-            paddingHorizontal: 10
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: 'bold' }}>
-            عکس های قدیمی دوستان
-          </Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-}
+const mapDispatchToProps = dispatch => {
+  return {
+    getContact: (limit, offset) =>
+      dispatch(notificationActions.getNotification(limit, offset))
+  };
+};
+
+const mapStateToProps = state => {
+  const { contacts } = state.contact;
+  // const contacts = state.contact.contacts;
+  return {
+    contacts
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Notif);

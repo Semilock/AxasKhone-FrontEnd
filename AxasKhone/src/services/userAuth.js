@@ -135,6 +135,14 @@ const handleResponse = response => {
   });
 };
 
+const getNotifications = (limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${
+      routes.notificationsList
+    }/?limit=${limit}&offset=${offset}`
+  );
+};
+
 export const userService = {
   login,
   logout,
@@ -151,5 +159,6 @@ export const userService = {
   addPost,
   follow,
   getComments,
-  sendComment
+  sendComment,
+  getNotifications
 };

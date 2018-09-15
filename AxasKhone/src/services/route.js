@@ -46,6 +46,9 @@ const routes = {
     },
     get tagSearchItems() {
       return `${this.basePath}tags/list_posts/?tag`;
+    },
+    get notificationsList() {
+      return `${this.basePath}notifications/`;
     }
   }
 };
