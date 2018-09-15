@@ -117,17 +117,6 @@ class ContactItem extends Component {
   }
 
   componentWillMount() {
-    const contact = this.props;
-    // this.setState({ fullname: contact.contact_name });
-    // if (contact.user === 'not_found') {
-    //   this.setState({ mode: 'invite' });
-    // } else if (contact.user instanceof Object) {
-    //   if (contact.user.length > 0) {
-    //     this.setState({ mode: 'following' });
-    //   }
-    // } else {
-    //   this.setState({ mode: 'follow' });
-    // }
     let mode = undefined;
     if (this.props.contact.user === 'not_found') {
       mode = 'invite';

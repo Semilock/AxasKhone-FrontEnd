@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  TextInput
+} from 'react-native';
 import Modal from 'react-native-modal';
+import { Icon } from 'native-base';
 
 export default class Notif extends Component {
   state = {
@@ -49,10 +56,32 @@ export default class Notif extends Component {
                   backgroundColor: 'rgba(200,200,200,1)',
                   height: 40,
                   justifyContent: 'center',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
+                  flexDirection: 'row'
                 }}
               >
-                <Text style={{ fontSize: 16 }}>+ ساخت برد جدید</Text>
+                <TextInput
+                  style={{
+                    height: 25,
+                    borderColor: 'gray',
+                    borderWidth: 0.5,
+                    width: 200,
+                    textAlign: 'right'
+                  }}
+                  onChangeText={text => this.setState({ text })}
+                  value={this.state.text}
+                  placeholder=" ساخت برد جدید"
+                  underlineColorAndroid="transparent"
+                  maxLength={20}
+                  fontSize={7}
+                />
+                <TouchableOpacity>
+                  <Icon
+                    style={{ fontSize: 22, paddingRight: 10 }}
+                    name="add-circle"
+                  />
+                </TouchableOpacity>
               </View>
             </TouchableOpacity>
             <FlatList
