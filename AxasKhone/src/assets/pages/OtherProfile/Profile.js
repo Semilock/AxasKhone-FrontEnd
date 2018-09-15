@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StatusBar } from 'react-native';
+import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import profileActions from '../../../actions/userProfile';
-import styles from '../Profile/Profile.style';
+import styles from './Profile.style';
 
 class OtherUserProfile extends Component {
   constructor(props) {
@@ -47,6 +47,34 @@ class OtherUserProfile extends Component {
               </Text>
               <Text> دنبال شونده {this.state.profile.following_number}</Text>
             </View>
+            {/* <TouchableOpacity activeOpacity={0.8}> */}
+            <View
+              style={{
+                height: 10,
+                backgroundColor: 'green',
+                flex: 1,
+                width: 150,
+                alignSelf: 'flex-end',
+                borderRadius: 10,
+                alignContent: 'center',
+                paddingTop: 2,
+                marginTop: 5,
+                marginBottom: 2
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: 'center',
+                  justifyContent: 'center',
+                  fontSize: 15,
+                  borderRadius: 10,
+                  color: 'white'
+                }}
+              >
+                دنبال کردن
+              </Text>
+            </View>
+            {/* </TouchableOpacity> */}
             <Text numberOfLines={3} style={{ flexWrap: 'nowrap' }}>
               {this.state.profile.bio}
             </Text>
