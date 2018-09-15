@@ -7,6 +7,7 @@ import { alert } from './alert';
 import { feed } from './feed';
 import { contact } from './contact';
 import { search } from './search';
+import { notification } from './notifications';
 
 export default combineReducers({
   profile: profile,
@@ -15,5 +16,6 @@ export default combineReducers({
   feed: feed,
   search: search,
   contact: contact,
+  notification: notification,
   alert: alert
 });

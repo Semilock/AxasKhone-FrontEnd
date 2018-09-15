@@ -2,7 +2,8 @@ import notificationsConst from '../constants/notificationsConst';
 
 const notificationsInitialState = {
   isFetching: false,
-  notifications: undefined
+  notifications: undefined,
+  errors: false
 };
 
 export const notification = (state = notificationsInitialState, action) => {
@@ -19,8 +20,8 @@ export const notification = (state = notificationsInitialState, action) => {
         isFetching: false,
         notifications:
           state.notifications !== undefined
-            ? state.notifications.concat(action.feed)
-            : action.feed
+            ? state.notifications.concat(action.notification)
+            : action.notification
       };
 
     case notificationsConst.GET_NOTIFICATIONS_FAILURE:

@@ -7,7 +7,6 @@ import {
   TextInput,
   Image
 } from 'react-native';
-import Modal from 'react-native-modal';
 import { Icon } from 'native-base';
 import { connect } from 'react-redux';
 import notificationActions from '../../../actions/userNotifications';
@@ -22,6 +21,10 @@ class Notif extends Component {
       profilePic:
         'http://images.hamshahrionline.ir/images/2018/9/position24/18-9-10-151411.jpg'
     };
+  }
+
+  componentDidMount() {
+    this.props.getNotifications(5, 0);
   }
 
   render() {
@@ -118,16 +121,22 @@ class Notif extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getContact: (limit, offset) =>
-      dispatch(notificationActions.getNotification(limit, offset))
+    getNotifications: (limit, offset) =>
+      dispatch(notificationActions.getNotifications(limit, offset))
   };
 };
 
 const mapStateToProps = state => {
-  const { contacts } = state.contact;
+  const { isFetching, isAuthenticated } = state.auth;
+  const notificationIsFetching = state.notification.isFetching;
+  const { notifications, error } = state.notification;
   // const contacts = state.contact.contacts;
   return {
-    contacts
+    isFetching,
+    isAuthenticated,
+    notifications,
+    error,
+    notificationIsFetching
   };
 };
 

@@ -7,6 +7,7 @@ const routes = {
   register: 'register',
   register_validation: 'register_validation',
   registerCompliment: 'register_compliment',
+  notificationsList: 'notifications',
   user: {
     basePath: 'user/',
     get sendContact() {
@@ -52,9 +53,6 @@ const routes = {
     },
     get tagSearchItems() {
       return `${this.basePath}tags/list_posts/?tag`;
-    },
-    get notificationsList() {
-      return `${this.basePath}notifications/`;
     }
   }
 };

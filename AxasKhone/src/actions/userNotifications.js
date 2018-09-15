@@ -2,7 +2,7 @@ import Reactotron from 'reactotron-react-native';
 import { userService } from '../services/userAuth';
 import notificationsConst from '../constants/notificationsConst';
 
-const getNotification = (limit, offset) => {
+const getNotifications = (limit, offset) => {
   return dispatch => {
     dispatch(request());
     userService.getNotifications(limit, offset).then(
@@ -31,6 +31,6 @@ const refreshNotification = () => {
   };
 };
 
-const notificationActions = { getNotification, refreshNotification };
+const notificationActions = { getNotifications, refreshNotification };
 
 export default notificationActions;
