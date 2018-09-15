@@ -25,6 +25,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.refreshUserFeeds();
     this.getFeeds(this.state.limit, this.state.offset);
   }
 

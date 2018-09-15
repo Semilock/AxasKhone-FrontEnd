@@ -25,6 +25,22 @@ function getProfile() {
   }
 }
 
+const follow = username => {
+  return dispatch => {
+    dispatch(request());
+    return userService.follow(username).then(res => {
+      dispatch(response(res.data.statuas));
+      return res.data.statuas;
+    });
+  };
+  function request() {
+    return { type: profileConst.FOLLOW_REQUEST };
+  }
+  function response(response) {
+    return { type: profileConst.FOLLOW_RESPONSE, response };
+  }
+};
+
 const getProfilePosts = (limit, offset) => {
   return dispatch => {
     dispatch(request());
@@ -249,6 +265,60 @@ const addPost = post => {
   }
 };
 
+const getComments = (postId, limit = 5, offset = 0) => {
+  return dispatch => {
+    dispatch(request(postId));
+    return userService
+      .getComments(postId, limit, offset)
+      .then(res => {
+        dispatch(success(res.data.results));
+      })
+      .catch(err => {
+        dispatch(failure(err.data));
+      });
+  };
+  function request(postId) {
+    return { type: profileConst.POST_COMMENT_REQUEST, postId };
+  }
+  function success(comments) {
+    return { type: profileConst.POST_COMMENT_SUCCESS, comments };
+  }
+  function failure(error) {
+    return { type: profileConst.POST_COMMENT_FAILURE, error };
+  }
+};
+
+const sendComment = (postId, text) => {
+  return dispatch => {
+    dispatch(request(postId));
+    return userService
+      .sendComment(postId, text)
+      .then(res => {
+        dispatch(success(res.data.status));
+        // return res.data.statuas;
+      })
+      .catch(err => {
+        dispatch(failure(err.data.error));
+        // return err.data.error;
+      });
+  };
+  function request(postId) {
+    return { type: profileConst.ADD_COMMENT_REQUEST, postId };
+  }
+  function success(response) {
+    return { type: profileConst.ADD_COMMENT_SUCCESS, response };
+  }
+  function failure(error) {
+    return { type: profileConst.ADD_COMMENT_FAILURE, error };
+  }
+};
+
+const refreshComments = () => {
+  return dispatch => {
+    dispatch({ type: profileConst.REFRESH_COMMENTS });
+  };
+};
+
 const profileActions = {
   removeEditProfileState,
   getProfile,
@@ -258,7 +328,11 @@ const profileActions = {
   getProfileFavoriteList,
   getProfileFavoriteListItems,
   changePassword,
-  addPost
+  addPost,
+  follow,
+  getComments,
+  sendComment,
+  refreshComments
 };
 
 export default profileActions;
