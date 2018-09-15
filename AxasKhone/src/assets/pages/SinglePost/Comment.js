@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Thumbnail, Text, Left, Right, Body, ListItem } from 'native-base';
+import { withNavigation } from 'react-navigation';
+import humanReadableTime from '../../../helpers/time';
 
-export default class Comment extends Component {
+class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
+  openUserProfile = () => {
+    this.props.navigation.navigate('OtherUserProfile', {
+      profile: this.props.comment.profile
+    });
+  };
   render() {
     return (
       <ListItem avatar>
@@ -21,17 +27,19 @@ export default class Comment extends Component {
               }}
             >
               <Text note style={{ textAlign: 'right' }}>
-                الان
+                {humanReadableTime(this.props.comment.time)}
               </Text>
-              <Text
-                note
-                style={{
-                  textAlign: 'left',
-                  justifyContent: 'center'
-                }}
-              >
-                {this.props.comment.username}
-              </Text>
+              <TouchableOpacity onPress={this.openUserProfile}>
+                <Text
+                  note
+                  style={{
+                    textAlign: 'left',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {this.props.comment.profile.main_username}
+                </Text>
+              </TouchableOpacity>
             </View>
             <Text style={{ textAlign: 'right', fontSize: 12 }}>
               {this.props.comment.text}
@@ -39,12 +47,18 @@ export default class Comment extends Component {
           </View>
         </Body>
         <Right>
-          <Thumbnail
-            small
-            source={{ uri: `http://${this.props.comment.user_picture}` }}
-          />
+          <TouchableOpacity onPress={this.openUserProfile}>
+            <Thumbnail
+              small
+              source={{
+                uri: `http://${this.props.comment.profile.profile_picture}`
+              }}
+            />
+          </TouchableOpacity>
         </Right>
       </ListItem>
     );
   }
 }
+
+export default withNavigation(Comment);

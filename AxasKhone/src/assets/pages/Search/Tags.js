@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 import searchActions from '../../../actions/search';
 
 class Tags extends Component {
@@ -64,6 +65,12 @@ class Tags extends Component {
         );
       }
     );
+  };
+
+  openPost = post => {
+    this.props.navigation.navigate('SinglePost', {
+      post
+    });
   };
 
   render() {
@@ -131,7 +138,10 @@ class Tags extends Component {
                     backgroundColor: 'gray'
                   }}
                 >
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.openPost(item)}
+                  >
                     <Image
                       style={{ width: '100%', height: 120 }}
                       resizeMode="cover"
@@ -172,4 +182,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Tags);
+)(withNavigation(Tags));

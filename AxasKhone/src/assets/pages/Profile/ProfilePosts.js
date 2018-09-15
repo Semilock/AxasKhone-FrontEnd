@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, FlatList, Image, Text, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import profileActions from '../../../actions/userProfile';
 
 class Photo extends Component {
@@ -37,6 +38,12 @@ class Photo extends Component {
     );
   };
 
+  openPost = post => {
+    this.props.navigation.navigate('SinglePost', {
+      post
+    });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -59,7 +66,10 @@ class Photo extends Component {
                     margin: 3
                   }}
                 >
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.openPost(item)}
+                  >
                     <Image
                       style={{ width: '100%', height: 180 }}
                       resizeMode="cover"
@@ -101,4 +111,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Photo);
+)(withNavigation(Photo));

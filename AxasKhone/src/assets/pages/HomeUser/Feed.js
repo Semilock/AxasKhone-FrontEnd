@@ -13,8 +13,23 @@ import {
 } from 'native-base';
 import Reactotron from 'reactotron-react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import humanReadableTime from '../../../helpers/time';
+import CModal from '../../../components/Modal';
+import profileActions from '../../../actions/userProfile';
 
 class Feed extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalVisible: false
+    };
+  }
+
+  _toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
   openPost = () => {
     this.props.navigation.navigate('SinglePost', {
       post: this.props.feeds
@@ -29,9 +44,20 @@ class Feed extends Component {
     const feed = this.props.feeds;
     return (
       <Card style={{ borderRadius: 8 }}>
+        <CModal
+          postId={feed.pk}
+          addFavoriteAction={this.props.addFavorite}
+          favoriteList={this.props.favoriteList}
+          isModalVisible={this.state.isModalVisible}
+          BackdropFunc={() => this.setState({ isModalVisible: false })}
+        />
         <CardItem>
           <Left>
-            <Button transparent style={{ paddingLeft: 15 }}>
+            <Button
+              transparent
+              style={{ paddingLeft: 15 }}
+              onPress={this._toggleModal}
+            >
               <Icon name="apps" />
             </Button>
             <Body>
@@ -41,7 +67,7 @@ class Feed extends Component {
                 </Text>
               </TouchableOpacity>
               <Text style={{ textAlign: 'right' }} note>
-                2 روز پیش
+                {humanReadableTime(feed.time)}
               </Text>
             </Body>
             <TouchableOpacity onPress={this.openUserProfile}>
@@ -88,4 +114,21 @@ class Feed extends Component {
   }
 }
 
-export default withNavigation(Feed);
+const mapDispatchToProps = dispatch => {
+  return {
+    addFavorite: (postId, favorite) =>
+      dispatch(profileActions.addPostToFavorite(postId, favorite))
+  };
+};
+
+const mapStateToProps = state => {
+  const { favoriteList } = state.profile;
+  return {
+    favoriteList
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(Feed));
