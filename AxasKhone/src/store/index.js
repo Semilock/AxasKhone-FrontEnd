@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import { AsyncStorage } from 'react-native';
 import { persistStore, persistReducer } from 'redux-persist';
 import createEncryptor from 'redux-persist-transform-encrypt';
-import Reactotron from '../../ReactotronConfig';
+// import Reactotron from '../../ReactotronConfig';
 import rootReducer from '../reducers';
 
 const encryptor = createEncryptor({
@@ -23,8 +23,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleware = [thunkMiddleware];
-
-export const store = Reactotron.createStore(
+//Reactotron.
+export const store = createStore(
   persistedReducer,
   undefined,
   compose(applyMiddleware(...middleware))

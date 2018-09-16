@@ -41,7 +41,7 @@ export default class ProfileTab extends Component {
             textStyle={{ color: 'black' }}
             activeTextStyle={{ color: 'black' }}
           >
-            <Photo />
+            <Photo username={this.props.username} />
           </Tab>
         </Tabs>
       </Container>

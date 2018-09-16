@@ -1,4 +1,4 @@
-import Reactotron from 'reactotron-react-native';
+// import Reactotron from 'reactotron-react-native';
 import { userService } from '../services/userAuth';
 import feedConst from '../constants/feedConst';
 

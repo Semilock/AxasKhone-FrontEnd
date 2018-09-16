@@ -23,11 +23,12 @@ import {
   ListItem,
   Content
 } from 'native-base';
-import Reactotoron from 'reactotron-react-native';
+// import Reactotoron from 'reactotron-react-native';
 import { connect } from 'react-redux';
 import Comment from './Comment';
 import userProfile from '../../../actions/userProfile';
 import CModal from '../../../components/Modal';
+import humanReadableTime from '../../../helpers/time';
 
 class SingelPost extends Component {
   // static navigationOptions = {
@@ -139,7 +140,7 @@ class SingelPost extends Component {
                       {this.state.post.profile.fullname}
                     </Text>
                     <Text style={{ textAlign: 'right' }} note>
-                      2 روز پیش
+                      {humanReadableTime(this.state.post.time)}
                     </Text>
                   </Body>
 

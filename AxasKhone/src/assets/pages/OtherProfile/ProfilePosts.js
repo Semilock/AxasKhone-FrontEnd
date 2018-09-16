@@ -19,7 +19,7 @@ class Photo extends Component {
   }
 
   getPosts(limit, offset) {
-    this.props.getProfilePosts(limit, offset);
+    this.props.getOtherUserProfilePosts(this.props.username, limit, offset);
     this.setState(prevState => ({
       offset: prevState.offset + prevState.limit
     }));
@@ -48,15 +48,15 @@ class Photo extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, margin: 3 }}>
-          {this.props.posts !== undefined ? (
+          {this.props.otherProfilePosts !== undefined ? (
             <FlatList
-              data={this.props.posts}
+              data={this.props.otherProfilePosts}
               numColumns={2}
               onEndReached={() =>
                 this.getPosts(this.state.limit, this.state.offset)
               }
               onEndReachedThreshold={0.5}
-              refreshing={this.props.ProfileIsFetching}
+              refreshing={this.props.postIsRefreshing}
               onRefresh={this.refreshPosts}
               renderItem={({ item }) => (
                 <View
@@ -88,23 +88,25 @@ class Photo extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getProfilePosts: (limit, offset) =>
-      dispatch(profileActions.getProfilePosts(limit, offset)),
+    getOtherUserProfilePosts: (username, limit, offset) =>
+      dispatch(
+        profileActions.getOtherUserProfilePosts(username, limit, offset)
+      ),
     refreshProfilePosts: () => dispatch(profileActions.refreshProfilePosts())
   };
 };
 
 const mapStateToProps = state => {
   const { isFetching, isAuthenticated, token } = state.auth;
-  const { posts, errors } = state.profile;
-  const ProfileIsFetching = state.profile.isFetching;
+  const { otherProfilePosts, errors } = state.profile;
+  const { postIsRefreshing } = state.profile;
   return {
     isFetching,
     isAuthenticated,
     token,
-    posts,
+    otherProfilePosts,
     errors,
-    ProfileIsFetching
+    postIsRefreshing
   };
 };
 

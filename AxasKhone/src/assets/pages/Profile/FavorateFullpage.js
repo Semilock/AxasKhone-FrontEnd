@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
-import Reactotron from 'reactotron-react-native';
+// import Reactotron from 'reactotron-react-native';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
 import DeleteModal from '../../../components/DeleteModal';
@@ -74,18 +74,18 @@ class FavorateFullpage extends Component {
     );
   };
 
-  // refreshFavoriteItems = () => {
-  //   this.props.refreshFavoriteItems();
-  //   this.setState(
-  //     {
-  //       offset: 0,
-  //       limit: 6
-  //     },
-  //     () => {
-  //       this.getPosts(this.state.limit, this.state.offset);
-  //     }
-  //   );
-  // };
+  refreshFavoriteItems = () => {
+    this.props.refreshFavoriteItemsItems();
+    this.setState(
+      {
+        offset: 0,
+        limit: 6
+      },
+      () => {
+        this.getPosts(this.state.limit, this.state.offset);
+      }
+    );
+  };
 
   render() {
     // const data = this.state.data;
@@ -126,14 +126,14 @@ class FavorateFullpage extends Component {
               color="rgb(239, 239, 239)"
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert('ADD')}>
+          {/* <TouchableOpacity onPress={() => alert('ADD')}>
             <Icon
               style={{}}
               name="md-add"
               size={30}
               color="rgb(239, 239, 239)"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={{ flex: 1, margin: 3 }}>
           {this.state.FavoriteItem !== undefined ? (
@@ -178,8 +178,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getProfileFavoriteListItem: (id, limit, offset) =>
       dispatch(profileActions.getProfileFavoriteListItems(id, limit, offset)),
-    removeFavorite: postId => dispatch(profileActions.removeFavorite(postId))
-    // ,refreshFavoriteItems: () => dispatch(profileActions.refreshFavoriteItems())
+    removeFavorite: postId => dispatch(profileActions.removeFavorite(postId)),
+    refreshFavoriteItemsItems: () =>
+      dispatch(profileActions.refreshProfileFavoriteListItems())
   };
 };
 

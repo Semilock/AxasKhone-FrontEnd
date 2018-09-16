@@ -35,8 +35,13 @@ class PersonsTag extends Component {
 
   followUser = () => {
     this.props.follow(this.state.username).then(res => {
-      ToastAndroid.show(res, ToastAndroid.SHORT);
-      this.setState(prevState => ({ mode: !prevState.mode }));
+      if (res === 'followed') {
+        ToastAndroid.show('دنبال شد', ToastAndroid.SHORT);
+        this.setState({ mode: true });
+      } else {
+        ToastAndroid.show('دنبال کردن لغو شد', ToastAndroid.SHORT);
+        this.setState({ mode: false });
+      }
     });
   };
 

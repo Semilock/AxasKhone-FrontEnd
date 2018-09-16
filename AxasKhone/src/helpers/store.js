@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import Reactotron from '../../ReactotronConfig';
+// import Reactotron from '../../ReactotronConfig';
 import { authentication } from '../reducers/auth';
 import { profile } from '../reducers/user';
 import { register } from '../reducers/register';
 import { alert } from '../reducers/alert';
 import { feed } from '../reducers/feed';
 import { contact } from '../reducers/contact';
-
-const store = Reactotron.createStore(
+//Reactotron
+const store = createStore(
   combineReducers({
     // user: users,
     profile: profile,

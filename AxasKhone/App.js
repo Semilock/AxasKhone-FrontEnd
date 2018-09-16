@@ -4,8 +4,8 @@ import { Text, ActivityIndicator } from 'react-native';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { store, persistor } from './src/store';
 import Start from './Start';
-import './ReactotronConfig';
-import ReactotronConfig from './ReactotronConfig';
+// import './ReactotronConfig';
+// import ReactotronConfig from './ReactotronConfig';
 
 console.disableYellowBox = true;
 export default class App extends Component {

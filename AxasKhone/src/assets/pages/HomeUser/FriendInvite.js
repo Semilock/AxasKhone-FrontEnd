@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ToastAndroid
+} from 'react-native';
 import Contacts from 'react-native-contacts';
-import Reactotron from 'reactotron-react-native';
+// import Reactotron from 'reactotron-react-native';
 import { connect } from 'react-redux';
 import feedActions from '../../../actions/userFeed';
+import profileActions from '../../../actions/userProfile';
 
 class FriendInvite extends Component {
   static navigationOptions = {
@@ -41,7 +48,7 @@ class FriendInvite extends Component {
     this.setState = {
       // this.state.
     };
-    Reactotron.warn(this.props.contacts);
+    // Reactotron.warn(this.props.contacts);
   }
 
   FetchContacts = () => {
@@ -68,8 +75,8 @@ class FriendInvite extends Component {
   };
 
   renderContactItem = ({ item }) => {
-    Reactotron.warn(item);
-    return <ContactItem contact={item} />;
+    // Reactotron.warn(item);
+    return <ContactItem contact={item} followAction={this.props.follow} />;
   };
 
   render() {
@@ -88,7 +95,8 @@ class FriendInvite extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getContact: allContac => dispatch(feedActions.sendContact(allContac))
+    getContact: allContac => dispatch(feedActions.sendContact(allContac)),
+    follow: username => dispatch(profileActions.follow(username))
   };
 };
 
@@ -130,6 +138,25 @@ class ContactItem extends Component {
     this.setState({ mode });
   }
 
+  followUser = (mode, user) => {
+    // Reactotron.warn(mode);
+    if (user instanceof Object) {
+      if (user.is_following === false && mode == 'follow') {
+        this.props.followAction(user.main_username).then(res => {
+          if (res === 'followed') {
+            this.setState({ mode: 'unfollow' });
+            ToastAndroid.show('دنبال شد', ToastAndroid.SHORT);
+          }
+        });
+      } else if (mode === 'unfollow') {
+        this.props.followAction(user.main_username).then(res => {
+          this.setState({ mode: 'follow' });
+          ToastAndroid.show('دنبال کردن لغو شد', ToastAndroid.SHORT);
+        });
+      }
+    }
+  };
+
   render() {
     return (
       <View>
@@ -160,7 +187,12 @@ class ContactItem extends Component {
               alignContent: 'center'
             }}
           >
-            <TouchableOpacity activeOpacity={0.8}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                this.followUser(this.state.mode, this.props.contact.user);
+              }}
+            >
               <View
                 style={{
                   borderRadius: 5,
@@ -207,3 +239,19 @@ class ContactItem extends Component {
     );
   }
 }
+
+// connect(
+//   state => {
+//     const { isFetching, isAuthenticated, token } = state.auth;
+//     return {
+//       isFetching,
+//       isAuthenticated,
+//       token
+//     };
+//   },
+//   dispatch => {
+//     return {
+//       follow: username => dispatch(profileActions.follow(username))
+//     };
+//   }
+// )(ContactItem);

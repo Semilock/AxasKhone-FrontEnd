@@ -17,7 +17,7 @@ import {
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
-import Reactotron from 'reactotron-react-native';
+// import Reactotron from 'reactotron-react-native';
 import styles from './Profile.style';
 import profileActions from '../../../actions/userProfile';
 

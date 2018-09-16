@@ -15,7 +15,9 @@ const profileInitialState = {
   addPostStatus: false,
   followRequestStatus: undefined,
   postComments: undefined,
-  sendCommentStatus: undefined
+  sendCommentStatus: undefined,
+  otherProfilePosts: undefined,
+  postIsRefreshing: false
 };
 export const profile = (state = profileInitialState, action) => {
   switch (action.type) {
@@ -71,7 +73,31 @@ export const profile = (state = profileInitialState, action) => {
     case profileConst.REFRESH_PROFILE_POSTS:
       return {
         ...state,
-        posts: undefined
+        posts: undefined,
+        otherProfilePosts: undefined
+      };
+
+    case profileConst.OTHER_USER_PROFILE_POSTS_REQUEST:
+      return {
+        ...state,
+        postIsRefreshing: true
+      };
+
+    case profileConst.OTHER_USER_PROFILE_POSTS_SUCCESS:
+      return {
+        ...state,
+        postIsRefreshing: false,
+        otherProfilePosts:
+          state.otherProfilePosts !== undefined
+            ? state.otherProfilePosts.concat(action.posts)
+            : action.posts
+      };
+
+    case profileConst.OTHER_USER_PROFILE_POSTS_FAILURE:
+      return {
+        ...state,
+        postIsRefreshing: false,
+        errors: action.error
       };
 
     case profileConst.FAVORITE_LIST_REQUEST:

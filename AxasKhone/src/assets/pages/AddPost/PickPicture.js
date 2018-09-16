@@ -45,8 +45,8 @@ export default class PickPicture extends React.Component {
 
     ImagePicker.openCropper({
       path: imageParam.uri,
-      width: 200,
-      height: 200
+      width: 1000,
+      height: 1000
     })
       .then(image => {
         this.setState({
@@ -77,7 +77,7 @@ export default class PickPicture extends React.Component {
 
   pickSingleWithCamera() {
     ImagePicker.openCamera({
-      // cropping: true,
+      cropping: false
       // width: 200,
       // height: 200
     }).then(image => {

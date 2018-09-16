@@ -84,6 +84,29 @@ const getProfilePosts = (limit, offset) => {
   }
 };
 
+const getOtherUserProfilePosts = (username, limit, offset) => {
+  return dispatch => {
+    dispatch(request());
+    userService.getOtherUserProfilePosts(username, limit, offset).then(
+      res => {
+        dispatch(success(res.data.results));
+      },
+      err => {
+        dispatch(failure(err.data));
+      }
+    );
+  };
+  function request() {
+    return { type: profileConst.OTHER_USER_PROFILE_POSTS_REQUEST };
+  }
+  function success(posts) {
+    return { type: profileConst.OTHER_USER_PROFILE_POSTS_SUCCESS, posts };
+  }
+  function failure(error) {
+    return { type: profileConst.OTHER_USER_PROFILE_POSTS_FAILURE, error };
+  }
+};
+
 const addPostToFavorite = (postId, favorite) => {
   return dispatch => {
     dispatch(request());
@@ -160,6 +183,12 @@ const getProfileFavoriteList = (limit, offset) => {
 const refreshProfileFavoriteList = () => {
   return dispatch => {
     dispatch({ type: profileConst.REFRESH_PROFILE_FAVORITE_LIST });
+  };
+};
+
+const refreshProfileFavoriteListItems = () => {
+  return dispatch => {
+    dispatch({ type: profileConst.REFRESH_PROFILE_FAVORITE_LIST_ITEMS });
   };
 };
 
@@ -323,6 +352,7 @@ const addPost = post => {
       .addPost(data)
       .then(res => {
         dispatch(success(res.data.status));
+        dispatch(refreshProfilePosts());
         dispatch(getProfilePosts(6, 0));
         // nav.navigate();
       })
@@ -371,6 +401,8 @@ const sendComment = (postId, text) => {
       .sendComment(postId, text)
       .then(res => {
         dispatch(success(res.data.status));
+        dispatch(refreshComments());
+        dispatch(getComments(postId));
         // return res.data.statuas;
       })
       .catch(err => {
@@ -404,6 +436,7 @@ const profileActions = {
   getProfileFavoriteList,
   refreshProfileFavoriteList,
   getProfileFavoriteListItems,
+  refreshProfileFavoriteListItems,
   changePassword,
   addPost,
   follow,
@@ -412,7 +445,8 @@ const profileActions = {
   sendComment,
   refreshComments,
   addPostToFavorite,
-  removeFavorite
+  removeFavorite,
+  getOtherUserProfilePosts
 };
 
 export default profileActions;

@@ -1,4 +1,4 @@
-import Reactotron from 'reactotron-react-native';
+// import Reactotron from 'reactotron-react-native';
 import routes from './route';
 import axiosInstance from './axios.config';
 
@@ -42,6 +42,14 @@ const firstStepRegisterValidation = (email, password) => {
 const getProfilePosts = (limit, offset) => {
   return axiosInstance.get(
     `${routes.basePath}/${routes.user.post}/?limit=${limit}&offset=${offset}`
+  );
+};
+
+const getOtherUserProfilePosts = (username, limit, offset) => {
+  return axiosInstance.get(
+    `${routes.basePath}/${
+      routes.user.post
+    }/list_posts/?username=${username}&limit=${limit}&offset=${offset}`
   );
 };
 
@@ -182,5 +190,6 @@ export const userService = {
   sendComment,
   getNotifications,
   addToFavorites,
-  removeFavorite
+  removeFavorite,
+  getOtherUserProfilePosts
 };

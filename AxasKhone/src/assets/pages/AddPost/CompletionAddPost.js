@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  ToastAndroid,
   Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -65,7 +66,9 @@ class CompletionAddPost extends Component {
       tags: undefined
     });
     this.props.addPost(post).then(res => {
-      this.props.navigation.navigate('Profile');
+      ToastAndroid.show('پست ارسال شد.', ToastAndroid.SHORT);
+      // this.props.navigation.navigate('Profile');
+      this.props.navigation.pop();
     });
   };
 
