@@ -41,7 +41,8 @@ class SingelPost extends Component {
       post: undefined,
       limit: 5,
       offset: 0,
-      isModalVisible: false
+      isModalVisible: false,
+      likeNumber: this.props.post.like_number
     };
   }
 
@@ -97,6 +98,20 @@ class SingelPost extends Component {
       });
   };
 
+  like = () => {
+    this.props.likePost(this.state.post.pk).then(res => {
+      if (res === 'unlike') {
+        this.setState(prevState => ({
+          likeNumber: prevState.likeNumber - 1
+        }));
+      } else if (res === 'like') {
+        this.setState(prevState => ({
+          likeNumber: prevState.likeNumber + 1
+        }));
+      }
+    });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -148,9 +163,13 @@ class SingelPost extends Component {
               </CardItem>
               <CardItem>
                 <Left>
-                  <Button transparent style={{ paddingLeft: 15 }}>
+                  <Button
+                    transparent
+                    style={{ paddingLeft: 15 }}
+                    onPress={this.like}
+                  >
                     <Icon active name="thumbs-up" />
-                    <Text>{this.state.post.like_number}</Text>
+                    <Text>{this.state.likeNumber}</Text>
                   </Button>
                   <Button transparent style={{ paddingLeft: 15 }}>
                     <Icon active name="chatbubbles" />
@@ -273,7 +292,8 @@ const mapDispatchToProps = dispatch => {
     sendComment: (postId, text) =>
       dispatch(userProfile.sendComment(postId, text)),
     addFavorite: (postId, favorite) =>
-      dispatch(userProfile.addPostToFavorite(postId, favorite))
+      dispatch(userProfile.addPostToFavorite(postId, favorite)),
+    likePost: postId => dispatch(userProfile.like(postId))
   };
 };
 const mapStateToProps = state => {
