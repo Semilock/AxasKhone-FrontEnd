@@ -1,4 +1,3 @@
-import Reactotron from 'reactotron-react-native';
 import { userService } from '../services/userAuth';
 import notificationsConst from '../constants/notificationsConst';
 

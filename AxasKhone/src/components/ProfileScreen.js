@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileStack from '../assets/pages/Profile/index';
 import AddPost from '../assets/pages/AddPost/index';
 import HomeUser from '../assets/pages/HomeUser/index';
-import Notif from '../assets/pages/Notification/index';
+import Notifications from '../assets/pages/Notification/index';
 import Search from '../assets/pages/Search/index';
 
 export default (AppStackNavigator = TabNavigator(
@@ -28,7 +28,7 @@ export default (AppStackNavigator = TabNavigator(
       }
     },
     Notification: {
-      screen: Notif,
+      screen: Notifications,
       navigationOptions: {
         tabBarIcon: ({ focused }) =>
           focused ? (
