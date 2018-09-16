@@ -29,8 +29,8 @@ const follow = username => {
   return dispatch => {
     dispatch(request());
     return userService.follow(username).then(res => {
-      dispatch(response(res.data.statuas));
-      return res.data.statuas;
+      dispatch(response(res.data.status));
+      return res.data.status;
     });
   };
   function request() {
@@ -38,6 +38,26 @@ const follow = username => {
   }
   function response(response) {
     return { type: profileConst.FOLLOW_RESPONSE, response };
+  }
+};
+
+const like = postId => {
+  return dispatch => {
+    dispatch(request(postId));
+    return userService.like(postId).then(res => {
+      dispatch(response(res.data.status));
+      if (res.data.status == 'unliked') {
+        return 'unlike';
+      } else {
+        return 'like';
+      }
+    });
+  };
+  function request(postId) {
+    return { type: profileConst.LIKE_REQUEST, postId };
+  }
+  function response(response) {
+    return { type: profileConst.LIKE_RESPONSE, response };
   }
 };
 
@@ -70,7 +90,7 @@ const addPostToFavorite = (postId, favorite) => {
     userService
       .addToFavorites(postId, favorite)
       .then(res => {
-        dispatch(success(res.data.statuas));
+        dispatch(success(res.data.status));
         dispatch(refreshProfileFavoriteList());
         dispatch(getProfileFavoriteList(5, 0));
       })
@@ -95,7 +115,7 @@ const removeFavorite = postId => {
     return userService
       .removeFavorite(postId)
       .then(res => {
-        dispatch(success(res.data.statuas));
+        dispatch(success(res.data.status));
         dispatch(refreshProfileFavoriteList());
         dispatch(getProfileFavoriteList(5, 0));
       })
@@ -387,6 +407,7 @@ const profileActions = {
   changePassword,
   addPost,
   follow,
+  like,
   getComments,
   sendComment,
   refreshComments,
