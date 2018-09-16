@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View, ToastAndroid } from 'react-native';
 import {
   Card,
   CardItem,
@@ -22,7 +22,8 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false
+      isModalVisible: false,
+      likeNumber: this.props.feeds.like_number
     };
   }
 
@@ -35,11 +36,29 @@ class Feed extends Component {
       post: this.props.feeds
     });
   };
+
   openUserProfile = () => {
     this.props.navigation.navigate('OtherUserProfile', {
       profile: this.props.feeds.profile
     });
   };
+
+  like = () => {
+    this.props.likePost(this.props.feeds.pk).then(res => {
+      // ToastAndroid.show(res, ToastAndroid.SHORT);
+      Reactotron.warn(res);
+      if (res === 'unlike') {
+        this.setState(prevState => ({
+          likeNumber: prevState.likeNumber - 1
+        }));
+      } else if (res === 'like') {
+        this.setState(prevState => ({
+          likeNumber: prevState.likeNumber + 1
+        }));
+      }
+    });
+  };
+
   render() {
     const feed = this.props.feeds;
     return (
@@ -92,9 +111,9 @@ class Feed extends Component {
         </CardItem>
         <CardItem>
           <Left>
-            <Button transparent style={{ paddingLeft: 15 }}>
+            <Button transparent style={{ paddingLeft: 15 }} onPress={this.like}>
               <Icon active name="thumbs-up" />
-              <Text>{feed.like_number}</Text>
+              <Text>{this.state.likeNumber}</Text>
             </Button>
             <Button
               transparent
@@ -117,7 +136,8 @@ class Feed extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     addFavorite: (postId, favorite) =>
-      dispatch(profileActions.addPostToFavorite(postId, favorite))
+      dispatch(profileActions.addPostToFavorite(postId, favorite)),
+    likePost: postId => dispatch(profileActions.like(postId))
   };
 };
 

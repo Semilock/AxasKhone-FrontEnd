@@ -136,6 +136,12 @@ const follow = username => {
   });
 };
 
+const like = postId => {
+  return axiosInstance.post(
+    `${routes.basePath}/${routes.user.post}/${postId}/like/`
+  );
+};
+
 const handleResponse = response => {
   return response.text().then(text => {
     const data = text && JSON.parse(text);
@@ -171,6 +177,7 @@ export const userService = {
   sendContact,
   addPost,
   follow,
+  like,
   getComments,
   sendComment,
   getNotifications,
