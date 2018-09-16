@@ -51,10 +51,13 @@ class Search extends Component {
     return (
       <Container>
         <Content>
-          <Header searchBar rounded>
-            <StatusBar backgroundColor="rgb(63, 81, 181)" />
+          <Header
+            searchBar
+            rounded
+            style={{ backgroundColor: 'rgb(25, 50, 75)' }}
+          >
+            <StatusBar backgroundColor="rgb(25, 50, 75)" />
             <Item>
-              <Icon name="ios-people" />
               <Input
                 placeholder="جستجو"
                 onChangeText={text => {
@@ -65,7 +68,13 @@ class Search extends Component {
             </Item>
           </Header>
           <Tabs>
-            <Tab heading="هشتگ">
+            <Tab
+              heading="هشتگ"
+              activeTabStyle={{ backgroundColor: 'rgb(25, 50, 75)' }}
+              tabStyle={{ backgroundColor: 'rgb(25, 50, 75)' }}
+              textStyle={{ color: 'rgb(200, 200, 200)' }}
+              activeTextStyle={{ color: 'rgb(200, 200, 200)' }}
+            >
               <Container>
                 {this.props.tags !== undefined ? (
                   <FlatList
@@ -75,7 +84,13 @@ class Search extends Component {
                 ) : null}
               </Container>
             </Tab>
-            <Tab heading="کاربران">
+            <Tab
+              heading="کاربران"
+              activeTabStyle={{ backgroundColor: 'rgb(25, 50, 75)' }}
+              tabStyle={{ backgroundColor: 'rgb(25, 50, 75)' }}
+              textStyle={{ color: 'rgb(200, 200, 200)' }}
+              activeTextStyle={{ color: 'rgb(200, 200, 200)' }}
+            >
               <View>
                 {this.props.users !== undefined ? (
                   <FlatList

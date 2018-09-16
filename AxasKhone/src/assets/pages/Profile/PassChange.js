@@ -95,7 +95,7 @@ class PassChange extends Component {
           />
           <TextInput
             style={styles.inputText}
-            placeholder=" رمز جدید را وارد کنید "
+            placeholder=" رمز جدید خود را وارد کنید "
             secureTextEntry
             value={this.state.newPassword}
             onChangeText={this.HandleChange('newPassword')}

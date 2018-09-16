@@ -28,8 +28,13 @@ export default class Main extends Component {
     return (
       <Container>
         <Content>
-          <Header searchBar rounded>
-            <StatusBar backgroundColor="rgb(63, 81, 181)" />
+          <Header
+            searchBar
+            rounded
+            backgroundColor="rgb(25, 50, 75)"
+            androidStatusBarColor="rgb(25, 50, 75)"
+          >
+            <StatusBar backgroundColor="rgb(25, 50, 75)" />
             <Item>
               <Input placeholder="جستجو" onKeyPress />
               <Icon name="ios-search" />
