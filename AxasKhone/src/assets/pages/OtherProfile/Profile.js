@@ -3,6 +3,7 @@ import { View, Text, Image, StatusBar, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
+import ProfileTab from './ProfileTab';
 
 class OtherUserProfile extends Component {
   constructor(props) {
@@ -81,7 +82,9 @@ class OtherUserProfile extends Component {
           </View>
         </View>
 
-        <View style={styles.BoxDown}>{/* <ProfileTab /> */}</View>
+        <View style={styles.BoxDown}>
+          <ProfileTab />
+        </View>
       </View>
     );
   }

@@ -164,7 +164,7 @@ class RegisterComplement extends Component {
               underlineColorAndroid="transparent"
               onChangeText={this.HandleChange('bio')}
               multiline
-              numberOfLines={4}
+              numberOfLines={3}
               maxLength={190}
             />
             <TouchableOpacity activeOpacity={0.8} onPress={this.NextStep}>

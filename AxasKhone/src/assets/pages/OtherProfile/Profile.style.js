@@ -17,7 +17,7 @@ export default (styles = StyleSheet.create({
   boxUp: {
     // flexDirection: 'row',
     flexDirection: 'row-reverse',
-    height: 130,
+    height: 160,
     padding: 15,
     backgroundColor: 'rgb(239, 239, 239)'
   },

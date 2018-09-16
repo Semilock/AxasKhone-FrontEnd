@@ -18,7 +18,6 @@ import {
   Tab,
   Tabs
 } from 'native-base';
-import Favorites from './ProfileFavorites';
 import Photo from './ProfilePosts';
 
 export default class ProfileTab extends Component {
@@ -35,15 +34,6 @@ export default class ProfileTab extends Component {
             backgroundColor: 'gray'
           }}
         >
-          <Tab
-            heading="علاقه مندی ها"
-            activeTabStyle={{ backgroundColor: 'white', color: 'black' }}
-            tabStyle={{ backgroundColor: 'white', color: 'black' }}
-            textStyle={{ color: 'black' }}
-            activeTextStyle={{ color: 'black' }}
-          >
-            <Favorites />
-          </Tab>
           <Tab
             heading="عکس ها"
             activeTabStyle={{ backgroundColor: 'white' }}
