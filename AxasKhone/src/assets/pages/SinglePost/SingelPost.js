@@ -38,12 +38,13 @@ class SingelPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      commentText: undefined,
+      commentText: '',
       post: undefined,
       limit: 5,
       offset: 0,
       isModalVisible: false,
-      likeNumber: this.props.post.like_number
+      likeNumber: this.props.post.like_number,
+      commentNumber: this.props.post.comment_number
     };
   }
 
@@ -94,7 +95,13 @@ class SingelPost extends Component {
     this.props
       .sendComment(this.state.post.pk, this.state.commentText)
       .then(res => {
-        this.getComments();
+        this.props.refreshComments();
+        this.props.getComments(this.state.post.pk, this.state.offset + 1, 0);
+        this.setState(prevState => ({
+          commentNumber: prevState.commentNumber + 1,
+          commentText: '',
+          offset: prevState.offset + 1
+        }));
         ToastAndroid.show(res, ToastAndroid.SHORT);
       });
   };
@@ -174,7 +181,7 @@ class SingelPost extends Component {
                   </Button>
                   <Button transparent style={{ paddingLeft: 15 }}>
                     <Icon active name="chatbubbles" />
-                    <Text>{this.state.post.comment_number}</Text>
+                    <Text>{this.state.commentNumber}</Text>
                   </Button>
                 </Left>
                 <Right>
@@ -240,6 +247,7 @@ class SingelPost extends Component {
                   height: 40
                 }}
                 onChangeText={text => this.setState({ commentText: text })}
+                value={this.state.commentText}
                 maxLength={500}
                 multiline
                 underlineColorAndroid="transparent"

@@ -401,9 +401,9 @@ const sendComment = (postId, text) => {
       .sendComment(postId, text)
       .then(res => {
         dispatch(success(res.data.status));
-        dispatch(refreshComments());
-        dispatch(getComments(postId));
-        // return res.data.statuas;
+        // dispatch(refreshComments());
+        // dispatch(getComments(postId));
+        return 'نظر ثبت شد.';
       })
       .catch(err => {
         dispatch(failure(err.data.error));
