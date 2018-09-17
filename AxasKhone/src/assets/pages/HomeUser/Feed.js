@@ -33,7 +33,7 @@ class Feed extends Component {
 
   openPost = () => {
     this.props.navigation.navigate('SinglePost', {
-      post: this.props.feeds
+      post: { ...this.props.feeds, like_number: this.state.likeNumber }
     });
   };
 
