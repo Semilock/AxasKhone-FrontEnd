@@ -1,4 +1,3 @@
-// import Reactotron from 'reactotron-react-native';
 import routes from './route';
 import axiosInstance from './axios.config';
 

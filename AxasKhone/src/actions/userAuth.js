@@ -1,7 +1,6 @@
 import { userService } from '../services/userAuth';
 import loginConst from '../constants/loginConst';
 import profileConst from '../constants/profileConst';
-// import { alertActions } from './alert';
 
 const login = (username, password) => {
   return dispatch => {
@@ -25,8 +24,6 @@ const login = (username, password) => {
           }
           dispatch(failure(errorMsg));
         }
-
-        // dispatch(alertActions.error(error));
       }
     );
   };

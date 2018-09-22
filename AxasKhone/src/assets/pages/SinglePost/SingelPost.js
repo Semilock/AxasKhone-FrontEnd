@@ -23,7 +23,6 @@ import {
   ListItem,
   Content
 } from 'native-base';
-// import Reactotoron from 'reactotron-react-native';
 import { connect } from 'react-redux';
 import Comment from './Comment';
 import userProfile from '../../../actions/userProfile';

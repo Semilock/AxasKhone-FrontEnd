@@ -11,7 +11,6 @@ import {
   Right,
   Body
 } from 'native-base';
-// import Reactotron from 'reactotron-react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import humanReadableTime from '../../../helpers/time';
@@ -46,7 +45,6 @@ class Feed extends Component {
   like = () => {
     this.props.likePost(this.props.feeds.pk).then(res => {
       // ToastAndroid.show(res, ToastAndroid.SHORT);
-      // Reactotron.warn(res);
       if (res === 'unlike') {
         this.setState(prevState => ({
           likeNumber: prevState.likeNumber - 1

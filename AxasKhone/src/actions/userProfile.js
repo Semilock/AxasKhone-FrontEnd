@@ -219,7 +219,6 @@ const getProfileFavoriteListItems = (id, limit, offset) => {
 const refreshProfilePosts = () => {
   return dispatch => {
     dispatch({ type: profileConst.REFRESH_PROFILE_POSTS });
-    // dispatch(getProfilePosts(limit, offset));
   };
 };
 
@@ -254,20 +253,11 @@ const editProfile = user => {
     }
     return userService
       .editProfile(data)
-      .then(
-        res => {
-          dispatch(success(res.data.status));
-          dispatch(getProfile());
-          return 'ویرایش شد';
-        }
-        // ,error => {
-        //   const { status } = error.response;
-        //   const { data } = error.response;
-        //   if (status === 400) {
-        //     dispatch(failure(data.error));
-        //   }
-        // }
-      )
+      .then(res => {
+        dispatch(success(res.data.status));
+        dispatch(getProfile());
+        return 'ویرایش شد';
+      })
       .catch(error => {
         const { status } = error.response;
         const { data } = error.response;

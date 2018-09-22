@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
-// import Reactotron from 'reactotron-react-native';
 import profileActions from '../../../actions/userProfile';
 import styles from './Profile.style';
 import DeleteModal from '../../../components/DeleteModal';

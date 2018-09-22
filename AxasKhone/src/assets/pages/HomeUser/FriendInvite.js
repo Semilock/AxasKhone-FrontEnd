@@ -7,7 +7,6 @@ import {
   ToastAndroid
 } from 'react-native';
 import Contacts from 'react-native-contacts';
-// import Reactotron from 'reactotron-react-native';
 import { connect } from 'react-redux';
 import feedActions from '../../../actions/userFeed';
 import profileActions from '../../../actions/userProfile';
@@ -45,16 +44,11 @@ class FriendInvite extends Component {
 
   componentDidMount() {
     this.FetchContacts();
-    this.setState = {
-      // this.state.
-    };
-    // Reactotron.warn(this.props.contacts);
   }
 
   FetchContacts = () => {
     Contacts.getAll((err, contacts) => {
       if (err) throw err;
-      // Reactotron.log(contacts);
       let allContac = {};
       contacts.map(item => {
         if (item.emailAddresses.length > 0) {
@@ -69,13 +63,11 @@ class FriendInvite extends Component {
           allContac = [...allContac, contact];
         }
       });
-      // Reactotron.warn({ contact_list: allContac });
       this.props.getContact(allContac);
     });
   };
 
   renderContactItem = ({ item }) => {
-    // Reactotron.warn(item);
     return <ContactItem contact={item} followAction={this.props.follow} />;
   };
 
@@ -102,7 +94,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   const { contacts } = state.contact;
-  // const contacts = state.contact.contacts;
   return {
     contacts
   };
@@ -139,7 +130,6 @@ class ContactItem extends Component {
   }
 
   followUser = (mode, user) => {
-    // Reactotron.warn(mode);
     if (user instanceof Object) {
       if (user.is_following === false && mode == 'follow') {
         this.props.followAction(user.main_username).then(res => {
@@ -163,7 +153,6 @@ class ContactItem extends Component {
         <View
           style={{
             height: 50,
-            // backgroundColor: 'red',
             flexDirection: 'row-reverse',
             borderBottomColor: 'gray',
             borderBottomWidth: 0.5
@@ -239,19 +228,3 @@ class ContactItem extends Component {
     );
   }
 }
-
-// connect(
-//   state => {
-//     const { isFetching, isAuthenticated, token } = state.auth;
-//     return {
-//       isFetching,
-//       isAuthenticated,
-//       token
-//     };
-//   },
-//   dispatch => {
-//     return {
-//       follow: username => dispatch(profileActions.follow(username))
-//     };
-//   }
-// )(ContactItem);

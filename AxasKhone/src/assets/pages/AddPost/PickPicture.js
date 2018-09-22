@@ -31,7 +31,6 @@ export default class PickPicture extends React.Component {
     super();
     this.state = {
       selected: null
-      // image: undefined
     };
   }
 
@@ -50,12 +49,6 @@ export default class PickPicture extends React.Component {
     })
       .then(image => {
         this.setState({
-          // image: {
-          //   uri: image.path,
-          //   width: image.width,
-          //   height: image.height,
-          //   mime: image.mime
-          // },
           selected: null
         });
         this.props.navigation.navigate('CompletionAddPost', {
@@ -66,7 +59,6 @@ export default class PickPicture extends React.Component {
             mime: image.mime
           }
         });
-        // Reactotron.warn(this.state.image, image);
       })
       .catch(e => {
         console.log(e);
@@ -78,17 +70,9 @@ export default class PickPicture extends React.Component {
   pickSingleWithCamera() {
     ImagePicker.openCamera({
       cropping: false
-      // width: 200,
-      // height: 200
     }).then(image => {
       this.setState(
         {
-          // image: {
-          //   uri: image.path,
-          //   width: image.width,
-          //   height: image.height,
-          //   mime: image.mime
-          // },
           selected: {
             uri: image.path
           }
@@ -96,17 +80,11 @@ export default class PickPicture extends React.Component {
         () => this.cropLast(this.state.selected)
       );
     });
-    // .catch(e => alert(e));
   }
 
   _draggedValue = new Animated.Value(-120);
 
   getSelectedImages = images => {
-    // Reactotron.warn(images[0]);
-    // this.cropLast(images[0]);
-    // this.setState({
-    //   selected: images
-    // });
     if (images[0]) {
       this.setState({
         selected: {
@@ -121,22 +99,7 @@ export default class PickPicture extends React.Component {
   };
 
   gotoToCompletePost = () => {
-    // this.props.navigation.navigate('CompletionAddPost', {
-    //   image: this.state.selected[0].uri
-    // })
-    // this.setState({ image: this.state.selected[0] });
-    // this.state.selected[0]
     this.cropLast(this.state.selected);
-    // const imageP = this.state.image;
-    // this.setState({
-    //   selected: null,
-    //   image: undefined
-    // });
-    // if (this.state.image !== undefined) {
-    //   this.props.navigation.navigate('CompletionAddPost', {
-    //     image: this.state.image
-    //   });
-    // }
   };
 
   render() {
@@ -169,7 +132,6 @@ export default class PickPicture extends React.Component {
             <View style={styles.containerDown}>
               <CameraRollPicker
                 scrollRenderAheadDistance={12}
-                // selected={this.state.selected}
                 backgroundColor="rgb(239, 239, 239)"
                 imagesPerRow={3}
                 imageMargin={5}
